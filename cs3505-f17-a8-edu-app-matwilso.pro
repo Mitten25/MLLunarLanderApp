@@ -53,12 +53,19 @@ INCLUDEPATH += $$PWD/include/SFML/include/
 
 
 # SFML
-unix:!macx: LIBS += -L"$$PWD/include/SFML/lib"
-unix:!macx:LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
+unix: LIBS += -L"$$PWD/include/SFML/lib"
+unix: LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
 # Box2d
-unix:!macx: LIBS += -L"$$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug" -lBox2D
+unix: LIBS += -L"$$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug" -lBox2D
 #unix:!macx: LIBS += -lsfml-graphics -lsfml-window -lsfml-system
 
 
 
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/include/Box2D/Box2D/Build/gmake/bin/release/ -lBox2D
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/include/Box2D/Box2D/Build/gmake/bin/debug/ -lBox2D
+
+#INCLUDEPATH += $$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug
+#DEPENDPATH += $$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug
+
+win32: include(include/Box2D/Box2D/Box2D/Box2D.pro)
