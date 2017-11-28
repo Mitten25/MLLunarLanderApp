@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Clipboard.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Clipboard.cpp
 SFML/Window/Clipboard.hpp
 -
 SFML/Window/ClipboardImpl.hpp
@@ -14,7 +14,7 @@ SFML/Window/ClipboardImpl.hpp
 SFML/System/String.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Context.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Context.cpp
 SFML/Window/Context.hpp
 -
 SFML/Window/GlContext.hpp
@@ -22,13 +22,13 @@ SFML/Window/GlContext.hpp
 SFML/System/ThreadLocalPtr.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Cursor.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Cursor.cpp
 SFML/Window/Cursor.hpp
 -
 SFML/Window/CursorImpl.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/GlContext.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/GlContext.cpp
 SFML/Window/GlContext.hpp
 -
 SFML/Window/Context.hpp
@@ -68,29 +68,29 @@ SFML/Window/iOS/EaglContext.hpp
 SFML/Window/EglContext.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/GlResource.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/GlResource.cpp
 SFML/Window/GlResource.hpp
 -
 SFML/Window/GlContext.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Joystick.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Joystick.cpp
 SFML/Window/Joystick.hpp
 -
 SFML/Window/JoystickManager.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/JoystickManager.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/JoystickManager.cpp
 SFML/Window/JoystickManager.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Keyboard.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Keyboard.cpp
 SFML/Window/Keyboard.hpp
 -
 SFML/Window/InputImpl.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Mouse.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Mouse.cpp
 SFML/Window/Mouse.hpp
 -
 SFML/Window/InputImpl.hpp
@@ -98,25 +98,25 @@ SFML/Window/InputImpl.hpp
 SFML/Window/Window.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Sensor.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Sensor.cpp
 SFML/Window/Sensor.hpp
 -
 SFML/Window/SensorManager.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/SensorManager.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/SensorManager.cpp
 SFML/Window/SensorManager.hpp
 -
 SFML/System/Err.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Touch.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Touch.cpp
 SFML/Window/Touch.hpp
 -
 SFML/Window/InputImpl.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/ClipboardImpl.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/ClipboardImpl.cpp
 SFML/Window/Unix/ClipboardImpl.hpp
 -
 SFML/Window/Unix/Display.hpp
@@ -132,7 +132,7 @@ string
 X11/Xlib.h
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/CursorImpl.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/CursorImpl.cpp
 SFML/Window/Unix/CursorImpl.hpp
 -
 SFML/Window/Unix/Display.hpp
@@ -148,7 +148,7 @@ cstdlib
 vector
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/Display.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/Display.cpp
 SFML/System/Err.hpp
 -
 SFML/System/Mutex.hpp
@@ -166,7 +166,7 @@ cstdlib
 map
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/GlxContext.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/GlxContext.cpp
 SFML/Window/Unix/WindowImplX11.hpp
 -
 SFML/Window/Unix/GlxContext.hpp
@@ -182,7 +182,7 @@ SFML/System/Err.hpp
 vector
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/GlxExtensions.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/GlxExtensions.cpp
 SFML/Window/Unix/GlxExtensions.hpp
 -
 SFML/Window/Context.hpp
@@ -196,7 +196,7 @@ cstddef
 string
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/InputImpl.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/InputImpl.cpp
 SFML/Window/Window.hpp
 -
 SFML/Window/Unix/InputImpl.hpp
@@ -210,7 +210,7 @@ X11/Xlib.h
 X11/keysym.h
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/JoystickImpl.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/JoystickImpl.cpp
 SFML/Window/JoystickImpl.hpp
 -
 SFML/System/Err.hpp
@@ -232,11 +232,11 @@ string
 cstring
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/SensorImpl.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/SensorImpl.cpp
 SFML/Window/SensorImpl.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/VideoModeImpl.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/VideoModeImpl.cpp
 SFML/Window/VideoModeImpl.hpp
 -
 SFML/Window/Unix/Display.hpp
@@ -250,7 +250,7 @@ X11/extensions/Xrandr.h
 algorithm
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/WindowImplX11.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Unix/WindowImplX11.cpp
 SFML/Window/Unix/WindowImplX11.hpp
 -
 SFML/Window/Unix/Display.hpp
@@ -300,7 +300,7 @@ SFML/Window/EglContext.hpp
 SFML/Window/Unix/GlxContext.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/VideoMode.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/VideoMode.cpp
 SFML/Window/VideoMode.hpp
 -
 SFML/Window/VideoModeImpl.hpp
@@ -310,7 +310,7 @@ algorithm
 functional
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Window.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/Window.cpp
 SFML/Window/Window.hpp
 -
 SFML/Window/GlContext.hpp
@@ -322,7 +322,7 @@ SFML/System/Sleep.hpp
 SFML/System/Err.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/WindowImpl.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Window/WindowImpl.cpp
 SFML/Window/WindowImpl.hpp
 -
 SFML/Window/Event.hpp

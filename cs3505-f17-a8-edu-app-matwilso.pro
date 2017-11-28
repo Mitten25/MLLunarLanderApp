@@ -56,7 +56,7 @@ win32-g++: LIBS += -L$$PWD/include/SFML/lib/ -lsfml-audio -lsfml-graphics -lsfml
 
 # SFML
 unix: LIBS += -L"$$PWD/include/SFML/lib"
-unix: LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
+unix: LIBS += -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
 # Box2d
 unix: LIBS += -L"$$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug" -lBox2D
@@ -70,4 +70,4 @@ unix: LIBS += -L"$$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug" -lBox2D
 #INCLUDEPATH += $$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug
 #DEPENDPATH += $$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug
 
-win32: include(include/Box2D/Box2D/Box2D/Box2D.pro)
+include(include/Box2D/Box2D/Box2D/Box2D.pro)
