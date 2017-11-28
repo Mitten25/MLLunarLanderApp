@@ -27,13 +27,10 @@ INCLUDEPATH += $$PWD/include/SFML/include/
 
 # Windows
 # SFML
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/include/SFML/lib/release/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
-
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/include/SFML/lib/debug/ -lsfml-audio-d -lsfml-graphics-d -lsfml-network-d -lsfml-window-d -lsfml-system-d
-#Not sure if following line will work with other windows compilers without debug/release folders
-else:win32: LIBS += -L$$PWD/include/SFML/lib/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
-
+win32-msvc*{
+    win32:CONFIG(release, debug|release): LIBS += -L$$PWD/include/SFML/lib/release/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
+    else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/include/SFML/lib/debug/ -lsfml-audio-d -lsfml-graphics-d -lsfml-network-d -lsfml-window-d -lsfml-system-d
+}
 win32-g++: LIBS += -L$$PWD/include/SFML/lib/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
 # Box2D
