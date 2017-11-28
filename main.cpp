@@ -3,7 +3,7 @@
 #include "Box2D/Box2D.h"
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
-
+#undef main
 static const float SCALE = 30.f;
 
 /** Create the base for the boxes to land */
