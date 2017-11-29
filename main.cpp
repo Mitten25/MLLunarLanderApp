@@ -3,6 +3,8 @@
 #include "Box2D/Box2D.h"
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
+#include "QtMath"
+#include "tuple"
 #undef main
 static const float SCALE = 30.f;
 
@@ -122,4 +124,49 @@ public:
     //virtual void render();
     //virtual void close();
     //virtual void seed();
+};
+
+class LunarLander : Env{
+private:
+    b2World world;
+    b2Body* lander;
+
+public:
+    LunarLander(){}
+
+    LunarLander(b2World &World){
+        world = World;
+        //observation_space = new std::vector<int>;
+        //action_space =
+        lander = NULL;
+
+        reset();
+    }
+
+    void destroy(){
+        world.DestroyBody(lander);
+        world.SetContactListener(NULL);
+    }
+
+    std::vector<int> reset(){
+        destroy();
+        int W = 800;
+        int H = 600;
+        int initial_y = H/SCALE;
+
+        b2BodyDef BodyDef;
+        BodyDef.position = b2Vec2((W/SCALE)/2, initial_y);
+        BodyDef.angle = 0.0f;
+        BodyDef.type = b2_dynamicBody;
+        //TODO: add fixtures
+        lander = world.CreateBody(&BodyDef);
+        //TODO: add initial force lander.ApplyForceToCenter();
+    }
+
+    step_return step(){
+        std::tuple<double, double> tip (std::make_tuple(qSin(lander->GetAngle()), qCos(lander->GetAngle())));
+        std::tuple<double, double> side (std::make_tuple(-std::get<0>(tip), std::get<0>(tip)));
+
+    }
+
 };
