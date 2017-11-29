@@ -103,3 +103,16 @@ void createGround(b2World& World, float X, float Y)
     FixtureDef.shape = &Shape;
     Body->CreateFixture(&FixtureDef);
 }
+
+class Env{
+public:
+    std::vector<int> action_space;
+    std::vector<int> observation_space;
+    std::vector<int> reward_range;
+
+    virtual void step();
+    virtual void reset();
+    virtual void render();
+    virtual void close();
+    virtual void seed();
+};
