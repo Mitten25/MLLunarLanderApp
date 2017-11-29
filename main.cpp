@@ -110,9 +110,16 @@ public:
     std::vector<int> observation_space;
     std::vector<int> reward_range;
 
-    virtual void step();
-    virtual void reset();
-    virtual void render();
-    virtual void close();
-    virtual void seed();
+    virtual step_return step();
+    virtual std::vector<int> reset();
+    //virtual void render();
+    //virtual void close();
+    //virtual void seed();
 };
+
+struct step_return{
+    std::vector<int> observation;
+    float reward;
+    bool done;
+
+} step_return;
