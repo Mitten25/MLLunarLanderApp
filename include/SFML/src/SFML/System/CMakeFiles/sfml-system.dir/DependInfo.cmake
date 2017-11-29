@@ -4,22 +4,22 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Clock.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Clock.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Err.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Err.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/FileInputStream.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/FileInputStream.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Lock.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Lock.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/MemoryInputStream.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/MemoryInputStream.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Mutex.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Mutex.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Sleep.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Sleep.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/String.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/String.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Thread.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Thread.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/ThreadLocal.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/ThreadLocal.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Time.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Time.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Unix/ClockImpl.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Unix/ClockImpl.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Unix/MutexImpl.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Unix/MutexImpl.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Unix/SleepImpl.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Unix/SleepImpl.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Unix/ThreadImpl.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Unix/ThreadImpl.cpp.o"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Unix/ThreadLocalImpl.cpp" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Unix/ThreadLocalImpl.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Clock.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Clock.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Err.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Err.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/FileInputStream.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/FileInputStream.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Lock.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Lock.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/MemoryInputStream.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/MemoryInputStream.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Mutex.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Mutex.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Sleep.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Sleep.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/String.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/String.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Thread.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Thread.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/ThreadLocal.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/ThreadLocal.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Time.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Time.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Unix/ClockImpl.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Unix/ClockImpl.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Unix/MutexImpl.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Unix/MutexImpl.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Unix/SleepImpl.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Unix/SleepImpl.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Unix/ThreadImpl.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Unix/ThreadImpl.cpp.o"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/Unix/ThreadLocalImpl.cpp" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/Unix/ThreadLocalImpl.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -31,8 +31,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Pairs of files generated by the same build rule.
 set(CMAKE_MULTIPLE_OUTPUT_PAIRS
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/lib/libsfml-system.so" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/lib/libsfml-system.so.2.4.2"
-  "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/lib/libsfml-system.so.2.4" "/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/lib/libsfml-system.so.2.4.2"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/lib/libsfml-system.so" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/lib/libsfml-system.so.2.4.2"
+  "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/lib/libsfml-system.so.2.4" "/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/lib/libsfml-system.so.2.4.2"
   )
 
 

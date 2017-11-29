@@ -72,8 +72,3 @@ endif()
 if(SFML_BUILD_GRAPHICS)
     add_subdirectory(Graphics)
 endif()
-
-# sfml-audio
-if(SFML_BUILD_AUDIO)
-    add_subdirectory(Audio)
-endif()

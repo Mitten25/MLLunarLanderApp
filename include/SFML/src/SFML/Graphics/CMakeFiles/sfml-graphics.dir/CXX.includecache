@@ -6,27 +6,27 @@
 
 #IncludeRegexTransform: 
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/BlendMode.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/BlendMode.cpp
 SFML/Graphics/BlendMode.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/CircleShape.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/CircleShape.cpp
 SFML/Graphics/CircleShape.hpp
 -
 cmath
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Color.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Color.cpp
 SFML/Graphics/Color.hpp
 -
 algorithm
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/ConvexShape.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/ConvexShape.cpp
 SFML/Graphics/ConvexShape.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Font.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Font.cpp
 SFML/Graphics/Font.hpp
 -
 SFML/Graphics/GLCheck.hpp
@@ -44,7 +44,7 @@ cstdlib
 cstring
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/GLCheck.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/GLCheck.cpp
 SFML/Graphics/GLCheck.hpp
 -
 SFML/System/Err.hpp
@@ -52,7 +52,7 @@ SFML/System/Err.hpp
 string
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/GLExtensions.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/GLExtensions.cpp
 SFML/Graphics/GLExtensions.hpp
 -
 SFML/Window/Context.hpp
@@ -60,19 +60,19 @@ SFML/Window/Context.hpp
 SFML/System/Err.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/GLLoader.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/GLLoader.cpp
 SFML/Graphics/GLLoader.hpp
 -
 SFML/Window/Context.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Glsl.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Glsl.cpp
 SFML/Graphics/Glsl.hpp
 -
 algorithm
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Image.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Image.cpp
 SFML/Graphics/Image.hpp
 -
 SFML/Graphics/ImageLoader.hpp
@@ -86,7 +86,7 @@ algorithm
 cstring
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/ImageLoader.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/ImageLoader.cpp
 SFML/Graphics/ImageLoader.hpp
 -
 SFML/System/InputStream.hpp
@@ -100,19 +100,19 @@ stb_image_write.h
 cctype
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RectangleShape.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RectangleShape.cpp
 SFML/Graphics/RectangleShape.hpp
 -
 cmath
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderStates.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderStates.cpp
 SFML/Graphics/RenderStates.hpp
 -
 cstddef
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderTarget.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderTarget.cpp
 SFML/Graphics/RenderTarget.hpp
 -
 SFML/Graphics/Drawable.hpp
@@ -132,7 +132,7 @@ cassert
 iostream
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderTexture.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderTexture.cpp
 SFML/Graphics/RenderTexture.hpp
 -
 SFML/Graphics/RenderTextureImplFBO.hpp
@@ -142,11 +142,11 @@ SFML/Graphics/RenderTextureImplDefault.hpp
 SFML/System/Err.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderTextureImpl.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderTextureImpl.cpp
 SFML/Graphics/RenderTextureImpl.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderTextureImplDefault.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderTextureImplDefault.cpp
 SFML/Graphics/RenderTextureImplDefault.hpp
 -
 SFML/Graphics/GLCheck.hpp
@@ -158,7 +158,7 @@ SFML/Window/Context.hpp
 SFML/System/Err.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderTextureImplFBO.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderTextureImplFBO.cpp
 SFML/Graphics/RenderTextureImplFBO.hpp
 -
 SFML/Graphics/Texture.hpp
@@ -168,13 +168,13 @@ SFML/Graphics/GLCheck.hpp
 SFML/System/Err.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderWindow.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/RenderWindow.cpp
 SFML/Graphics/RenderWindow.hpp
 -
 SFML/Graphics/Texture.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Shader.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Shader.cpp
 SFML/Graphics/Shader.hpp
 -
 SFML/Graphics/Texture.hpp
@@ -200,7 +200,7 @@ fstream
 vector
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Shape.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Shape.cpp
 SFML/Graphics/Shape.hpp
 -
 SFML/Graphics/RenderTarget.hpp
@@ -212,7 +212,7 @@ SFML/System/Err.hpp
 cmath
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Sprite.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Sprite.cpp
 SFML/Graphics/Sprite.hpp
 -
 SFML/Graphics/Texture.hpp
@@ -222,7 +222,7 @@ SFML/Graphics/RenderTarget.hpp
 cstdlib
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Text.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Text.cpp
 SFML/Graphics/Text.hpp
 -
 SFML/Graphics/Texture.hpp
@@ -232,7 +232,7 @@ SFML/Graphics/RenderTarget.hpp
 cmath
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Texture.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Texture.cpp
 SFML/Graphics/Texture.hpp
 -
 SFML/Graphics/Image.hpp
@@ -256,100 +256,36 @@ cassert
 cstring
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/TextureSaver.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/TextureSaver.cpp
 SFML/Graphics/TextureSaver.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Transform.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Transform.cpp
 SFML/Graphics/Transform.hpp
 -
 cmath
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Transformable.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Transformable.cpp
 SFML/Graphics/Transformable.hpp
 -
 cmath
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Vertex.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/Vertex.cpp
 SFML/Graphics/Vertex.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/VertexArray.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/VertexArray.cpp
 SFML/Graphics/VertexArray.hpp
 -
 SFML/Graphics/RenderTarget.hpp
 -
 
-/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/View.cpp
+/home/aradford/CS3505/cs3505-f17-a8-edu-app-matwilso/include/SFML/src/SFML/Graphics/View.cpp
 SFML/Graphics/View.hpp
 -
 cmath
--
-
-/usr/include/freetype2/freetype/config/ftheader.h
-x86_64-linux-gnu/freetype2/freetype/config/ftheader.h
--
-x86_64-linux-gnux32/freetype2/freetype/config/ftheader.h
--
-i386-linux-gnu/freetype2/freetype/config/ftheader.h
--
-aarch64-linux-gnu/freetype2/freetype/config/ftheader.h
--
-alpha-linux-gnu/freetype2/freetype/config/ftheader.h
--
-arm-linux-gnueabihf/freetype2/freetype/config/ftheader.h
--
-arm-linux-gnueabi/freetype2/freetype/config/ftheader.h
--
-hppa-linux-gnu/freetype2/freetype/config/ftheader.h
--
-ia64-linux-gnu/freetype2/freetype/config/ftheader.h
--
-m68k-linux-gnu/freetype2/freetype/config/ftheader.h
--
-mipsel-linux-gnu/freetype2/freetype/config/ftheader.h
--
-mips64el-linux-gnuabin32/freetype2/freetype/config/ftheader.h
--
-mips64el-linux-gnuabi64/freetype2/freetype/config/ftheader.h
--
-mips-linux-gnu/freetype2/freetype/config/ftheader.h
--
-mips64-linux-gnuabin32/freetype2/freetype/config/ftheader.h
--
-mips64-linux-gnuabi64/freetype2/freetype/config/ftheader.h
--
-or1k-linux-gnu/freetype2/freetype/config/ftheader.h
--
-powerpc-linux-gnuspe/freetype2/freetype/config/ftheader.h
--
-powerpc64le-linux-gnu/freetype2/freetype/config/ftheader.h
--
-powerpc64-linux-gnu/freetype2/freetype/config/ftheader.h
--
-powerpc-linux-gnu/freetype2/freetype/config/ftheader.h
--
-s390x-linux-gnu/freetype2/freetype/config/ftheader.h
--
-s390-linux-gnu/freetype2/freetype/config/ftheader.h
--
-sh4-linux-gnu/freetype2/freetype/config/ftheader.h
--
-sparc64-linux-gnu/freetype2/freetype/config/ftheader.h
--
-sparc-linux-gnu/freetype2/freetype/config/ftheader.h
--
-x86_64-kfreebsd-gnu/freetype2/freetype/config/ftheader.h
--
-i386-kfreebsd-gnu/freetype2/freetype/config/ftheader.h
--
-i386-gnu/freetype2/freetype/config/ftheader.h
--
-
-/usr/include/freetype2/ft2build.h
-freetype/config/ftheader.h
 -
 
 extlibs/headers/stb_image/stb_image.h

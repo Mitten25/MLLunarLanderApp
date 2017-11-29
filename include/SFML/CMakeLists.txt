@@ -94,7 +94,7 @@ endif()
 sfml_set_option(SFML_BUILD_WINDOW TRUE BOOL "TRUE to build SFML's Window module. This setting is ignored, if the graphics module is built.")
 sfml_set_option(SFML_BUILD_GRAPHICS TRUE BOOL "TRUE to build SFML's Graphics module.")
 if(NOT SFML_OS_IOS)
-    sfml_set_option(SFML_BUILD_AUDIO TRUE BOOL "TRUE to build SFML's Audio module.")
+    sfml_set_option(SFML_BUILD_AUDIO FALSE BOOL "TRUE to build SFML's Audio module.")
 endif()
 sfml_set_option(SFML_BUILD_NETWORK TRUE BOOL "TRUE to build SFML's Network module.")
 
@@ -285,7 +285,7 @@ if(SFML_OS_LINUX OR SFML_OS_FREEBSD)
     if(BUILD_SHARED_LIBS)
         sfml_set_option(SFML_INSTALL_PKGCONFIG_FILES FALSE BOOL "TRUE to automatically install pkg-config files so other projects can find SFML")
         if(SFML_INSTALL_PKGCONFIG_FILES)
-            foreach(sfml_module IN ITEMS all system window graphics audio network)
+            foreach(sfml_module IN ITEMS all system window graphics network)
                 CONFIGURE_FILE(
                     "tools/pkg-config/sfml-${sfml_module}.pc.in"
                     "tools/pkg-config/sfml-${sfml_module}.pc"
@@ -317,7 +317,7 @@ endif()
 sfml_set_option(SFML_INSTALL_PKGCONFIG_FILES FALSE BOOL "TRUE to automatically install pkg-config files so other projects can find SFML")
 
 if(SFML_OS_SUPPORTS_PKGCONFIG OR SFML_INSTALL_PKGCONFIG_FILES)
-    foreach(sfml_module IN ITEMS all system window graphics audio network)
+    foreach(sfml_module IN ITEMS all system window graphics network)
         CONFIGURE_FILE(
             "tools/pkg-config/sfml-${sfml_module}.pc.in"
             "tools/pkg-config/sfml-${sfml_module}.pc"
@@ -482,9 +482,6 @@ elseif(SFML_OS_MACOSX)
             install(DIRECTORY extlibs/libs-osx/Frameworks/vorbisfile.framework DESTINATION ${CMAKE_INSTALL_FRAMEWORK_PREFIX})
         endif()
 
-        if(OPENAL_LIBRARY STREQUAL "${SFML_SOURCE_DIR}/extlibs/libs-osx/Frameworks/OpenAL.framework")
-            install(DIRECTORY "${OPENAL_LIBRARY}" DESTINATION ${CMAKE_INSTALL_FRAMEWORK_PREFIX})
-        endif()
     endif()
 
     # install the Xcode templates if requested
