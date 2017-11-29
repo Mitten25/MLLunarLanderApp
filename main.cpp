@@ -104,6 +104,13 @@ void createGround(b2World& World, float X, float Y)
     Body->CreateFixture(&FixtureDef);
 }
 
+struct step_return{
+    std::vector<int> observation;
+    float reward;
+    bool done;
+
+};
+
 class Env{
 public:
     std::vector<int> action_space;
@@ -116,10 +123,3 @@ public:
     //virtual void close();
     //virtual void seed();
 };
-
-struct step_return{
-    std::vector<int> observation;
-    float reward;
-    bool done;
-
-} step_return;
