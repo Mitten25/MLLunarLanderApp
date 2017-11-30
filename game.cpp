@@ -105,7 +105,7 @@ public:
 */
 };
 
-int main()
+int game()
 {
     //QApplication a(argc, argv);
     //MainWindow w;
