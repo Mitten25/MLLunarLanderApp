@@ -13,8 +13,10 @@ TARGET = cs3505-f17-a8-edu-app-matwilso
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+SOURCES +=\
+        mainwindow.cpp \
+    game.cpp \
+    main.cpp
 HEADERS  += mainwindow.h
 FORMS    += mainwindow.ui
 
