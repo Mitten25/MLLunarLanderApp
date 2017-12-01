@@ -6,9 +6,10 @@ welcomeScreen::welcomeScreen(QWidget* parent):QMainWindow(parent)
 {
     QLabel label;
     label.setText("This is a welcome screen");
+
     QLayout *layout = new QHBoxLayout();
-    layout->addWidget(&label);
-    label.show();
+
+    layout->setObjectName("asdf");
     this->setLayout(layout);
-    layout->addItem(label);
+    label.show();
 }
