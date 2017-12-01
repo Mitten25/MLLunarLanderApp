@@ -9,13 +9,24 @@
 #include "tuple"
 #include "vector"
 
+struct EnvData {
+    std::vector<float> observation;
+    float reward;
+    bool done;
+};
+
 class Env
 {
 public:
-    virtual std::tuple<std::vector<float>, float, bool> reset();
-    virtual std::tuple<std::vector<float>, float, bool> step(std::vector<float>);
+    virtual EnvData reset();
+    virtual EnvData step(std::vector<float>);
     virtual void render();
     //TODO: close() maybe
+
+    std::vector<int> actionSpace;
+    std::vector<int> observationSpace;
+    std::vector<int> rewardRange;
+
 };
 
 

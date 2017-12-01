@@ -15,14 +15,12 @@
 
 
 const int FPS    = 50;
-const int SCALE  = 30.0;   // affects how fast-paced the game is, forces should be adjusted as well
+const float SCALE  = 30.0;   // affects how fast-paced the game is, forces should be adjusted as well
 
 const float MAIN_ENGINE_POWER  = 13.0;
 const float SIDE_ENGINE_POWER  =  0.6;
 
 const float INITIAL_RANDOM = 1000.0;   // Set 1500 to make game harder
-
-b2Vec2 LANDER_POLY[6];
 
 const int LEG_AWAY = 20;
 const int LEG_DOWN = 18;
@@ -111,6 +109,7 @@ private:
 
     b2Body* moon_; // body of lunar surface
     std::vector<b2Body*> particles_; // particles that shoot out of the rocket (just for looks)
+    std::vector<std::tuple<b2Vec2, b2Vec2, b2Vec2, b2Vec2> > skyPolys_; // I think is for drawing the sky
     b2Body* lander_; // body of lunar lander
     b2PolygonShape landerShape_; // shape of lander for physics and drawing
     b2Body* leftLeg_; // left leg of lunar lander
@@ -120,19 +119,12 @@ private:
     ContactDetector* contactDetector_; // Box2D object for handling collisions
     bool gameOver_; // this will get set when the thing crashes or something, so we know when to end things
     float prevShaping_; // used for setting reward
-
-    std::random_device rd;  //Will be used to obtain a seed for the random number engine
-    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-
-
+    std::vector<b2Body*> drawList_;
+    bool continuous_;
 
 public:
     LunarLander::LunarLander(bool continuous);
     std::pair<float, float> observationRange;
-    //std::tuple<std::vector<float>, float, bool> reset(float);
-    //std::tuple<std::vector<float>, float, bool> step();
-    //void render();
-    //TODO: close() maybe
 };
 
 

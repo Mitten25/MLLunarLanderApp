@@ -1,65 +1,18 @@
 #include "lunarlander.h"
 
-sf::RenderWindow Window(sf::VideoMode(800, 600, 32), "Test");
-Window.setFramerateLimit(60);
-
-/** Prepare the world */
-/** Prepare textures */
-sf::Texture GroundTexture;
-sf::Texture BoxTexture;
-GroundTexture.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/ground.png");
-BoxTexture.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/box.png");
-
-LunarLander* LL = new LunarLander(World);
-LL->reset();
-while (Window.isOpen())
-{/*
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        int MouseX = sf::Mouse::getPosition(Window).x;
-        int MouseY = sf::Mouse::getPosition(Window).y;
-        createBox(World, MouseX, MouseY);
-    }*/
-    World.Step(1/60.f, 8, 3);
-
-    Window.clear(sf::Color::White);
-    int BodyCount = 0;
-    for (b2Body* BodyIterator = World.GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
-    {
-        if (BodyIterator->GetType() == b2_dynamicBody)
-        {
-            sf::Sprite Sprite;
-            Sprite.setTexture(BoxTexture);
-            Sprite.setOrigin(16.f, 16.f);
-            Sprite.setPosition(SCALE * BodyIterator->GetPosition().x, SCALE * BodyIterator->GetPosition().y);
-            Sprite.setRotation(BodyIterator->GetAngle() * 180/b2_pi);
-            Window.draw(Sprite);
-            ++BodyCount;
-        }
-        else
-        {
-            sf::Sprite GroundSprite;
-            GroundSprite.setTexture(GroundTexture);
-            GroundSprite.setOrigin(400.f, 8.f);
-            GroundSprite.setPosition(BodyIterator->GetPosition().x * SCALE, BodyIterator->GetPosition().y * SCALE);
-            GroundSprite.setRotation(180/b2_pi * BodyIterator->GetAngle());
-            Window.draw(GroundSprite);
-        }
-    }
-    Window.display();
-}
-
-
 LunarLander::LunarLander() {
-    // create lander shape (like a rhombus or something)
-    LANDER_POLY[0].Set(-14, +17);
-    LANDER_POLY[1].Set(-17, 0);
-    LANDER_POLY[2].Set(-17, -10);
-    LANDER_POLY[3].Set(+17, -10);
-    LANDER_POLY[4].Set(+17, 0);
-    LANDER_POLY[5].Set(+14, +17);
-
-    landerShape_.Set(LANDER_POLY, 6);
+    // create lander shape
+    b2Vec2 landerXY[6];
+    landerXY[0] = b2Vec2(-14, +17);
+    landerXY[1] = b2Vec2(-17, 0);
+    landerXY[2] = b2Vec2(-17, -10);
+    landerXY[3] = b2Vec2(+17, -10);
+    landerXY[4] = b2Vec2(+17, 0);
+    landerXY[5] = b2Vec2(+14, +17);
+    for (int i = 0; i < 6; i++) {
+        landerXY[i] *= 1.0/SCALE;
+    }
+    landerShape_.Set(landerXY, 6);
 
     b2Vec2 gravity(0.f, 9.8f);
     world_ = b2World(gravity);
@@ -76,7 +29,7 @@ LunarLander::~LanderLander() {
 
 LunarLander::destroy() {
     // if things haven't been created, we don't need to destroy them.
-    if (contactDetector == nullptr) {
+    if (contactDetector_ == nullptr) {
         return;
     }
 
@@ -97,15 +50,13 @@ LunarLander::destroy() {
 }
 
 
-LunarLander::reset() {
+EnvData LunarLander::reset() {
     destroy();
     contactDetector_ = new ContactDetector(this);
     world_.SetContactListener(contactDetector_);
     gameOver_ = false;
     prevShaping_ = 0;
 
-
-    //
     int H = VIEWPORT_H/SCALE;
     int W = VIEWPORT_W/SCALE;
 
@@ -115,9 +66,9 @@ LunarLander::reset() {
     float chunkX[CHUNK];
 
     // random sample a bunch of heights 0 to H/2
-    std::uniform_real_distribution<> dis(0, H/2);
+    std::uniform_real_distribution<> heightSampler(0, H/2);
     for (int i = 0; i < 12; i++) {
-        height[i] = dis(gen);
+        height[i] = heightSampler(gen);
     }
     for (i = 0; i < 11; i++) {
         chunkX[i] = i * (W/(CHUNKS-1));
@@ -140,117 +91,122 @@ LunarLander::reset() {
         smoothY = 0.33*(height[i-1] + height[i+0] + height[i+1]);
     }
 
+    // create moon
+    b2BodyDef moonBodyDef;
+    moonBodyDef.type = b2_staticBody;
+    moon_ = world.CreateBody(&moonBodyDef);
+    b2EdgeShape moonEdgeShape;
+    b2Vec2 v1(0.0f, 0.0f);
+    b2Vec2 v2((float) W, 0.0f);
+    moonEdgeShape.Set(v1, v2);
+    moon_->CreateFixture(moonEdgeShape, 1.0);
 
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(0.0f, 4.0f);
-    b2Body* body = world.CreateBody(&bodyDef);
+    skyPolys_.clear();
+    for (i = 0; i < CHUNKS-1; i++) {
+        b2Vec2 p1(chunkX[i], smoothY[i]);
+        b2Vec2 p2(chunkX[i+1], smoothY[i+1]);
+        b2EdgeShape groundEdge;
+        groundEdge.Set(p1, p2);
+        b2FixtureDef groundDef;
+        groundDef.shape = &groundEdge;
+        groundDef.density = 0;
+        groundDef.friction = 0.1;
+        moon_->CreateFixture(groundDef);
 
-    world.SetContactListener(contactListener);
+        // stuff for drawing sky
+        b2Vec2 skyTop1(p1.x, (float) H);
+        b2Vec2 skyTop2(p2.x, (float) H);
+
+        std::tuple<b2Vec2, b2Vec2, b2Vec2, b2Vec2> polyTupe = std::make_tuple(p1, p2, skyTop1, skyTop2);
+        skyPolys_.push_back(polyTupe);
+    }
 
 
-    self.world.contactListener_keepref = ContactDetector(self)
-    self.world.contactListener = self.world.contactListener_keepref
-    self.game_over = False
-    self.prev_shaping = None
+    // create lander
+    float initLanderY = VIEWPORT_H / SCALE;
+    b2BodyDef landerBodyDef;
+    landerBodyDef.type = b2_dynamicBody;
+    landerBodyDef.position = b2Vec2((VIEWPORT_W / SCALE)/2.0, initLanderY);
+    landerBodyDef.angle = 0.0;
+    b2FixtureDef landerFixtureDef;
+    landerFixtureDef.shape = landerShape_;
+    landerFixtureDef.density = 5.0;
+    landerFixtureDef.friction = 0.1;
+    landerFixtureDef.filter.categoryBits = 0x0010;
+    landerFixtureDef.filter.maskBits = 0x001; // collide only with the ground
+    landerFixtureDef.restitution = 0.0; // 0.99 bouncy
 
-    W = VIEWPORT_W/SCALE
-    H = VIEWPORT_H/SCALE
+    lander_ = world_.CreateBody(&landerBodyDef);
+    lander_->CreateFixture(landerFixtureDef);
 
-    # terrain
-    CHUNKS = 11
-    height = self.np_random.uniform(0, H/2, size=(CHUNKS+1,) )
-    chunk_x  = [W/(CHUNKS-1)*i for i in range(CHUNKS)]
-    self.helipad_x1 = chunk_x[CHUNKS//2-1]
-    self.helipad_x2 = chunk_x[CHUNKS//2+1]
-    self.helipad_y  = H/4
-    height[CHUNKS/2 - 2] = self.helipad_y
-    height[CHUNKS/2 - 1] = self.helipad_y
-    height[CHUNKS/2 + 0] = self.helipad_y
-    height[CHUNKS/2 + 1] = self.helipad_y
-    height[CHUNKS/2 + 2] = self.helipad_y
-    smooth_y = [0.33*(height[i-1] + height[i+0] + height[i+1]) for i in range(CHUNKS)]
+    std::uniform_real_distribution<> forceSampler(-INITIAL_RANDOM, INITIAL_RANDOM);
+    lander_->ApplyForceToCenter(forceSampler(gen), forceSampler(gen), true);
 
-    self.moon = self.world.CreateStaticBody( shapes=edgeShape(vertices=[(0, 0), (W, 0)]) )
-    self.sky_polys = []
-    for i in range(CHUNKS-1):
-        p1 = (chunk_x[i],   smooth_y[i])
-        p2 = (chunk_x[i+1], smooth_y[i+1])
-        self.moon.CreateEdgeFixture(
-            vertices=[p1,p2],
-            density=0,
-            friction=0.1)
-        self.sky_polys.append( [p1, p2, (p2[0],H), (p1[0],H)] )
 
-    self.moon.color1 = (0.0,0.0,0.0)
-    self.moon.color2 = (0.0,0.0,0.0)
+    // create legs
+    b2Body legs[2];
+    legs[0] = leftLeg_;
+    legs[1] = rightLeg_;
 
-    initial_y = VIEWPORT_H/SCALE
-    self.lander = self.world.CreateDynamicBody(
-        position = (VIEWPORT_W/SCALE/2, initial_y),
-        angle=0.0,
-        fixtures = fixtureDef(
-            shape=polygonShape(vertices=[ (x/SCALE,y/SCALE) for x,y in LANDER_POLY ]),
-            density=5.0,
-            friction=0.1,
-            categoryBits=0x0010,
-            maskBits=0x001,  # collide only with ground
-            restitution=0.0) # 0.99 bouncy
-            )
-    self.lander.color1 = (0.5,0.4,0.9)
-    self.lander.color2 = (0.3,0.3,0.5)
-    self.lander.ApplyForceToCenter( (
-        self.np_random.uniform(-INITIAL_RANDOM, INITIAL_RANDOM),
-        self.np_random.uniform(-INITIAL_RANDOM, INITIAL_RANDOM)
-        ), True)
+    for (i = 0; i < 2; i++) {
+      b2BodyDef legBodyDef;
+      legBodyDef.type = b2_dynamicBody;
+      legBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((i-1)*LEG_AWAY)/SCALE, initLanderY);
+      legBodyDef.angle = (i-1)*0.05;
+      b2FixtureDef legFixtureDef;
+      b2PolygonShape legShape;
+      legShape.SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
+      legFixtureDef.shape = legShape;
+      legFixtureDef.density = 1.0;
+      legFixtureDef.restitution = 0.0;
+      legFixtureDef.filter.categoryBits = 0x0020;
+      legFixtureDef.filter.maskBits = 0x001;
 
-    self.legs = []
-    for i in [-1,+1]:
-        leg = self.world.CreateDynamicBody(
-            position = (VIEWPORT_W/SCALE/2 - i*LEG_AWAY/SCALE, initial_y),
-            angle = (i*0.05),
-            fixtures = fixtureDef(
-                shape=polygonShape(box=(LEG_W/SCALE, LEG_H/SCALE)),
-                density=1.0,
-                restitution=0.0,
-                categoryBits=0x0020,
-                maskBits=0x001)
-            )
-        leg.ground_contact = False
-        leg.color1 = (0.5,0.4,0.9)
-        leg.color2 = (0.3,0.3,0.5)
-        rjd = revoluteJointDef(
-            bodyA=self.lander,
-            bodyB=leg,
-            localAnchorA=(0, 0),
-            localAnchorB=(i*LEG_AWAY/SCALE, LEG_DOWN/SCALE),
-            enableMotor=True,
-            enableLimit=True,
-            maxMotorTorque=LEG_SPRING_TORQUE,
-            motorSpeed=+0.3*i  # low enough not to jump back into the sky
-            )
-        if i==-1:
-            rjd.lowerAngle = +0.9 - 0.5  # Yes, the most esoteric numbers here, angles legs have freedom to travel within
-            rjd.upperAngle = +0.9
-        else:
-            rjd.lowerAngle = -0.9
-            rjd.upperAngle = -0.9 + 0.5
-        leg.joint = self.world.CreateJoint(rjd)
-        self.legs.append(leg)
+      legs[i] = world_.CreateBody(&landerBodyDef);
+      legs[i]->CreateFixture(landerFixtureDef);
 
-    self.drawlist = [self.lander] + self.legs
 
-return self._step(np.array([0,0]) if self.continuous else 0)[0]
+      b2RevoluteJointDef rjd;
+      rjd.bodyA = lander_;
+      rjd.bodyB = leg;
+      rjd.localAnchorA = b2Vec2(0, 0);
+      rjd.localAnchorB = b2Vec2((i-1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
+      rjd.enableMotor = True;
+      rjd.enableLimit = True;
+      rjd.maxMotorTorque = LEG_SPRING_TORQUE;
+      rjd.motorSpeed += 0.3*(i-1);
+
+      if (i == 0) {
+          rjd.lowerAngle = 0.9 - 0.5;
+          rjd.upperAngle = 0.9;
+      }
+      else {
+          rjd.lowerAngle = -0.9;
+          rjd.upperAngle = -0.9 + 0.5;
+      }
+
+      world_.CreateJoint(&rjd);
+    }
+
+    drawList_.clear();
+    drawList_.push_back(lander_);
+    drawList_.push_back(rightLeg_);
+    drawList_.push_back(leftLeg_);
+
+    if (continuous_) {
+        return step(0);
+    }
+    else {
+        return step(0);
+    }
+}
+
+EnvData LunarLander::step(std::vector<float>) {
 
 
 
 }
 
-LunarLander::render() {
-
-}
-
-LunarLander::step() {
-
+void LunarLander::render() {
 
 }
