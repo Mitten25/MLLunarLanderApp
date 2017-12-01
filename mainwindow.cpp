@@ -11,13 +11,20 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QTabWidget* tab = new QTabWidget(ui->centralWidget);
+  //  QTabWidget* tabb = new QTabWidget(ui->centralWidget);
+    QTabBar* tab = new QTabBar(ui->centralWidget);
     welcomeScreen* screen = new welcomeScreen;
+    welcomeScreen* screens = new welcomeScreen;
+
     QString s = "asdf";
-    //tab->addTab(screen, s);
+
+    tab->addTab( s);
+
+    QString st = "OOOOOOOOO";
+
+    tab->addTab( st);
 
 
-    //ui->centralWidget->addAction(tab);
 
 }
 
