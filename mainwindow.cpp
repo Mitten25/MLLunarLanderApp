@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include "welcomescreen.h"
 #include <QString>
+#include <QSizePolicy>
+#include <QVBoxLayout>
 
 
 
@@ -11,7 +13,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QVBoxLayout *vLayoutMain;
+
+    vLayoutMain = new QVBoxLayout(this->centralWidget());
+
+
     QTabWidget* tab = new QTabWidget(ui->centralWidget);
+    ui->centralWidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+    tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     welcomeScreen* new_welcomescreen = new welcomeScreen;
     welcomeScreen* introScreen = new welcomeScreen;
     welcomeScreen* rewardScreen = new welcomeScreen;
@@ -29,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     rewardScreen->show();
     lunarLanderScreen->show();
 
+    vLayoutMain->addWidget(tab);
 
 }
 
