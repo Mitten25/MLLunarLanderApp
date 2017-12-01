@@ -4,12 +4,15 @@
 #include <QHBoxLayout>
 welcomeScreen::welcomeScreen(QWidget* parent):QMainWindow(parent)
 {
-    QLabel label;
-    label.setText("This is a welcome screen");
+    QLabel *label = new QLabel(this);
+    QFont welcomeFont;
 
-    QLayout *layout = new QHBoxLayout();
+    welcomeFont.setBold(true);
+    welcomeFont.setStyleHint(QFont::Helvetica);
+    welcomeFont.setPixelSize(100);
 
-    layout->setObjectName("asdf");
-    this->setLayout(layout);
-    label.show();
+    label->setFont(welcomeFont);
+    label->setText("Welcome");
+    label->resize(1000, 100);
+    label->show();
 }
