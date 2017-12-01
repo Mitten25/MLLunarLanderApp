@@ -4,6 +4,7 @@
 #include <QString>
 #include <QSizePolicy>
 #include <QVBoxLayout>
+#include<QLabel>
 
 
 
@@ -21,28 +22,45 @@ MainWindow::MainWindow(QWidget *parent) :
     QTabWidget* tab = new QTabWidget(ui->centralWidget);
     ui->centralWidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
-    welcomeScreen* new_welcomescreen = new welcomeScreen;
-    welcomeScreen* introScreen = new welcomeScreen;
-    welcomeScreen* rewardScreen = new welcomeScreen;
-    welcomeScreen* lunarLanderScreen  = new welcomeScreen;
-    QString s = "Welcome";
-    QString st = "Machine Learning: An Introduction";
+    QWidget* welcomescreen = new QWidget();
+    QWidget* introScreen = new QWidget();
+    QWidget* rewardScreen = new QWidget();
+    QWidget* lunarLanderScreen  = new QWidget();
+    QString welcome = "Welcome";
+    QString intro = "Machine Learning: An Introduction";
     QString rewardString = "The Reward System";
     QString lunarString = "Lunar Landing Simulation";
-    tab->addTab(new_welcomescreen, s);
-    tab->addTab(introScreen, st);
+    tab->addTab(welcomescreen, welcome);
+    tab->addTab(introScreen, intro);
     tab->addTab(rewardScreen, rewardString);
     tab->addTab(lunarLanderScreen, lunarString);
-    new_welcomescreen->show();
+    welcomescreen->show();
     introScreen->show();
     rewardScreen->show();
     lunarLanderScreen->show();
-
     vLayoutMain->addWidget(tab);
+
+    //Welcome screen text
+    QLabel *label = new QLabel(welcomescreen);
+    QFont welcomeFont;
+
+    welcomeFont.setBold(true);
+    welcomeFont.setStyleHint(QFont::Helvetica);
+    welcomeFont.setPixelSize(100);
+
+    label->setFont(welcomeFont);
+    label->setText("Welcome");
+    label->resize(1000, 100);
+    label->show();
 }
 
 
 MainWindow::~MainWindow()
 {
     delete ui;
+//    delete tab;
+//    delete welcomescreen;
+//    delete introScreen;
+//    delete rewardScreen;
+//    delete lunarLanderScreen;
 }
