@@ -12,17 +12,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
   //  QTabWidget* tabb = new QTabWidget(ui->centralWidget);
-    QTabBar* tab = new QTabBar(ui->centralWidget);
+    QTabBar* tabs = new QTabBar(ui->centralWidget);
     welcomeScreen* screen = new welcomeScreen;
     welcomeScreen* screens = new welcomeScreen;
+    tabs->addTab("Welcome");
+    tabs->addTab("Machine Learning: An Introduction");
+    tabs->addTab("The Reward System");
+    tabs->addTab("Lunar Landing Simulation");
 
-    QString s = "asdf";
-
-    tab->addTab( s);
-
-    QString st = "OOOOOOOOO";
-
-    tab->addTab( st);
 
 
 
