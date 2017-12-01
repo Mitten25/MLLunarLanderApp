@@ -1,6 +1,8 @@
 #ifndef _LUNARLANDER_H_
 #include "env.h"
 #include <random>
+#include <math.h>
+#include <algorithm>
 
 /*
  * LunarLander Game Implementation
@@ -14,7 +16,7 @@
  */
 
 
-const int FPS    = 50;
+const float FPS    = 50.0;
 const float SCALE  = 30.0;   // affects how fast-paced the game is, forces should be adjusted as well
 
 const float MAIN_ENGINE_POWER  = 13.0;
@@ -34,61 +36,19 @@ const float SIDE_ENGINE_AWAY   = 12.0;
 const int VIEWPORT_W = 600;
 const int VIEWPORT_H = 400;
 
-/*
- * Custom handler for collisions so we can handle them in our game
- */
-class ContactDetector : public b2ContactListener
-{
-public:
-    LunarLander env_;
-    void ContactDetector::ContactDetector(LunarLander env) {
-        // keep env_ member variable so we can access data
-        env_ = env;
-    }
-    /*
-     * Event handler called when two Box2D bodies collide (contact)
-     */
-    void BeginContact(b2Contact* contact) {
-        b2Body* bodyA = contact->GetFixtureA()->GetBody();
-        b2Body* bodyB = contact->GetFixtureB()->GetBody();
-        // Lander crashed into the ground
-        if (env_.lander == bodyA || env_.lander == bodyB) {
-            env_.gameOver = true;
-        }
-        // legs are touching the ground (so the bot knows it has reached the surface)
-        if (env_.leftLeg == bodyA || env_.leftLeg == bodyB) {
-            env_.leftLegGroundContact = true;
-        }
-        if (env_.rightLeg == bodyA || env_.rightLeg == bodyB) {
-            env_.rightLegGroundContact = true;
-        }
-    }
-    /*
-     * Event handler called when two Box2D bodies stop contacting
-     */
-    void EndContact(b2Contact* contact) {
-        // these
-        b2Body* bodyA = contact->GetFixtureA()->GetBody();
-        b2Body* bodyB = contact->GetFixtureB()->GetBody();
-
-        // check if either leg ended contact with the ground
-        if (env_.leftLeg == bodyA || env_.leftLeg == bodyB) {
-            env_.leftLegGroundContact = false;
-        }
-        if (env_.rightLeg == bodyA || env_.rightLeg == bodyB) {
-            env_.rightLegGroundContact = false;
-        }
-    }
-};
-
+class ContactDetector;
 
 /*
  * LunarLander to match OpenAI Gym-like API
  */
 
-class LunarLander : Env
+class LunarLander : public Env
 {
     friend class ContactDetector; // make it so ContactDectector can access private member variables
+public:
+    EnvData reset();
+    EnvData step(std::vector<float>);
+    void render();
 private:
     /*
      * Clean up all resources for next episode
@@ -103,15 +63,15 @@ private:
     /*
      *
      */
-    void createParticle(float mass, float x, float y, float throttle);
 
-    b2World world_; // main Box2D world object
+    b2Body* createParticle(float mass, float x, float y, float* power);
+
+    b2World* world_; // main Box2D world object
 
     b2Body* moon_; // body of lunar surface
-    std::vector<b2Body*> particles_; // particles that shoot out of the rocket (just for looks)
+    std::list<b2Body*> particles_; // particles that shoot out of the rocket (just for looks)
     std::vector<std::tuple<b2Vec2, b2Vec2, b2Vec2, b2Vec2> > skyPolys_; // I think is for drawing the sky
     b2Body* lander_; // body of lunar lander
-    b2PolygonShape landerShape_; // shape of lander for physics and drawing
     b2Body* leftLeg_; // left leg of lunar lander
     b2Body* rightLeg_; // right leg of lunar lander
     bool leftLegGroundContact_; // if the left leg is touching the ground
@@ -121,10 +81,19 @@ private:
     float prevShaping_; // used for setting reward
     std::vector<b2Body*> drawList_;
     bool continuous_;
+    b2Vec2 LANDERPOLY[6]; // lander poly shape
+
+    int helipadY_;
+    int helipadX1_;
+    int helipadX2_;
+
+    std::random_device rd_;  //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen_;
 
 public:
-    LunarLander::LunarLander(bool continuous);
-    std::pair<float, float> observationRange;
+    LunarLander(bool continuous);
+    ~LunarLander();
+    //std::pair<float, float> observationRange;
 };
 
 

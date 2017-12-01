@@ -18,7 +18,6 @@ SOURCES +=\
     game.cpp \
     main.cpp \
     welcomescreen.cpp \
-    env.cpp \
     lunarlander.cpp
 HEADERS  += mainwindow.h \
     welcomescreen.h \

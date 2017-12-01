@@ -5,8 +5,14 @@
 #include <SFML/Graphics.hpp>
 #include "QtMath"
 #include "tuple"
+#include "env.h"
+#include "lunarlander.h"
+#include <iostream>
+#include <thread>         // std::this_thread::sleep_for
+#include <chrono>         // std::chrono::seconds
+
 #undef main
-static const float SCALE = 30.f;
+//static const float SCALE = 30.f;
 
 /** Create the base for the boxes to land */
 void createGround(b2World& World, float X, float Y);
@@ -48,21 +54,41 @@ void createGround(b2World& World, float X, float Y)
 
 int game()
 {
-    LunarLander env(continuous=false);
+    LunarLander env(false);
+
+    // discrete
+    int actionSpace = (int)(env.actionSpace.at(0)); // = 4 for lunar lander (noop, left engine, main engine, right engine)
+
     EnvData envData = env.reset();
 
+
+    float episodeReward = 0;
     // loop forever running episodes of lunar lander
     while (1) {
         // action = choose action based on envData.observation
+        std::vector<float> action;
+        action.push_back(0); // TODO: something better than always 0 (noop)
 
         // update the sf::RenderWindow with the new location of stuff (redraw basically)
         env.render();
         envData = env.step(action);
+        episodeReward += envData.reward;
+
+        std::cout << "obs: ";
+        for (std::vector<float>::const_iterator i = envData.observation.begin(); i != envData.observation.end(); ++i)
+            std::cout << *i << ' ';
+         std::cout << std::endl;
+
 
         // lander has crashed or landed successfully or timed out
         if (envData.done) {
             envData = env.reset();
+            std::cout << "done, ep reward = " << episodeReward << std::endl;
+            episodeReward = 0;
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         }
+
+        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
 

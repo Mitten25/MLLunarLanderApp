@@ -18,14 +18,14 @@ struct EnvData {
 class Env
 {
 public:
-    virtual EnvData reset();
-    virtual EnvData step(std::vector<float>);
-    virtual void render();
+    //virtual EnvData reset();
+    //virtual EnvData step(std::vector<float>);
+    //virtual void render(void);
     //TODO: close() maybe
 
-    std::vector<int> actionSpace;
-    std::vector<int> observationSpace;
-    std::vector<int> rewardRange;
+    std::vector<float> actionSpace;
+    std::vector<float> observationSpace;
+    std::vector<float> rewardRange;
 
 };
 
