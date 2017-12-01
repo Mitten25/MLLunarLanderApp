@@ -17,10 +17,13 @@ SOURCES +=\
         mainwindow.cpp \
     game.cpp \
     main.cpp \
-    welcomescreen.cpp
+    welcomescreen.cpp \
+    env.cpp \
+    lunarlander.cpp
 HEADERS  += mainwindow.h \
-    welcomescreen.h
-FORMS    += mainwindow.ui
+    welcomescreen.h \
+    lunarlander.h
+FORMS    += mainwindow.ui \
 
 
 
@@ -75,3 +78,7 @@ unix: LIBS += -L"$$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug" -lBox2D
 #DEPENDPATH += $$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug
 
 include(include/Box2D/Box2D/Box2D/Box2D.pro)
+
+HEADERS += \
+    env.h \
+    lunarlander.h
