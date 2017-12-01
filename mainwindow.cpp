@@ -10,8 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     QTabWidget* tab = new QTabWidget(ui->centralWidget);
+    tab->resize(this->width(), this->height());
+    tab->isMovable();
     welcomeScreen* new_welcomescreen = new welcomeScreen;
     welcomeScreen* introScreen = new welcomeScreen;
     welcomeScreen* rewardScreen = new welcomeScreen;
@@ -28,8 +29,6 @@ MainWindow::MainWindow(QWidget *parent) :
     introScreen->show();
     rewardScreen->show();
     lunarLanderScreen->show();
-
-
 }
 
 
