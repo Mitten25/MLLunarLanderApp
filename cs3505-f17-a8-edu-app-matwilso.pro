@@ -17,11 +17,11 @@ SOURCES +=\
         mainwindow.cpp \
     game.cpp \
     main.cpp \
-    welcomescreen.cpp \
-    lunarlander.cpp
+    lunarlander.cpp \
+    screenwelcome.cpp
 HEADERS  += mainwindow.h \
-    welcomescreen.h \
-    lunarlander.h
+    lunarlander.h \
+    screenwelcome.h
 FORMS    += mainwindow.ui \
 
 

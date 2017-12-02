@@ -1,8 +1,8 @@
-#include "welcomescreen.h"
-#include "mainwindow.h"
+#include "screenwelcome.h"
 #include "QLabel"
 #include <QHBoxLayout>
-welcomeScreen::welcomeScreen(QWidget* parent):QWidget(parent)
+
+screenWelcome::screenWelcome(QWidget *parent) : QWidget(parent)
 {
     QLabel *label = new QLabel(this);
     QFont welcomeFont;

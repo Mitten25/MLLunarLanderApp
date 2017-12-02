@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "welcomescreen.h"
+#include "screenwelcome.h""
 #include <QString>
 #include <QSizePolicy>
 #include <QVBoxLayout>
@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    welcomeScreen* screener = new welcomeScreen(this);
+    screenWelcome* screener = new screenWelcome(this);
 
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 
     //Create Screen Widgets
-    QWidget* welcomescreen = new QWidget();
+   // QWidget* welcomescreen = new QWidget();
     QWidget* introScreen = new QWidget();
     QWidget* rewardScreen = new QWidget();
     QWidget* lunarLanderScreen  = new QWidget();
