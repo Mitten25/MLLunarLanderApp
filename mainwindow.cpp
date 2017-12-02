@@ -22,18 +22,26 @@ MainWindow::MainWindow(QWidget *parent) :
     QTabWidget* tab = new QTabWidget(ui->centralWidget);
     ui->centralWidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+
+    //Create Screen Widgets
     QWidget* welcomescreen = new QWidget();
     QWidget* introScreen = new QWidget();
     QWidget* rewardScreen = new QWidget();
     QWidget* lunarLanderScreen  = new QWidget();
+
+    //Create Tab Names
     QString welcome = "Welcome";
     QString intro = "Machine Learning: An Introduction";
     QString rewardString = "The Reward System";
     QString lunarString = "Lunar Landing Simulation";
+
+    //Add Widgets/.CPP to tab screens
     tab->addTab(welcomescreen, welcome);
     tab->addTab(introScreen, intro);
     tab->addTab(rewardScreen, rewardString);
     tab->addTab(lunarLanderScreen, lunarString);
+
+    //Display Screens
     welcomescreen->show();
     introScreen->show();
     rewardScreen->show();
