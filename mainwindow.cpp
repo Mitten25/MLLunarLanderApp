@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "screenwelcome.h""
+#include "screenwelcome.h"
+#include "screenintro.h"
+#include "screenreward.h"
+
 #include <QString>
 #include <QSizePolicy>
 #include <QVBoxLayout>
@@ -14,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    screenWelcome* screener = new screenWelcome(this);
 
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
@@ -25,9 +27,9 @@ MainWindow::MainWindow(QWidget *parent) :
     tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 
     //Create Screen Widgets
-   // QWidget* welcomescreen = new QWidget();
-    QWidget* introScreen = new QWidget();
-    QWidget* rewardScreen = new QWidget();
+    screenWelcome* welcomeScreen = new screenWelcome(this);
+    screenIntro* introScreen = new screenIntro();
+    screenReward* rewardScreen = new screenReward();
     QWidget* lunarLanderScreen  = new QWidget();
 
     //Create Tab Names
@@ -37,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QString lunarString = "Lunar Landing Simulation";
 
     //Add Widgets/.CPP to tab screens
-    tab->addTab(screener, welcome);
+    tab->addTab(welcomeScreen, welcome);
     tab->addTab(introScreen, intro);
     tab->addTab(rewardScreen, rewardString);
     tab->addTab(lunarLanderScreen, lunarString);
