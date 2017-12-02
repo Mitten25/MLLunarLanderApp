@@ -4,11 +4,13 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QWidget>
+#include <QtWidgets>
 
-class welcomeScreen : public QMainWindow
+class welcomeScreen : public QWidget
 {
+    Q_OBJECT
 public:
-    welcomeScreen(QWidget* parent = nullptr);
+  explicit  welcomeScreen(QWidget* parent = 0);
 
 };
 

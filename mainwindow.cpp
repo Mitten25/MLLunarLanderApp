@@ -4,7 +4,7 @@
 #include <QString>
 #include <QSizePolicy>
 #include <QVBoxLayout>
-#include<QLabel>
+#include <QLabel>
 
 
 
@@ -14,8 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QVBoxLayout *vLayoutMain;
+    welcomeScreen* screener = new welcomeScreen(this);
 
+    QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
 
 
@@ -36,30 +37,30 @@ MainWindow::MainWindow(QWidget *parent) :
     QString lunarString = "Lunar Landing Simulation";
 
     //Add Widgets/.CPP to tab screens
-    tab->addTab(welcomescreen, welcome);
+    tab->addTab(screener, welcome);
     tab->addTab(introScreen, intro);
     tab->addTab(rewardScreen, rewardString);
     tab->addTab(lunarLanderScreen, lunarString);
 
     //Display Screens
-    welcomescreen->show();
+   // welcomescreen->show();
     introScreen->show();
     rewardScreen->show();
     lunarLanderScreen->show();
     vLayoutMain->addWidget(tab);
 
     //Welcome screen text
-    QLabel *label = new QLabel(welcomescreen);
-    QFont welcomeFont;
+//    QLabel *label = new QLabel(welcomescreen);
+//    QFont welcomeFont;
 
-    welcomeFont.setBold(true);
-    welcomeFont.setStyleHint(QFont::Helvetica);
-    welcomeFont.setPixelSize(100);
+//    welcomeFont.setBold(true);
+//    welcomeFont.setStyleHint(QFont::Helvetica);
+//    welcomeFont.setPixelSize(100);
 
-    label->setFont(welcomeFont);
-    label->setText("Welcome");
-    label->resize(1000, 100);
-    label->show();
+//    label->setFont(welcomeFont);
+//    label->setText("Welcome");
+//    label->resize(1000, 100);
+//    label->show();
 }
 
 
