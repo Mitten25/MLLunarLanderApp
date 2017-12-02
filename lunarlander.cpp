@@ -459,7 +459,7 @@ void LunarLander::render() {
         viewer_ = new sf::RenderWindow(sf::VideoMode(600, 400), "test");
     }
 
-    std::cout << skyPolys_.size();
+    //std::cout << skyPolys_.size();
     sf::Texture BoxTexture;
     BoxTexture.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/box.png");
 
@@ -468,7 +468,7 @@ void LunarLander::render() {
 
     // resize it to 10 points
     convex.setPointCount(11);
-    convex.setFillColor(sf::Color(0, 255, 255));
+    convex.setFillColor(sf::Color().Black);
 
     //draw moon
     for (int i = 0; i < skyPolys_.size(); i++){
@@ -477,6 +477,17 @@ void LunarLander::render() {
     }
     convex.setPoint(10, sf::Vector2f(600, 400));
     viewer_->draw(convex);
+
+    //draw flags
+    sf::RectangleShape flag, flag2;
+    flag.setSize(sf::Vector2f(3, -(helipadY_ + 1000/SCALE)));
+    flag2.setSize(sf::Vector2f(3, -(helipadY_ + 1000/SCALE)));
+    flag.setPosition(sf::Vector2f(SCALE*helipadX1_, 400 -helipadY_*SCALE));
+    flag2.setPosition(sf::Vector2f(SCALE*helipadX2_, 400 -helipadY_*SCALE));
+    flag.setFillColor(sf::Color().Red);
+    flag2.setFillColor(sf::Color().Red);
+    viewer_->draw(flag);
+    viewer_->draw(flag2);
 
     //draw lander
     sf::Sprite Sprite;
