@@ -61,7 +61,6 @@ int game()
 
     EnvData envData = env.reset();
 
-
     float episodeReward = 0;
     // loop forever running episodes of lunar lander
     while (1) {
@@ -70,6 +69,7 @@ int game()
         action.push_back(0); // TODO: something better than always 0 (noop)
 
         // update the sf::RenderWindow with the new location of stuff (redraw basically)
+
         env.render();
         envData = env.step(action);
         episodeReward += envData.reward;

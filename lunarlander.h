@@ -82,6 +82,7 @@ private:
     std::vector<b2Body*> drawList_;
     bool continuous_;
     b2Vec2 LANDERPOLY[6]; // lander poly shape
+    sf::RenderWindow *viewer_;
 
     int helipadY_;
     int helipadX1_;

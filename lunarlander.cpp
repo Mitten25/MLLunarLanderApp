@@ -1,4 +1,5 @@
 #include "lunarlander.h"
+#include <iostream>
 
 float clip(float n, float lower, float upper) {
   return std::max(lower, std::min(n, upper));
@@ -90,6 +91,7 @@ LunarLander::LunarLander(bool continuous): gen_(std::random_device()()) {
     leftLeg_ = nullptr;
     rightLeg_ = nullptr;
     contactDetector_ = nullptr;
+    viewer_ = nullptr;
 }
 
 LunarLander::~LunarLander() {
@@ -324,7 +326,7 @@ EnvData LunarLander::step(std::vector<float> action) {
     EnvData envData;
 
     if (continuous_) {
-        assert(action.size() == 2);
+        //assert(action.size() == 2);
     }
     else {
         assert(action.size() == 1);
@@ -449,7 +451,44 @@ EnvData LunarLander::step(std::vector<float> action) {
 
 void LunarLander::render() {
 
-
     // TODO:
+
+    // set viewer if null
+    if (viewer_ == nullptr){
+        std::cout << "hi" << std::endl;
+        viewer_ = new sf::RenderWindow(sf::VideoMode(600, 400), "test");
+    }
+
+    std::cout << skyPolys_.size();
+    sf::Texture BoxTexture;
+    BoxTexture.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/box.png");
+
+    // create an empty shape
+    sf::ConvexShape convex;
+
+    // resize it to 10 points
+    convex.setPointCount(11);
+    convex.setFillColor(sf::Color(0, 255, 255));
+
+    //draw moon
+    for (int i = 0; i < skyPolys_.size(); i++){
+        sf::Sprite Sprite;
+        convex.setPoint(i, sf::Vector2f(std::get<0>(skyPolys_[i]).x*SCALE, 400 - std::get<0>(skyPolys_[i]).y*SCALE));
+    }
+    convex.setPoint(10, sf::Vector2f(600, 400));
+    viewer_->draw(convex);
+
+    //draw lander
+    sf::Sprite Sprite;
+    Sprite.setTexture(BoxTexture);
+    Sprite.setOrigin(-300.f, 16.f);
+    Sprite.setPosition(drawList_[0]->GetPosition().x, drawList_[0]->GetPosition().y);
+    //Sprite.setRotation(drawList_[0]->GetAngle() * 180/b2_pi);
+    viewer_->draw(Sprite);
+
+    viewer_->display();
+    viewer_->clear(sf::Color(255, 255, 255));
+
+    //sf::RenderWindow Window(sf::VideoMode(800, 600, 32), "Test");
 
 }
