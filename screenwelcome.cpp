@@ -15,4 +15,12 @@ screenWelcome::screenWelcome(QWidget *parent) : QWidget(parent)
     label->setText("Welcome");
     label->resize(1000, 100);
     label->show();
+
+
+
+
+
+
+
+
 }
