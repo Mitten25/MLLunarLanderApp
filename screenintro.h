@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QWidget>
+#include "QLabel"
+#include <QHBoxLayout>
 
 class screenIntro : public QWidget
 {
