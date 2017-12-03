@@ -173,7 +173,7 @@ EnvData LunarLander::reset() {
     int W = VIEWPORT_W/SCALE;
 
     // generate terrain
-    int CHUNKS = 11;
+    const int CHUNKS = 11;
     float height[CHUNKS+1];
     float chunkX[CHUNKS];
 
