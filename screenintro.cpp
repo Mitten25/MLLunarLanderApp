@@ -17,16 +17,43 @@ screenIntro::screenIntro(QWidget *parent) : QWidget(parent)
 
 
     QLabel *info1 = new QLabel(this);
-    info1->setText("Machine Learning is the process in which computers apply statistical learning techniques to identify patterns in data. This data can then be used to make highly accurate predictions. \nThis guide will go over Reinforcement Learning, a type of Machine Learning commonly used in games");
+    QString text = "Machine Learning is the process in which computers apply statistical learning techniques to identify patterns in data. ";
+    text+= "This data can then be used to make highly accurate predictions.";
+    text+= "\nThis guide will go over Reinforcement Learning, a type of Machine Learning commonly used in games";
+    text+= "";
+
+    info1->setText(text);
 
     setLayout(boxLayout);
-    QPushButton *diagram = new QPushButton;
-    QPixmap pixDiagram("../cs3505-f17-a8-edu-app-matwilso/diagrams/rl1png.png");
-    QIcon ButtonIcon(pixDiagram);
-    diagram->setIcon(ButtonIcon);
-    diagram->setIconSize(pixDiagram.rect().size());
+    diagram = new QPushButton;
+    QPixmap pixDiagram1("../cs3505-f17-a8-edu-app-matwilso/diagrams/rl1png.png");
+    QIcon ButtonIcon1(pixDiagram1);
+    diagram->setIcon(ButtonIcon1);
+    diagram->setIconSize(pixDiagram1.rect().size());
+    flag = 0;
 
+
+    //Adding to the layout
     boxLayout->addWidget(intro);
     boxLayout->addWidget(info1);
     boxLayout->addWidget(diagram);
+
+    connect(diagram, SIGNAL(clicked(bool)), this, SLOT(change(bool)));
 }
+
+void screenIntro::change(bool) {
+    if(flag == 0) {
+        QPixmap pixDiagram2("../cs3505-f17-a8-edu-app-matwilso/diagrams/progeny.png");
+        QIcon ButtonIcon2(pixDiagram2);
+        diagram->setIcon(ButtonIcon2);
+        flag = 1;
+    }
+    else {
+        QPixmap pixDiagram1("../cs3505-f17-a8-edu-app-matwilso/diagrams/rl1png.png");
+        QIcon ButtonIcon1(pixDiagram1);
+        diagram->setIcon(ButtonIcon1);
+        diagram->setIconSize(pixDiagram1.rect().size());
+        flag = 0;
+    }
+}
+

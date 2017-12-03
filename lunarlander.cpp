@@ -524,11 +524,25 @@ void LunarLander::render() {
     viewer_->draw(flag2);
 
     //draw lander
-    sf::RectangleShape test;
-    test.setSize(sf::Vector2f(16, 16));
-    test.setPosition(drawList_[0]->GetPosition().x*SCALE, drawList_[0]->GetPosition().y);
-    test.setFillColor(sf::Color().Blue);
-    viewer_->draw(test);
+    sf::ConvexShape ship;
+    ship.setPointCount(6);
+    ship.setFillColor(sf::Color().Blue);
+    ship.setPoint(0, sf::Vector2f(-14*SCALE, 17*SCALE));
+    ship.setPoint(1, sf::Vector2f(-17*SCALE, 10*SCALE));
+    ship.setPoint(2, sf::Vector2f(-17*SCALE, 0*SCALE));
+    ship.setPoint(3, sf::Vector2f(17*SCALE, 0*SCALE));
+    ship.setPoint(4, sf::Vector2f(17*SCALE, 10*SCALE));
+    ship.setPoint(5, sf::Vector2f(14*SCALE, 17*SCALE));
+    ship.setPosition(drawList_[0]->GetPosition().x*SCALE, drawList_[0]->GetPosition().y);
+    viewer_->draw(ship);
+
+//    b2PolygonShape *polygonShape = (b2PolygonShape*)drawList_[0]->GetFixtureList()->GetShape();
+//    polygonShape->GetVertex(0);
+//    sf::RectangleShape test;
+//    test.setSize(sf::Vector2f(16, 16));
+//    test.setPosition(drawList_[0]->GetPosition().x*SCALE, drawList_[0]->GetPosition().y);
+//    test.setFillColor(sf::Color().Blue);
+//    viewer_->draw(test);
 
     for(int i = 1; i < drawList_.size(); i++)
     {
@@ -537,6 +551,17 @@ void LunarLander::render() {
         leg2Test.setPosition(drawList_[i]->GetPosition().x*SCALE, drawList_[i]->GetPosition().y);
         leg2Test.setFillColor(sf::Color().Green);
         viewer_->draw(leg2Test);
+    }
+
+    //draw particles
+    for (std::list<b2Body*>::iterator it=particles_.begin(); it != particles_.end(); ++it)
+    {
+        sf::CircleShape shape(50);
+        // set the shape color to green
+        shape.setFillColor(sf::Color().Green);
+        shape.setPosition(sf::Vector2f(SCALE*(*it)->GetPosition().x, SCALE*(*it)->GetPosition().y));
+        viewer_->draw(shape);
+        //std::cout << "here " << (*it)->GetPosition().x;
     }
 
     viewer_->display();
