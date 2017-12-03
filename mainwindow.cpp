@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QSize* minSize = new QSize(1100, 600);
     this->setMinimumSize(*minSize);
     this->setWindowTitle("MoonMoon");
-
+  //  this->setWindowIcon();
 
 
 
@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Display Screens
    // welcomescreen->show();
-    introScreen->show();
+   // introScreen->show();
     rewardScreen->show();
     lunarLanderScreen->show();
     vLayoutMain->addWidget(tab);
