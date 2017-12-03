@@ -22,7 +22,7 @@ screenWelcome::screenWelcome(QWidget *parent) : QWidget(parent)
 
     labell->setText("setset");
     labell->setFont(welcomeFont);
-    layout->
+    //layout->
 
     label->setAlignment(Qt::AlignCenter);
     label->setFont(welcomeFont);
