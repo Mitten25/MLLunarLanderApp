@@ -260,51 +260,85 @@ EnvData LunarLander::reset() {
     float f2 = forceSampler(gen_);
     lander_->ApplyForceToCenter(b2Vec2(forceSampler(gen_), forceSampler(gen_)), true);
 
+    b2BodyDef leftLegBodyDef;
+    leftLegBodyDef.type = b2_dynamicBody;
+    leftLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((i-1)*LEG_AWAY)/SCALE, initLanderY);
+    leftLegBodyDef.angle = (i-1)*0.05;
+    b2FixtureDef leftLegFixtureDef;
+    b2PolygonShape* leftLegShape = new b2PolygonShape;
+    leftLegShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
+    leftLegFixtureDef.shape = leftLegShape;
+    leftLegFixtureDef.density = 1.0;
+    leftLegFixtureDef.restitution = 0.0;
+    leftLegFixtureDef.filter.categoryBits = 0x0020;
+    leftLegFixtureDef.filter.maskBits = 0x001;
 
-    // create legs
-    b2Body* legs[2];
-    legs[0] = leftLeg_;
-    legs[1] = rightLeg_;
-
-    for (i = 0; i < 2; i++) {
-      b2BodyDef legBodyDef;
-      legBodyDef.type = b2_dynamicBody;
-      legBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((i-1)*LEG_AWAY)/SCALE, initLanderY);
-      legBodyDef.angle = (i-1)*0.05;
-      b2FixtureDef legFixtureDef;
-      b2PolygonShape* legShape = new b2PolygonShape;
-      legShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
-      legFixtureDef.shape = legShape;
-      legFixtureDef.density = 1.0;
-      legFixtureDef.restitution = 0.0;
-      legFixtureDef.filter.categoryBits = 0x0020;
-      legFixtureDef.filter.maskBits = 0x001;
-
-      legs[i] = world_->CreateBody(&landerBodyDef);
-      legs[i]->CreateFixture(&landerFixtureDef);
+	leftLeg_ = world_->CreateBody(&landerBodyDef);
+    leftLeg_->CreateFixture(&landerFixtureDef);
 
 
-      b2RevoluteJointDef rjd;
-      rjd.bodyA = lander_;
-      rjd.bodyB = legs[i];
-      rjd.localAnchorA = b2Vec2(0, 0);
-      rjd.localAnchorB = b2Vec2((i-1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
-      rjd.enableMotor = true;
-      rjd.enableLimit = true;
-      rjd.maxMotorTorque = LEG_SPRING_TORQUE;
-      rjd.motorSpeed += 0.3*(i-1);
+    b2RevoluteJointDef leftLegRJD;
+    leftLegRJD.bodyA = lander_;
+    leftLegRJD.bodyB = leftLeg_;
+    leftLegRJD.localAnchorA = b2Vec2(0, 0);
+    leftLegRJD.localAnchorB = b2Vec2((i-1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
+    leftLegRJD.enableMotor = true;
+    leftLegRJD.enableLimit = true;
+    leftLegRJD.maxMotorTorque = LEG_SPRING_TORQUE;
+    leftLegRJD.motorSpeed += 0.3*(i-1);
 
-      if (i == 0) {
-          rjd.lowerAngle = 0.9 - 0.5;
-          rjd.upperAngle = 0.9;
-      }
-      else {
-          rjd.lowerAngle = -0.9;
-          rjd.upperAngle = -0.9 + 0.5;
-      }
-
-      world_->CreateJoint(&rjd);
+    if (i == 0) {
+        leftLegRJD.lowerAngle = 0.9 - 0.5;
+        leftLegRJD.upperAngle = 0.9;
     }
+    else {
+        leftLegRJD.lowerAngle = -0.9;
+        leftLegRJD.upperAngle = -0.9 + 0.5;
+    }
+
+    world_->CreateJoint(&leftLegRJD);
+
+    b2BodyDef rightLegBodyDef;
+    rightLegBodyDef.type = b2_dynamicBody;
+    rightLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((i-1)*LEG_AWAY)/SCALE, initLanderY);
+    rightLegBodyDef.angle = (i-1)*0.05;
+    b2FixtureDef rightLegFixtureDef;
+    b2PolygonShape* rightLegShape = new b2PolygonShape;
+    rightLegShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
+    rightLegFixtureDef.shape = rightLegShape;
+    rightLegFixtureDef.density = 1.0;
+    rightLegFixtureDef.restitution = 0.0;
+    rightLegFixtureDef.filter.categoryBits = 0x0020;
+    rightLegFixtureDef.filter.maskBits = 0x001;
+
+    rightLeg_ = world_->CreateBody(&landerBodyDef);
+    rightLeg_->CreateFixture(&landerFixtureDef);
+
+
+    b2RevoluteJointDef rightLegRJD;
+    rightLegRJD.bodyA = lander_;
+    rightLegRJD.bodyB = rightLeg_;
+    rightLegRJD.localAnchorA = b2Vec2(0, 0);
+    rightLegRJD.localAnchorB = b2Vec2((i-1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
+    rightLegRJD.enableMotor = true;
+    rightLegRJD.enableLimit = true;
+    rightLegRJD.maxMotorTorque = LEG_SPRING_TORQUE;
+    rightLegRJD.motorSpeed += 0.3*(i-1);
+
+    if (i == 0) {
+        rightLegRJD.lowerAngle = 0.9 - 0.5;
+        rightLegRJD.upperAngle = 0.9;
+    }
+    else {
+        rightLegRJD.lowerAngle = -0.9;
+        rightLegRJD.upperAngle = -0.9 + 0.5;
+    }
+
+    world_->CreateJoint(&rightLegRJD);
+
+
+
+
 
     drawList_.clear();
     drawList_.push_back(lander_);
@@ -495,6 +529,9 @@ void LunarLander::render() {
     test.setPosition(drawList_[0]->GetPosition().x*SCALE, drawList_[0]->GetPosition().y);
     test.setFillColor(sf::Color().Blue);
     viewer_->draw(test);
+
+    //std::cout << drawList_[1]->GetPosition().x << std::endl;
+
 
     //TODO: draw legs
 
