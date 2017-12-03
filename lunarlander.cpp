@@ -490,12 +490,13 @@ void LunarLander::render() {
     viewer_->draw(flag2);
 
     //draw lander
-    sf::Sprite Sprite;
-    Sprite.setTexture(BoxTexture);
-    Sprite.setOrigin(-300.f, 16.f);
-    Sprite.setPosition(drawList_[0]->GetPosition().x, drawList_[0]->GetPosition().y);
-    //Sprite.setRotation(drawList_[0]->GetAngle() * 180/b2_pi);
-    viewer_->draw(Sprite);
+    sf::RectangleShape test;
+    test.setSize(sf::Vector2f(16, 16));
+    test.setPosition(drawList_[0]->GetPosition().x*SCALE, drawList_[0]->GetPosition().y);
+    test.setFillColor(sf::Color().Blue);
+    viewer_->draw(test);
+
+    //TODO: draw legs
 
     viewer_->display();
     viewer_->clear(sf::Color(255, 255, 255));
