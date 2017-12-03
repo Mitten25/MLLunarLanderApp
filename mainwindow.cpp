@@ -17,10 +17,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     //setup for the mainwindow
     ui->setupUi(this);
-    QSize* minSize = new QSize(1100, 600);
+    QSize* minSize = new QSize(1050, 600);
     this->setMinimumSize(*minSize);
     this->setWindowTitle("MoonMoon");
-  //  this->setWindowIcon();
+//    this->setStyleSheet("background-color: grey;");
+//    ui->centralWidget->setStyleSheet("background-color: grey;");
 
 
 
@@ -29,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     QTabWidget* tab = new QTabWidget(ui->centralWidget);
+   // tab->setStyleSheet("background-color: grey;");
     ui->centralWidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 
@@ -53,8 +55,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //Display Screens
    // welcomescreen->show();
    // introScreen->show();
-    rewardScreen->show();
-    lunarLanderScreen->show();
+//    rewardScreen->show();
+//    lunarLanderScreen->show();
     vLayoutMain->addWidget(tab);
 
     //Welcome screen text
