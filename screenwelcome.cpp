@@ -10,6 +10,7 @@ screenWelcome::screenWelcome(QWidget *parent) : QWidget(parent)
     welcomeFont.setBold(true);
     welcomeFont.setStyleHint(QFont::Helvetica);
     welcomeFont.setPixelSize(100);
+    label->setAlignment(Qt::AlignCenter);
 
     label->setFont(welcomeFont);
     label->setText("Welcome");

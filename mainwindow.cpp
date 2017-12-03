@@ -15,7 +15,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    //setup for the mainwindow
     ui->setupUi(this);
+    QSize* minSize = new QSize(1100, 600);
+    this->setMinimumSize(*minSize);
+    this->setWindowTitle("MoonMoon");
+
+
 
 
     QVBoxLayout *vLayoutMain;
