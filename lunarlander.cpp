@@ -262,8 +262,8 @@ EnvData LunarLander::reset() {
 
     b2BodyDef leftLegBodyDef;
     leftLegBodyDef.type = b2_dynamicBody;
-    leftLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((i-1)*LEG_AWAY)/SCALE, initLanderY);
-    leftLegBodyDef.angle = (i-1)*0.05;
+    leftLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((-1)*LEG_AWAY)/SCALE, initLanderY);
+    leftLegBodyDef.angle = (-1)*0.05;
     b2FixtureDef leftLegFixtureDef;
     b2PolygonShape* leftLegShape = new b2PolygonShape;
     leftLegShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
@@ -273,35 +273,35 @@ EnvData LunarLander::reset() {
     leftLegFixtureDef.filter.categoryBits = 0x0020;
     leftLegFixtureDef.filter.maskBits = 0x001;
 
-	leftLeg_ = world_->CreateBody(&landerBodyDef);
-    leftLeg_->CreateFixture(&landerFixtureDef);
+    leftLeg_ = world_->CreateBody(&leftLegBodyDef);
+    leftLeg_->CreateFixture(&leftLegFixtureDef);
 
 
     b2RevoluteJointDef leftLegRJD;
     leftLegRJD.bodyA = lander_;
     leftLegRJD.bodyB = leftLeg_;
     leftLegRJD.localAnchorA = b2Vec2(0, 0);
-    leftLegRJD.localAnchorB = b2Vec2((i-1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
+    leftLegRJD.localAnchorB = b2Vec2((-1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
     leftLegRJD.enableMotor = true;
     leftLegRJD.enableLimit = true;
     leftLegRJD.maxMotorTorque = LEG_SPRING_TORQUE;
-    leftLegRJD.motorSpeed += 0.3*(i-1);
+    leftLegRJD.motorSpeed += 0.3*(-1);
 
-    if (i == 0) {
+    //if (i == 0) {
         leftLegRJD.lowerAngle = 0.9 - 0.5;
         leftLegRJD.upperAngle = 0.9;
-    }
-    else {
-        leftLegRJD.lowerAngle = -0.9;
-        leftLegRJD.upperAngle = -0.9 + 0.5;
-    }
+   // }
+   // else {
+     //  leftLegRJD.lowerAngle = -0.9;
+        //leftLegRJD.upperAngle = -0.9 + 0.5;
+   // }
 
     world_->CreateJoint(&leftLegRJD);
 
     b2BodyDef rightLegBodyDef;
     rightLegBodyDef.type = b2_dynamicBody;
-    rightLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((i-1)*LEG_AWAY)/SCALE, initLanderY);
-    rightLegBodyDef.angle = (i-1)*0.05;
+    rightLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((1)*LEG_AWAY)/SCALE, initLanderY);
+    rightLegBodyDef.angle = (1)*0.05;
     b2FixtureDef rightLegFixtureDef;
     b2PolygonShape* rightLegShape = new b2PolygonShape;
     rightLegShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
@@ -311,28 +311,28 @@ EnvData LunarLander::reset() {
     rightLegFixtureDef.filter.categoryBits = 0x0020;
     rightLegFixtureDef.filter.maskBits = 0x001;
 
-    rightLeg_ = world_->CreateBody(&landerBodyDef);
-    rightLeg_->CreateFixture(&landerFixtureDef);
+    rightLeg_ = world_->CreateBody(&rightLegBodyDef);
+    rightLeg_->CreateFixture(&rightLegFixtureDef);
 
 
     b2RevoluteJointDef rightLegRJD;
     rightLegRJD.bodyA = lander_;
     rightLegRJD.bodyB = rightLeg_;
     rightLegRJD.localAnchorA = b2Vec2(0, 0);
-    rightLegRJD.localAnchorB = b2Vec2((i-1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
+    rightLegRJD.localAnchorB = b2Vec2((1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
     rightLegRJD.enableMotor = true;
     rightLegRJD.enableLimit = true;
     rightLegRJD.maxMotorTorque = LEG_SPRING_TORQUE;
-    rightLegRJD.motorSpeed += 0.3*(i-1);
-
+    rightLegRJD.motorSpeed += 0.3*(1);
+/*
     if (i == 0) {
         rightLegRJD.lowerAngle = 0.9 - 0.5;
         rightLegRJD.upperAngle = 0.9;
-    }
-    else {
+    }*/
+    //else {
         rightLegRJD.lowerAngle = -0.9;
         rightLegRJD.upperAngle = -0.9 + 0.5;
-    }
+    //}
 
     world_->CreateJoint(&rightLegRJD);
 
@@ -514,8 +514,8 @@ void LunarLander::render() {
 
     //draw flags
     sf::RectangleShape flag, flag2;
-    flag.setSize(sf::Vector2f(3, -(helipadY_ + 1000/SCALE)));
-    flag2.setSize(sf::Vector2f(3, -(helipadY_ + 1000/SCALE)));
+    flag.setSize(sf::Vector2f(3, -(helipadY_ + 50)));
+    flag2.setSize(sf::Vector2f(3, -(helipadY_ + 50)));
     flag.setPosition(sf::Vector2f(SCALE*helipadX1_, 400 -helipadY_*SCALE));
     flag2.setPosition(sf::Vector2f(SCALE*helipadX2_, 400 -helipadY_*SCALE));
     flag.setFillColor(sf::Color().Red);
@@ -530,10 +530,14 @@ void LunarLander::render() {
     test.setFillColor(sf::Color().Blue);
     viewer_->draw(test);
 
-    //std::cout << drawList_[1]->GetPosition().x << std::endl;
-
-
-    //TODO: draw legs
+    for(int i = 1; i < drawList_.size(); i++)
+    {
+        sf::RectangleShape leg2Test;
+        leg2Test.setSize(sf::Vector2f(LEG_W, LEG_H));
+        leg2Test.setPosition(drawList_[i]->GetPosition().x*SCALE, drawList_[i]->GetPosition().y);
+        leg2Test.setFillColor(sf::Color().Green);
+        viewer_->draw(leg2Test);
+    }
 
     viewer_->display();
     viewer_->clear(sf::Color(255, 255, 255));
