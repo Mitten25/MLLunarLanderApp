@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QVBoxLayout>
+#include "QLabel"
+
 
 class screenTrials : public QWidget
 {
