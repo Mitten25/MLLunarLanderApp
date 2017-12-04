@@ -21,7 +21,7 @@ screenIntro::screenIntro(QWidget *parent) : QWidget(parent)
     text+= "This data can then be used to make highly accurate predictions.";
     text+= "\nThis guide will go over Reinforcement Learning, a type of Machine Learning commonly used in games";
     text+= "\n In reinforcement learning you have the agent do some action in the environment, and based on the action you give it rewards ";
-    text+= "\n "
+    text+= "\n ";
 
     info1->setText(text);
 
