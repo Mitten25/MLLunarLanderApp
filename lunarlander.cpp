@@ -25,6 +25,7 @@ public:
      * Event handler called when two Box2D bodies collide (contact)
      */
     void BeginContact(b2Contact* contact) {
+        std::cout<<"here"<<std::endl;
         b2Body* bodyA = contact->GetFixtureA()->GetBody();
         b2Body* bodyB = contact->GetFixtureB()->GetBody();
         // Lander crashed into the ground
@@ -287,14 +288,8 @@ EnvData LunarLander::reset() {
     leftLegRJD.maxMotorTorque = LEG_SPRING_TORQUE;
     leftLegRJD.motorSpeed += 0.3*(-1);
 
-    //if (i == 0) {
-        leftLegRJD.lowerAngle = 0.9 - 0.5;
-        leftLegRJD.upperAngle = 0.9;
-   // }
-   // else {
-     //  leftLegRJD.lowerAngle = -0.9;
-        //leftLegRJD.upperAngle = -0.9 + 0.5;
-   // }
+    leftLegRJD.lowerAngle = 0.9 - 0.5;
+    leftLegRJD.upperAngle = 0.9;
 
     world_->CreateJoint(&leftLegRJD);
 
@@ -324,21 +319,11 @@ EnvData LunarLander::reset() {
     rightLegRJD.enableLimit = true;
     rightLegRJD.maxMotorTorque = LEG_SPRING_TORQUE;
     rightLegRJD.motorSpeed += 0.3*(1);
-/*
-    if (i == 0) {
-        rightLegRJD.lowerAngle = 0.9 - 0.5;
-        rightLegRJD.upperAngle = 0.9;
-    }*/
-    //else {
-        rightLegRJD.lowerAngle = -0.9;
-        rightLegRJD.upperAngle = -0.9 + 0.5;
-    //}
+
+    rightLegRJD.lowerAngle = -0.9;
+    rightLegRJD.upperAngle = -0.9 + 0.5;
 
     world_->CreateJoint(&rightLegRJD);
-
-
-
-
 
     drawList_.clear();
     drawList_.push_back(lander_);
@@ -502,7 +487,7 @@ void LunarLander::render() {
 
     // resize it to 10 points
     convex.setPointCount(11);
-    convex.setFillColor(sf::Color().Black);
+    convex.setFillColor(sf::Color().White);
 
     //draw moon
     for (int i = 0; i < skyPolys_.size(); i++){
@@ -512,7 +497,7 @@ void LunarLander::render() {
     convex.setPoint(10, sf::Vector2f(600, 400));
     viewer_->draw(convex);
 
-    //draw flags
+    //draw flag poles
     sf::RectangleShape flag, flag2;
     flag.setSize(sf::Vector2f(3, -(helipadY_ + 50)));
     flag2.setSize(sf::Vector2f(3, -(helipadY_ + 50)));
@@ -523,34 +508,48 @@ void LunarLander::render() {
     viewer_->draw(flag);
     viewer_->draw(flag2);
 
+    //draw flag triangles
+    sf::ConvexShape flagTri, flagTri2;
+    flagTri.setPointCount(3);
+    flagTri2.setPointCount(3);
+    flagTri.setPoint(0, sf::Vector2f(5, 5));
+    flagTri.setPoint(1, sf::Vector2f(5, -5));
+    flagTri.setPoint(2, sf::Vector2f(25, 0));
+    flagTri.setPosition(sf::Vector2f(SCALE*helipadX1_-3, 400 -helipadY_*SCALE-(helipadY_+45)));
+    flagTri.setFillColor(sf::Color().Red);
+    flagTri2.setPoint(0, sf::Vector2f(5, 5));
+    flagTri2.setPoint(1, sf::Vector2f(5, -5));
+    flagTri2.setPoint(2, sf::Vector2f(25, 0));
+    flagTri2.setPosition(sf::Vector2f(SCALE*helipadX2_-3, 400 -helipadY_*SCALE-(helipadY_+45)));
+    flagTri2.setFillColor(sf::Color().Red);
+    viewer_->draw(flagTri);
+    viewer_->draw(flagTri2);
+
     //draw lander
     sf::ConvexShape ship;
     ship.setPointCount(6);
     ship.setFillColor(sf::Color().Blue);
-    ship.setPoint(0, sf::Vector2f(-14*SCALE, 17*SCALE));
-    ship.setPoint(1, sf::Vector2f(-17*SCALE, 10*SCALE));
-    ship.setPoint(2, sf::Vector2f(-17*SCALE, 0*SCALE));
-    ship.setPoint(3, sf::Vector2f(17*SCALE, 0*SCALE));
-    ship.setPoint(4, sf::Vector2f(17*SCALE, 10*SCALE));
-    ship.setPoint(5, sf::Vector2f(14*SCALE, 17*SCALE));
+    ship.setPoint(0, sf::Vector2f(-14, -17));
+    ship.setPoint(5, sf::Vector2f(14, -17));
+    ship.setPoint(4, sf::Vector2f(17, -10));
+    ship.setPoint(3, sf::Vector2f(17, 0));
+    ship.setPoint(2, sf::Vector2f(-17, 0));
+    ship.setPoint(1, sf::Vector2f(-17, -10));
+
     ship.setPosition(drawList_[0]->GetPosition().x*SCALE, drawList_[0]->GetPosition().y);
+    ship.rotate(-drawList_[0]->GetAngle()*SCALE);
+
     viewer_->draw(ship);
 
-//    b2PolygonShape *polygonShape = (b2PolygonShape*)drawList_[0]->GetFixtureList()->GetShape();
-//    polygonShape->GetVertex(0);
-//    sf::RectangleShape test;
-//    test.setSize(sf::Vector2f(16, 16));
-//    test.setPosition(drawList_[0]->GetPosition().x*SCALE, drawList_[0]->GetPosition().y);
-//    test.setFillColor(sf::Color().Blue);
-//    viewer_->draw(test);
-
+    //draw legs
     for(int i = 1; i < drawList_.size(); i++)
     {
-        sf::RectangleShape leg2Test;
-        leg2Test.setSize(sf::Vector2f(LEG_W, LEG_H));
-        leg2Test.setPosition(drawList_[i]->GetPosition().x*SCALE, drawList_[i]->GetPosition().y);
-        leg2Test.setFillColor(sf::Color().Green);
-        viewer_->draw(leg2Test);
+        sf::RectangleShape legShape;
+        legShape.setSize(sf::Vector2f(LEG_W, LEG_H));
+        legShape.setPosition(drawList_[i]->GetPosition().x*SCALE, drawList_[i]->GetPosition().y);
+        legShape.setFillColor(sf::Color().Green);
+        legShape.rotate(-drawList_[i]->GetAngle()*SCALE);
+        viewer_->draw(legShape);
     }
 
     //draw particles
@@ -565,7 +564,7 @@ void LunarLander::render() {
     }
 
     viewer_->display();
-    viewer_->clear(sf::Color(255, 255, 255));
+    viewer_->clear(sf::Color().Black);
 
     //sf::RenderWindow Window(sf::VideoMode(800, 600, 32), "Test");
 

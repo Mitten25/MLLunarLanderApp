@@ -3,6 +3,8 @@
 #include "screenwelcome.h"
 #include "screenintro.h"
 #include "screenreward.h"
+#include "screenobservation.h""
+#include "screentrials.h"
 
 #include <QString>
 #include <QSizePolicy>
@@ -17,8 +19,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     //setup for the mainwindow
     ui->setupUi(this);
-    QSize* minSize = new QSize(1050, 600);
+    QSize* minSize = new QSize(1100, 600);
     this->setMinimumSize(*minSize);
+    this->setMaximumSize(*minSize);
     this->setWindowTitle("MoonMoon");
 //    this->setStyleSheet("background-color: grey;");
 //    ui->centralWidget->setStyleSheet("background-color: grey;");
@@ -38,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
     screenWelcome* welcomeScreen = new screenWelcome(this);
     screenIntro* introScreen = new screenIntro();
     screenReward* rewardScreen = new screenReward();
+    screenObservation* observationScreen = new screenObservation();
+    screenTrials* trialsScreen = new screenTrials();
+
     QWidget* lunarLanderScreen  = new QWidget();
 
     //Create Tab Names
@@ -45,11 +51,15 @@ MainWindow::MainWindow(QWidget *parent) :
     QString intro = "Machine Learning: An Introduction";
     QString rewardString = "The Reward System";
     QString lunarString = "Lunar Landing Simulation";
+    QString observationString = "Observation";
+    QString trialsString = "Trials";
 
     //Add Widgets/.CPP to tab screens
     tab->addTab(welcomeScreen, welcome);
     tab->addTab(introScreen, intro);
     tab->addTab(rewardScreen, rewardString);
+    tab->addTab(observationScreen, observationString);
+    tab->addTab(trialsScreen, trialsString);
     tab->addTab(lunarLanderScreen, lunarString);
 
     //Display Screens
