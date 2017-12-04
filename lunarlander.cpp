@@ -13,11 +13,13 @@ class ContactDetector : public b2ContactListener
 public:
     LunarLander* env_;
     ContactDetector() {
+        std::cout << "test\n";
         // keep env_ member variable so we can access data
         //env_ = env;
     }
 
     void SetEnv(LunarLander* env) {
+        std::cout << "xxx\n";
         env_ = env;
     }
 
@@ -25,13 +27,16 @@ public:
      * Event handler called when two Box2D bodies collide (contact)
      */
     void BeginContact(b2Contact* contact) {
+        std::cout << "BEGIN Contact\n";
         b2Body* bodyA = contact->GetFixtureA()->GetBody();
         b2Body* bodyB = contact->GetFixtureB()->GetBody();
+
         // Lander crashed into the ground
         if (env_->lander_ == bodyA || env_->lander_ == bodyB) {
             env_->gameOver_ = true;
         }
         // legs are touching the ground (so the bot knows it has reached the surface)
+
         if (env_->leftLeg_ == bodyA || env_->leftLeg_ == bodyB) {
             env_->leftLegGroundContact_ = true;
         }
@@ -43,6 +48,7 @@ public:
      * Event handler called when two Box2D bodies stop contacting
      */
     void EndContact(b2Contact* contact) {
+        std::cout << "END Contact\n";
         // these
         b2Body* bodyA = contact->GetFixtureA()->GetBody();
         b2Body* bodyB = contact->GetFixtureB()->GetBody();
@@ -54,6 +60,10 @@ public:
         if (env_->rightLeg_ == bodyA || env_->rightLeg_ == bodyB) {
             env_->rightLegGroundContact_ = false;
         }
+    }
+    void PreSolve(b2Contact* contact, const b2Manifold* oldManifold) {
+    }
+    void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) {
     }
 };
 
@@ -105,14 +115,14 @@ b2Body* LunarLander::createParticle(float mass, float x, float y, float* power) 
     particleBodyDef.position = b2Vec2(x, y);
     particleBodyDef.angle = 0.0;
     b2FixtureDef particleFixtureDef;
-    b2CircleShape circle;
-    circle.m_p = b2Vec2(0.0, 0.0);
-    circle.m_radius = 2.0/SCALE;
-    particleFixtureDef.shape = &circle;
+    b2CircleShape* circle = new b2CircleShape;
+    circle->m_p = b2Vec2(0.0, 0.0);
+    circle->m_radius = 2.0/SCALE;
+    particleFixtureDef.shape = circle;
     particleFixtureDef.density = mass;
     particleFixtureDef.friction = 0.1;
-    particleFixtureDef.filter.categoryBits = 0x0100;
-    particleFixtureDef.filter.maskBits = 0x001;
+//    particleFixtureDef.filter.categoryBits = 0x0100;
+//    particleFixtureDef.filter.maskBits = 0x001;
     particleFixtureDef.restitution = 0.3;
 
     b2Body* particle = world_->CreateBody(&particleBodyDef);
@@ -163,9 +173,12 @@ void LunarLander::destroy() {
 
 EnvData LunarLander::reset() {
     destroy();
+    std::cout << "reset" << std::endl;
     contactDetector_ = new ContactDetector;
     contactDetector_->SetEnv(this);
     world_->SetContactListener(contactDetector_);
+    //world_->SetAllowSleeping(false);
+
     gameOver_ = false;
     prevShaping_ = 0;
 
@@ -207,24 +220,14 @@ EnvData LunarLander::reset() {
     // create moon
     b2BodyDef moonBodyDef;
     moonBodyDef.type = b2_staticBody;
+//    moonBodyDef.active = true;
     moon_ = world_->CreateBody(&moonBodyDef);
-    b2EdgeShape* moonEdgeShape = new b2EdgeShape;
-    b2Vec2 v1(0.0f, 0.0f);
-    b2Vec2 v2((float) W, 0.0f);
-    moonEdgeShape->Set(v1, v2);
-    moon_->CreateFixture(moonEdgeShape, 1.0);
+
 
     skyPolys_.clear();
     for (i = 0; i < CHUNKS-1; i++) {
         b2Vec2 p1(chunkX[i], smoothY[i]);
         b2Vec2 p2(chunkX[i+1], smoothY[i+1]);
-        b2EdgeShape* groundEdge = new b2EdgeShape;
-        groundEdge->Set(p1, p2);
-        b2FixtureDef groundDef;
-        groundDef.shape = groundEdge;
-        groundDef.density = 0;
-        groundDef.friction = 0.1;
-        moon_->CreateFixture(&groundDef);
 
         // stuff for drawing sky
         b2Vec2 skyTop1(p1.x, (float) H);
@@ -234,10 +237,19 @@ EnvData LunarLander::reset() {
         skyPolys_.push_back(polyTupe);
     }
 
+    b2Vec2 vs[CHUNKS];
+    for (i = 0; i < CHUNKS; i++) {
+        vs[i].Set(chunkX[i], smoothY[i]);
+    }
+    b2ChainShape* chainShape = new b2ChainShape;
+    chainShape->CreateChain(vs, CHUNKS);
+    moon_->CreateFixture(chainShape, 0);
+
 
     // create lander
     float initLanderY = VIEWPORT_H / SCALE;
     b2BodyDef landerBodyDef;
+//    landerBodyDef.active = true;
     landerBodyDef.type = b2_dynamicBody;
     landerBodyDef.position = b2Vec2((VIEWPORT_W / SCALE)/2.0, initLanderY);
     landerBodyDef.angle = 0.0;
@@ -248,44 +260,42 @@ EnvData LunarLander::reset() {
     landerFixtureDef.shape = landerShape_;
     landerFixtureDef.density = 5.0;
     landerFixtureDef.friction = 0.1;
-    landerFixtureDef.filter.categoryBits = 0x0010;
-    landerFixtureDef.filter.maskBits = 0x001; // collide only with the ground
+//    landerFixtureDef.filter.categoryBits = 0x0010;
+//    landerFixtureDef.filter.maskBits = 0x001; // collide only with the ground
     landerFixtureDef.restitution = 0.0; // 0.99 bouncy
 
     lander_ = world_->CreateBody(&landerBodyDef);
     lander_->CreateFixture(&landerFixtureDef);
 
     std::uniform_real_distribution<> forceSampler(-INITIAL_RANDOM, INITIAL_RANDOM);
-    float f1 = forceSampler(gen_);
-    float f2 = forceSampler(gen_);
     lander_->ApplyForceToCenter(b2Vec2(forceSampler(gen_), forceSampler(gen_)), true);
 
     b2BodyDef leftLegBodyDef;
+//    leftLegBodyDef.active = true;
     leftLegBodyDef.type = b2_dynamicBody;
-    leftLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((i-1)*LEG_AWAY)/SCALE, initLanderY);
-    leftLegBodyDef.angle = (i-1)*0.05;
+    leftLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((-1)*LEG_AWAY)/SCALE, initLanderY);
+    leftLegBodyDef.angle = -1*0.05;
     b2FixtureDef leftLegFixtureDef;
     b2PolygonShape* leftLegShape = new b2PolygonShape;
     leftLegShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
     leftLegFixtureDef.shape = leftLegShape;
     leftLegFixtureDef.density = 1.0;
     leftLegFixtureDef.restitution = 0.0;
-    leftLegFixtureDef.filter.categoryBits = 0x0020;
-    leftLegFixtureDef.filter.maskBits = 0x001;
+//    leftLegFixtureDef.filter.categoryBits = 0x0020;
+//    leftLegFixtureDef.filter.maskBits = 0x001;
 
-	leftLeg_ = world_->CreateBody(&landerBodyDef);
-    leftLeg_->CreateFixture(&landerFixtureDef);
-
+    leftLeg_ = world_->CreateBody(&leftLegBodyDef);
+    leftLeg_->CreateFixture(&leftLegFixtureDef);
 
     b2RevoluteJointDef leftLegRJD;
     leftLegRJD.bodyA = lander_;
     leftLegRJD.bodyB = leftLeg_;
     leftLegRJD.localAnchorA = b2Vec2(0, 0);
-    leftLegRJD.localAnchorB = b2Vec2((i-1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
+    leftLegRJD.localAnchorB = b2Vec2(-1*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
     leftLegRJD.enableMotor = true;
     leftLegRJD.enableLimit = true;
     leftLegRJD.maxMotorTorque = LEG_SPRING_TORQUE;
-    leftLegRJD.motorSpeed += 0.3*(i-1);
+    leftLegRJD.motorSpeed += 0.3*-1;
 
     if (i == 0) {
         leftLegRJD.lowerAngle = 0.9 - 0.5;
@@ -299,31 +309,32 @@ EnvData LunarLander::reset() {
     world_->CreateJoint(&leftLegRJD);
 
     b2BodyDef rightLegBodyDef;
+//    rightLegBodyDef.active = true;
     rightLegBodyDef.type = b2_dynamicBody;
-    rightLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((i-1)*LEG_AWAY)/SCALE, initLanderY);
-    rightLegBodyDef.angle = (i-1)*0.05;
+    rightLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((1)*LEG_AWAY)/SCALE, initLanderY);
+    rightLegBodyDef.angle = 1*0.05;
     b2FixtureDef rightLegFixtureDef;
     b2PolygonShape* rightLegShape = new b2PolygonShape;
     rightLegShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
     rightLegFixtureDef.shape = rightLegShape;
     rightLegFixtureDef.density = 1.0;
     rightLegFixtureDef.restitution = 0.0;
-    rightLegFixtureDef.filter.categoryBits = 0x0020;
-    rightLegFixtureDef.filter.maskBits = 0x001;
+//    rightLegFixtureDef.filter.categoryBits = 0x0020;
+//    rightLegFixtureDef.filter.maskBits = 0x001;
 
-    rightLeg_ = world_->CreateBody(&landerBodyDef);
-    rightLeg_->CreateFixture(&landerFixtureDef);
+    rightLeg_ = world_->CreateBody(&rightLegBodyDef);
+    rightLeg_->CreateFixture(&rightLegFixtureDef);
 
 
     b2RevoluteJointDef rightLegRJD;
     rightLegRJD.bodyA = lander_;
     rightLegRJD.bodyB = rightLeg_;
     rightLegRJD.localAnchorA = b2Vec2(0, 0);
-    rightLegRJD.localAnchorB = b2Vec2((i-1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
+    rightLegRJD.localAnchorB = b2Vec2(1*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
     rightLegRJD.enableMotor = true;
     rightLegRJD.enableLimit = true;
     rightLegRJD.maxMotorTorque = LEG_SPRING_TORQUE;
-    rightLegRJD.motorSpeed += 0.3*(i-1);
+    rightLegRJD.motorSpeed += 0.3*1;
 
     if (i == 0) {
         rightLegRJD.lowerAngle = 0.9 - 0.5;
@@ -436,6 +447,10 @@ EnvData LunarLander::step(std::vector<float> action) {
 
     world_->Step(1.0/FPS, 6*30, 2*30);
 
+    if (world_->GetContactList() != 0) {
+        std::cout << "contact list  = " << world_->GetContactList() << std::endl;
+    }
+
     b2Vec2 pos = lander_->GetPosition();
     b2Vec2 vel = lander_->GetLinearVelocity();
 
@@ -476,6 +491,8 @@ EnvData LunarLander::step(std::vector<float> action) {
         done = true;
         reward = 100; // we landed safely :)
     }
+
+    //std::cout <<
 
     envData.observation = state;
     envData.reward = reward;
