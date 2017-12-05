@@ -31,15 +31,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
 
-    QPalette palette = QPalette();
-    palette.setColor(QPalette::Background, Qt::magenta);
-
     QTabWidget* tab = new QTabWidget(ui->centralWidget);
    // tab->setStyleSheet("background-color: grey;");
     ui->centralWidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setAutoFillBackground(true);
-    tab->setPalette(palette);
 
     //Create Screen Widgets
     screenWelcome* welcomeScreen = new screenWelcome(this);

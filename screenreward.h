@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QLabel>
+#include <QGridLayout>
 
 class screenReward : public QWidget
 {
@@ -18,9 +19,13 @@ signals:
 public slots:
 
 private:
+    QGridLayout *layout;
     QLabel *headerText;
     QLabel *firstSentence;
+    QLabel *markovText;
+    QLabel *rewardText;
     QFont font;
+
 
 };
 
