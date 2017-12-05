@@ -567,5 +567,13 @@ void LunarLander::render() {
     viewer_->clear(sf::Color().Black);
 
     //sf::RenderWindow Window(sf::VideoMode(800, 600, 32), "Test");
-
+    sf::Event event;
+            while (viewer_->pollEvent(event))
+            {
+                // "close requested" event: we close the window
+                if (event.type == sf::Event::Closed)
+                {
+                    viewer_->close();
+                }
+            }
 }
