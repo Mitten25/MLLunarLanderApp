@@ -87,6 +87,7 @@ int game()
         std::cout << std::endl;
 
 
+
         // lander has crashed or landed successfully or timed out
         if (envData.done) {
             envData = env.reset();

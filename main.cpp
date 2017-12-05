@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     //Comment these out to stop the game
     extern int game();
-    //QFuture<void> future = QtConcurrent::run(game);
+    QFuture<void> future = QtConcurrent::run(game);
 
 
     return a.exec();

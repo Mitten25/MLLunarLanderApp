@@ -17,14 +17,14 @@ screenWelcome::screenWelcome(QWidget *parent) : QWidget(parent)
     font.setStyleHint(QFont::Helvetica);
     font.setPixelSize(100);
 
-    //Titel Setup
+    //Tital Setup
     label->setFont(font);
     label->setText("ML Moonlander");
     label->resize(1000, 100);
 
     //Names Setup
     font.setPixelSize(20);
-    madeBy->setText("Made By, \nKathy, Osama, Ling, Andrew, Joel, Matt");
+    madeBy->setText("Made By \nKathy, Osama, Ling, Andrew, Joel, Matt");
     madeBy->setFont(font);
 
 

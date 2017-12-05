@@ -3,6 +3,9 @@
 #include "screenwelcome.h"
 #include "screenintro.h"
 #include "screenreward.h"
+#include "screenobservation.h""
+#include "screentrials.h"
+#include "screenlander.h"
 
 #include <QString>
 #include <QSizePolicy>
@@ -17,60 +20,101 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     //setup for the mainwindow
     ui->setupUi(this);
-    QSize* minSize = new QSize(1050, 600);
+    QSize* minSize = new QSize(1100, 600);
     this->setMinimumSize(*minSize);
+    this->setMaximumSize(*minSize);
     this->setWindowTitle("MoonMoon");
 //    this->setStyleSheet("background-color: grey;");
 //    ui->centralWidget->setStyleSheet("background-color: grey;");
 
 
-
+    //Layout Setup
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
 
-
-    QTabWidget* tab = new QTabWidget(ui->centralWidget);
+    //Tab Setup
+    tab = new QTabWidget(this);
    // tab->setStyleSheet("background-color: grey;");
     ui->centralWidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+    tab->setAutoFillBackground(true);
+
+    //Progres Bar
+    progressBar = new QProgressBar(this);
+    progressBar->setRange(0,5);
 
     //Create Screen Widgets
     screenWelcome* welcomeScreen = new screenWelcome(this);
-    screenIntro* introScreen = new screenIntro();
-    screenReward* rewardScreen = new screenReward();
-    QWidget* lunarLanderScreen  = new QWidget();
+    screenIntro* introScreen = new screenIntro(this);
+    screenReward* rewardScreen = new screenReward(this);
+    screenObservation* observationScreen = new screenObservation(this);
+    screenTrials* trialsScreen = new screenTrials(this);
+    screenLander* lunarLanderScreen  = new screenLander(this);
 
     //Create Tab Names
     QString welcome = "Welcome";
     QString intro = "Machine Learning: An Introduction";
     QString rewardString = "The Reward System";
     QString lunarString = "Lunar Landing Simulation";
+    QString observationString = "Observation";
+    QString trialsString = "Trials";
 
     //Add Widgets/.CPP to tab screens
     tab->addTab(welcomeScreen, welcome);
     tab->addTab(introScreen, intro);
     tab->addTab(rewardScreen, rewardString);
+    tab->addTab(observationScreen, observationString);
+    tab->addTab(trialsScreen, trialsString);
     tab->addTab(lunarLanderScreen, lunarString);
 
-    //Display Screens
-   // welcomescreen->show();
-   // introScreen->show();
-//    rewardScreen->show();
-//    lunarLanderScreen->show();
+
+
+    //Add to Main Layout
     vLayoutMain->addWidget(tab);
+    vLayoutMain->addWidget(progressBar);
 
-    //Welcome screen text
-//    QLabel *label = new QLabel(welcomescreen);
-//    QFont welcomeFont;
+    //Signals and Slots
+    connect(tab, &QTabWidget::currentChanged, this, &MainWindow::updateValue);
 
-//    welcomeFont.setBold(true);
-//    welcomeFont.setStyleHint(QFont::Helvetica);
-//    welcomeFont.setPixelSize(100);
+}
 
-//    label->setFont(welcomeFont);
-//    label->setText("Welcome");
-//    label->resize(1000, 100);
-//    label->show();
+void MainWindow::updateValue(int index){
+
+    int val = progressBar->value();
+    switch (index) {
+    case 1:
+        if(progressBar->value() >= 1){
+            break;
+        }
+        progressBar->setValue(1);
+        break;
+    case 2:
+        if(progressBar->value() >= 2){
+            break;
+        }
+        progressBar->setValue(2);
+        break;
+    case 3:
+        if(progressBar->value() >= 3){
+            break;
+        }
+        progressBar->setValue(3);
+        break;
+    case 4:
+        if(progressBar->value() >= 4){
+            break;
+        }
+        progressBar->setValue(4);
+        break;
+    case 5:
+        if(progressBar->value() >= 5){
+            break;
+        }
+        progressBar->setValue(5);
+        break;
+    default:
+        break;
+    }
 }
 
 
@@ -83,3 +127,5 @@ MainWindow::~MainWindow()
 //    delete rewardScreen;
 //    delete lunarLanderScreen;
 }
+
+

@@ -22,14 +22,16 @@ SOURCES +=\
     screenintro.cpp \
     screenreward.cpp \
     screenobservation.cpp \
-    screentrials.cpp
+    screentrials.cpp \
+    screenlander.cpp
 HEADERS  += mainwindow.h \
     lunarlander.h \
     screenwelcome.h \
     screenintro.h \
     screenreward.h \
     screenobservation.h \
-    screentrials.h
+    screentrials.h \
+    screenlander.h
 FORMS    += mainwindow.ui \
 
 
