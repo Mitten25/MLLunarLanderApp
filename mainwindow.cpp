@@ -21,10 +21,14 @@ MainWindow::MainWindow(QWidget *parent) :
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
 
+    QPalette palette = QPalette();
+    palette.setColor(QPalette::Background, Qt::magenta);
 
     QTabWidget* tab = new QTabWidget(ui->centralWidget);
     ui->centralWidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+    tab->setAutoFillBackground(true);
+    tab->setPalette(palette);
 
     //Create Screen Widgets
     screenWelcome* welcomeScreen = new screenWelcome(this);
@@ -43,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
     tab->addTab(introScreen, intro);
     tab->addTab(rewardScreen, rewardString);
     tab->addTab(lunarLanderScreen, lunarString);
+
 
     //Display Screens
    // welcomescreen->show();

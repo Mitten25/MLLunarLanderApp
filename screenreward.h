@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QLabel>
 
 class screenReward : public QWidget
 {
@@ -10,9 +11,17 @@ class screenReward : public QWidget
 public:
     explicit screenReward(QWidget *parent = nullptr);
 
+    ~screenReward();
+
 signals:
 
 public slots:
+
+private:
+    QLabel *headerText;
+    QLabel *firstSentence;
+    QFont font;
+
 };
 
 #endif // SCREENREWARD_H

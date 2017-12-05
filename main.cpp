@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
     w.show();
 
  //   game();
-    extern int game();
-    QFuture<void> future = QtConcurrent::run(game);
+    //extern int game();
+    //QFuture<void> future = QtConcurrent::run(game);
 
 
     return a.exec();
