@@ -22,7 +22,7 @@ const float SCALE  = 30.0;   // affects how fast-paced the game is, forces shoul
 const float MAIN_ENGINE_POWER  = 13.0;
 const float SIDE_ENGINE_POWER  =  0.6;
 
-const float INITIAL_RANDOM = 10.0;   // Set 1500 to make game harder
+const float INITIAL_RANDOM = 1.0;   // Set 1500 to make game harder
 
 const int LEG_AWAY = 20;
 const int LEG_DOWN = 18;
@@ -83,6 +83,18 @@ private:
     bool continuous_;
     b2Vec2 LANDERPOLY[6]; // lander poly shape
     sf::RenderWindow *viewer_;
+
+
+    b2FixtureDef particleFixtureDef;
+    b2FixtureDef groundDef;
+    //b2FixtureDef landerFixtureDef;
+    b2FixtureDef leftLegFixtureDef;
+    b2FixtureDef rightLegFixtureDef;
+    b2BodyDef leftLegBodyDef;
+    b2BodyDef rightLegBodyDef;
+    b2BodyDef particleBodyDef;
+    b2BodyDef moonBodyDef;
+    //b2BodyDef landerBodyDef;
 
     int helipadY_;
     int helipadX1_;

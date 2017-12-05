@@ -63,10 +63,17 @@ int game()
 
     float episodeReward = 0;
     // loop forever running episodes of lunar lander
+    int count = 0;
     while (1) {
+        count++;
         // action = choose action based on envData.observation
         std::vector<float> action;
-        action.push_back(0); // TODO: something better than always 0 (noop)
+        if (count % 2 == 0 || count % 7 == 0) {
+            action.push_back(2); // TODO: something better than always 0 (noop)
+        }
+        else {
+            action.push_back(0);
+        }
 
         // update the sf::RenderWindow with the new location of stuff (redraw basically)
 
@@ -77,7 +84,7 @@ int game()
         std::cout << "obs: ";
         for (std::vector<float>::const_iterator i = envData.observation.begin(); i != envData.observation.end(); ++i)
             std::cout << *i << ' ';
-         std::cout << std::endl;
+        std::cout << std::endl;
 
 
         // lander has crashed or landed successfully or timed out
@@ -88,64 +95,8 @@ int game()
             std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
-
-
-
-    ///** Prepare the window */
-    //sf::RenderWindow Window(sf::VideoMode(800, 600, 32), "Test");
-    //Window.setFramerateLimit(60);
-
-    ///** Prepare the world */
-    //b2Vec2 Gravity(0.f, 9.8f);
-    //b2World World(Gravity);
-    //createGround(World, 400.f, 500.f);
-
-    ///** Prepare textures */
-    //sf::Texture GroundTexture;
-    //sf::Texture BoxTexture;
-    //GroundTexture.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/ground.png");
-    //BoxTexture.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/box.png");
-
-    //LunarLander* LL = new LunarLander(World);
-    //LL->reset();
-    //while (Window.isOpen())
-    //{/*
-    //    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    //    {
-    //        int MouseX = sf::Mouse::getPosition(Window).x;
-    //        int MouseY = sf::Mouse::getPosition(Window).y;
-    //        createBox(World, MouseX, MouseY);
-    //    }*/
-    //    World.Step(1/60.f, 8, 3);
-
-    //    Window.clear(sf::Color::White);
-    //    int BodyCount = 0;
-    //    for (b2Body* BodyIterator = World.GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
-    //    {
-    //        if (BodyIterator->GetType() == b2_dynamicBody)
-    //        {
-    //            sf::Sprite Sprite;
-    //            Sprite.setTexture(BoxTexture);
-    //            Sprite.setOrigin(16.f, 16.f);
-    //            Sprite.setPosition(SCALE * BodyIterator->GetPosition().x, SCALE * BodyIterator->GetPosition().y);
-    //            Sprite.setRotation(BodyIterator->GetAngle() * 180/b2_pi);
-    //            Window.draw(Sprite);
-    //            ++BodyCount;
-    //        }
-    //        else
-    //        {
-    //            sf::Sprite GroundSprite;
-    //            GroundSprite.setTexture(GroundTexture);
-    //            GroundSprite.setOrigin(400.f, 8.f);
-    //            GroundSprite.setPosition(BodyIterator->GetPosition().x * SCALE, BodyIterator->GetPosition().y * SCALE);
-    //            GroundSprite.setRotation(180/b2_pi * BodyIterator->GetAngle());
-    //            Window.draw(GroundSprite);
-    //        }
-    //    }
-    //    Window.display();
-    //}
 
     return 0;
 }
