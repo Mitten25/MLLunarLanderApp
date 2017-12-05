@@ -5,6 +5,7 @@
 #include "screenreward.h"
 #include "screenobservation.h""
 #include "screentrials.h"
+#include "screenlander.h"
 
 #include <QString>
 #include <QSizePolicy>
@@ -32,20 +33,20 @@ MainWindow::MainWindow(QWidget *parent) :
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
 
-    QTabWidget* tab = new QTabWidget(ui->centralWidget);
+    QTabWidget* tab = new QTabWidget(this);
    // tab->setStyleSheet("background-color: grey;");
     ui->centralWidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setAutoFillBackground(true);
 
     //Create Screen Widgets
-    screenWelcome* welcomeScreen = new screenWelcome();
-    screenIntro* introScreen = new screenIntro();
-    screenReward* rewardScreen = new screenReward();
-    screenObservation* observationScreen = new screenObservation();
-    screenTrials* trialsScreen = new screenTrials();
+    screenWelcome* welcomeScreen = new screenWelcome(this);
+    screenIntro* introScreen = new screenIntro(this);
+    screenReward* rewardScreen = new screenReward(this);
+    screenObservation* observationScreen = new screenObservation(this);
+    screenTrials* trialsScreen = new screenTrials(this);
     QProgressBar* progressBar = new QProgressBar(this);
-    QWidget* lunarLanderScreen  = new QWidget();
+    screenLander* lunarLanderScreen  = new screenLander(this);
 
     //Create Tab Names
     QString welcome = "Welcome";
