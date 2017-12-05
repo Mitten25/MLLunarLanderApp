@@ -20,12 +20,16 @@ SOURCES +=\
     lunarlander.cpp \
     screenwelcome.cpp \
     screenintro.cpp \
-    screenreward.cpp
+    screenreward.cpp \
+    screenobservation.cpp \
+    screentrials.cpp
 HEADERS  += mainwindow.h \
     lunarlander.h \
     screenwelcome.h \
     screenintro.h \
-    screenreward.h
+    screenreward.h \
+    screenobservation.h \
+    screentrials.h
 FORMS    += mainwindow.ui \
 
 

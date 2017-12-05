@@ -4,19 +4,35 @@
 
 screenWelcome::screenWelcome(QWidget *parent) : QWidget(parent)
 {
+
+    //Delcare the stuff
+    QGridLayout *layout = new QGridLayout(this);
     QLabel *label = new QLabel(this);
-    QFont welcomeFont;
+    QLabel *madeBy = new QLabel(this);
+    QFont font;
 
-    welcomeFont.setBold(true);
-    welcomeFont.setStyleHint(QFont::Helvetica);
-    welcomeFont.setPixelSize(100);
 
-    label->setFont(welcomeFont);
-    label->setText("Welcome");
+    //font start point
+    font.setBold(true);
+    font.setStyleHint(QFont::Helvetica);
+    font.setPixelSize(100);
+
+    //Tital Setup
+    label->setFont(font);
+    label->setText("ML Moonlander");
     label->resize(1000, 100);
-    label->show();
+
+    //Names Setup
+    font.setPixelSize(20);
+    madeBy->setText("Made By \nKathy, Osama, Ling, Andrew, Joel, Matt");
+    madeBy->setFont(font);
 
 
+
+
+    //add widgets to layout last
+    layout->addWidget(label,0,0,Qt::AlignCenter);
+    layout->addWidget(madeBy,1,0,Qt::AlignCenter);
 
 
 

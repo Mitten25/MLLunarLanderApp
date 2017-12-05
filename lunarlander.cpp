@@ -25,6 +25,7 @@ public:
      * Event handler called when two Box2D bodies collide (contact)
      */
     void BeginContact(b2Contact* contact) {
+        std::cout<<"here"<<std::endl;
         b2Body* bodyA = contact->GetFixtureA()->GetBody();
         b2Body* bodyB = contact->GetFixtureB()->GetBody();
         // Lander crashed into the ground
@@ -173,7 +174,7 @@ EnvData LunarLander::reset() {
     int W = VIEWPORT_W/SCALE;
 
     // generate terrain
-    int CHUNKS = 11;
+    const int CHUNKS = 11;
     float height[CHUNKS+1];
     float chunkX[CHUNKS];
 
@@ -260,51 +261,69 @@ EnvData LunarLander::reset() {
     float f2 = forceSampler(gen_);
     lander_->ApplyForceToCenter(b2Vec2(forceSampler(gen_), forceSampler(gen_)), true);
 
+    b2BodyDef leftLegBodyDef;
+    leftLegBodyDef.type = b2_dynamicBody;
+    leftLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((-1)*LEG_AWAY)/SCALE, initLanderY);
+    leftLegBodyDef.angle = (-1)*0.05;
+    b2FixtureDef leftLegFixtureDef;
+    b2PolygonShape* leftLegShape = new b2PolygonShape;
+    leftLegShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
+    leftLegFixtureDef.shape = leftLegShape;
+    leftLegFixtureDef.density = 1.0;
+    leftLegFixtureDef.restitution = 0.0;
+    leftLegFixtureDef.filter.categoryBits = 0x0020;
+    leftLegFixtureDef.filter.maskBits = 0x001;
 
-    // create legs
-    b2Body* legs[2];
-    legs[0] = leftLeg_;
-    legs[1] = rightLeg_;
-
-    for (i = 0; i < 2; i++) {
-      b2BodyDef legBodyDef;
-      legBodyDef.type = b2_dynamicBody;
-      legBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((i-1)*LEG_AWAY)/SCALE, initLanderY);
-      legBodyDef.angle = (i-1)*0.05;
-      b2FixtureDef legFixtureDef;
-      b2PolygonShape* legShape = new b2PolygonShape;
-      legShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
-      legFixtureDef.shape = legShape;
-      legFixtureDef.density = 1.0;
-      legFixtureDef.restitution = 0.0;
-      legFixtureDef.filter.categoryBits = 0x0020;
-      legFixtureDef.filter.maskBits = 0x001;
-
-      legs[i] = world_->CreateBody(&landerBodyDef);
-      legs[i]->CreateFixture(&landerFixtureDef);
+    leftLeg_ = world_->CreateBody(&leftLegBodyDef);
+    leftLeg_->CreateFixture(&leftLegFixtureDef);
 
 
-      b2RevoluteJointDef rjd;
-      rjd.bodyA = lander_;
-      rjd.bodyB = legs[i];
-      rjd.localAnchorA = b2Vec2(0, 0);
-      rjd.localAnchorB = b2Vec2((i-1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
-      rjd.enableMotor = true;
-      rjd.enableLimit = true;
-      rjd.maxMotorTorque = LEG_SPRING_TORQUE;
-      rjd.motorSpeed += 0.3*(i-1);
+    b2RevoluteJointDef leftLegRJD;
+    leftLegRJD.bodyA = lander_;
+    leftLegRJD.bodyB = leftLeg_;
+    leftLegRJD.localAnchorA = b2Vec2(0, 0);
+    leftLegRJD.localAnchorB = b2Vec2((-1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
+    leftLegRJD.enableMotor = true;
+    leftLegRJD.enableLimit = true;
+    leftLegRJD.maxMotorTorque = LEG_SPRING_TORQUE;
+    leftLegRJD.motorSpeed += 0.3*(-1);
 
-      if (i == 0) {
-          rjd.lowerAngle = 0.9 - 0.5;
-          rjd.upperAngle = 0.9;
-      }
-      else {
-          rjd.lowerAngle = -0.9;
-          rjd.upperAngle = -0.9 + 0.5;
-      }
+    leftLegRJD.lowerAngle = 0.9 - 0.5;
+    leftLegRJD.upperAngle = 0.9;
 
-      world_->CreateJoint(&rjd);
-    }
+    world_->CreateJoint(&leftLegRJD);
+
+    b2BodyDef rightLegBodyDef;
+    rightLegBodyDef.type = b2_dynamicBody;
+    rightLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((1)*LEG_AWAY)/SCALE, initLanderY);
+    rightLegBodyDef.angle = (1)*0.05;
+    b2FixtureDef rightLegFixtureDef;
+    b2PolygonShape* rightLegShape = new b2PolygonShape;
+    rightLegShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
+    rightLegFixtureDef.shape = rightLegShape;
+    rightLegFixtureDef.density = 1.0;
+    rightLegFixtureDef.restitution = 0.0;
+    rightLegFixtureDef.filter.categoryBits = 0x0020;
+    rightLegFixtureDef.filter.maskBits = 0x001;
+
+    rightLeg_ = world_->CreateBody(&rightLegBodyDef);
+    rightLeg_->CreateFixture(&rightLegFixtureDef);
+
+
+    b2RevoluteJointDef rightLegRJD;
+    rightLegRJD.bodyA = lander_;
+    rightLegRJD.bodyB = rightLeg_;
+    rightLegRJD.localAnchorA = b2Vec2(0, 0);
+    rightLegRJD.localAnchorB = b2Vec2((1)*LEG_AWAY/SCALE, LEG_DOWN/SCALE);
+    rightLegRJD.enableMotor = true;
+    rightLegRJD.enableLimit = true;
+    rightLegRJD.maxMotorTorque = LEG_SPRING_TORQUE;
+    rightLegRJD.motorSpeed += 0.3*(1);
+
+    rightLegRJD.lowerAngle = -0.9;
+    rightLegRJD.upperAngle = -0.9 + 0.5;
+
+    world_->CreateJoint(&rightLegRJD);
 
     drawList_.clear();
     drawList_.push_back(lander_);
@@ -459,7 +478,7 @@ void LunarLander::render() {
         viewer_ = new sf::RenderWindow(sf::VideoMode(600, 400), "test");
     }
 
-    std::cout << skyPolys_.size();
+    //std::cout << skyPolys_.size();
     sf::Texture BoxTexture;
     BoxTexture.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/box.png");
 
@@ -468,7 +487,7 @@ void LunarLander::render() {
 
     // resize it to 10 points
     convex.setPointCount(11);
-    convex.setFillColor(sf::Color(0, 255, 255));
+    convex.setFillColor(sf::Color().White);
 
     //draw moon
     for (int i = 0; i < skyPolys_.size(); i++){
@@ -478,16 +497,74 @@ void LunarLander::render() {
     convex.setPoint(10, sf::Vector2f(600, 400));
     viewer_->draw(convex);
 
+    //draw flag poles
+    sf::RectangleShape flag, flag2;
+    flag.setSize(sf::Vector2f(3, -(helipadY_ + 50)));
+    flag2.setSize(sf::Vector2f(3, -(helipadY_ + 50)));
+    flag.setPosition(sf::Vector2f(SCALE*helipadX1_, 400 -helipadY_*SCALE));
+    flag2.setPosition(sf::Vector2f(SCALE*helipadX2_, 400 -helipadY_*SCALE));
+    flag.setFillColor(sf::Color().Red);
+    flag2.setFillColor(sf::Color().Red);
+    viewer_->draw(flag);
+    viewer_->draw(flag2);
+
+    //draw flag triangles
+    sf::ConvexShape flagTri, flagTri2;
+    flagTri.setPointCount(3);
+    flagTri2.setPointCount(3);
+    flagTri.setPoint(0, sf::Vector2f(5, 5));
+    flagTri.setPoint(1, sf::Vector2f(5, -5));
+    flagTri.setPoint(2, sf::Vector2f(25, 0));
+    flagTri.setPosition(sf::Vector2f(SCALE*helipadX1_-3, 400 -helipadY_*SCALE-(helipadY_+45)));
+    flagTri.setFillColor(sf::Color().Red);
+    flagTri2.setPoint(0, sf::Vector2f(5, 5));
+    flagTri2.setPoint(1, sf::Vector2f(5, -5));
+    flagTri2.setPoint(2, sf::Vector2f(25, 0));
+    flagTri2.setPosition(sf::Vector2f(SCALE*helipadX2_-3, 400 -helipadY_*SCALE-(helipadY_+45)));
+    flagTri2.setFillColor(sf::Color().Red);
+    viewer_->draw(flagTri);
+    viewer_->draw(flagTri2);
+
     //draw lander
-    sf::Sprite Sprite;
-    Sprite.setTexture(BoxTexture);
-    Sprite.setOrigin(-300.f, 16.f);
-    Sprite.setPosition(drawList_[0]->GetPosition().x, drawList_[0]->GetPosition().y);
-    //Sprite.setRotation(drawList_[0]->GetAngle() * 180/b2_pi);
-    viewer_->draw(Sprite);
+    sf::ConvexShape ship;
+    ship.setPointCount(6);
+    ship.setFillColor(sf::Color().Blue);
+    ship.setPoint(0, sf::Vector2f(-14, -17));
+    ship.setPoint(5, sf::Vector2f(14, -17));
+    ship.setPoint(4, sf::Vector2f(17, -10));
+    ship.setPoint(3, sf::Vector2f(17, 0));
+    ship.setPoint(2, sf::Vector2f(-17, 0));
+    ship.setPoint(1, sf::Vector2f(-17, -10));
+
+    ship.setPosition(drawList_[0]->GetPosition().x*SCALE, drawList_[0]->GetPosition().y);
+    ship.rotate(-drawList_[0]->GetAngle()*SCALE);
+
+    viewer_->draw(ship);
+
+    //draw legs
+    for(int i = 1; i < drawList_.size(); i++)
+    {
+        sf::RectangleShape legShape;
+        legShape.setSize(sf::Vector2f(LEG_W, LEG_H));
+        legShape.setPosition(drawList_[i]->GetPosition().x*SCALE, drawList_[i]->GetPosition().y);
+        legShape.setFillColor(sf::Color().Green);
+        legShape.rotate(-drawList_[i]->GetAngle()*SCALE);
+        viewer_->draw(legShape);
+    }
+
+    //draw particles
+    for (std::list<b2Body*>::iterator it=particles_.begin(); it != particles_.end(); ++it)
+    {
+        sf::CircleShape shape(50);
+        // set the shape color to green
+        shape.setFillColor(sf::Color().Green);
+        shape.setPosition(sf::Vector2f(SCALE*(*it)->GetPosition().x, SCALE*(*it)->GetPosition().y));
+        viewer_->draw(shape);
+        //std::cout << "here " << (*it)->GetPosition().x;
+    }
 
     viewer_->display();
-    viewer_->clear(sf::Color(255, 255, 255));
+    viewer_->clear(sf::Color().Black);
 
     //sf::RenderWindow Window(sf::VideoMode(800, 600, 32), "Test");
 

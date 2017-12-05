@@ -12,7 +12,8 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
- //   game();
+
+    //Comment these out to stop the game
     //extern int game();
     //QFuture<void> future = QtConcurrent::run(game);
 
