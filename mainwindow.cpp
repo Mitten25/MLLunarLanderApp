@@ -11,7 +11,6 @@
 #include <QSizePolicy>
 #include <QVBoxLayout>
 #include <QLabel>
-#include <QProgressBar>
 
 
 
@@ -29,15 +28,20 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->centralWidget->setStyleSheet("background-color: grey;");
 
 
-
+    //Layout Setup
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
 
-    QTabWidget* tab = new QTabWidget(this);
+    //Tab Setup
+    tab = new QTabWidget(this);
    // tab->setStyleSheet("background-color: grey;");
     ui->centralWidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setAutoFillBackground(true);
+
+    //Progres Bar
+    progressBar = new QProgressBar(this);
+    progressBar->setRange(0,5);
 
     //Create Screen Widgets
     screenWelcome* welcomeScreen = new screenWelcome(this);
@@ -45,7 +49,6 @@ MainWindow::MainWindow(QWidget *parent) :
     screenReward* rewardScreen = new screenReward(this);
     screenObservation* observationScreen = new screenObservation(this);
     screenTrials* trialsScreen = new screenTrials(this);
-    QProgressBar* progressBar = new QProgressBar(this);
     screenLander* lunarLanderScreen  = new screenLander(this);
 
     //Create Tab Names
@@ -70,6 +73,48 @@ MainWindow::MainWindow(QWidget *parent) :
     vLayoutMain->addWidget(tab);
     vLayoutMain->addWidget(progressBar);
 
+    //Signals and Slots
+    connect(tab, &QTabWidget::currentChanged, this, &MainWindow::updateValue);
+
+}
+
+void MainWindow::updateValue(int index){
+
+    int val = progressBar->value();
+    switch (index) {
+    case 1:
+        if(progressBar->value() >= 1){
+            break;
+        }
+        progressBar->setValue(1);
+        break;
+    case 2:
+        if(progressBar->value() >= 2){
+            break;
+        }
+        progressBar->setValue(2);
+        break;
+    case 3:
+        if(progressBar->value() >= 3){
+            break;
+        }
+        progressBar->setValue(3);
+        break;
+    case 4:
+        if(progressBar->value() >= 4){
+            break;
+        }
+        progressBar->setValue(4);
+        break;
+    case 5:
+        if(progressBar->value() >= 5){
+            break;
+        }
+        progressBar->setValue(5);
+        break;
+    default:
+        break;
+    }
 }
 
 
@@ -82,3 +127,5 @@ MainWindow::~MainWindow()
 //    delete rewardScreen;
 //    delete lunarLanderScreen;
 }
+
+

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QProgressBar>
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +18,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QProgressBar* progressBar;
+    QTabWidget* tab;
+
+public slots:
+    void updateValue(int index);
 };
+
+
+
 
 #endif // MAINWINDOW_H
