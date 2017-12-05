@@ -10,6 +10,7 @@
 #include <QSizePolicy>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QProgressBar>
 
 
 
@@ -38,12 +39,12 @@ MainWindow::MainWindow(QWidget *parent) :
     tab->setAutoFillBackground(true);
 
     //Create Screen Widgets
-    screenWelcome* welcomeScreen = new screenWelcome(this);
+    screenWelcome* welcomeScreen = new screenWelcome();
     screenIntro* introScreen = new screenIntro();
     screenReward* rewardScreen = new screenReward();
     screenObservation* observationScreen = new screenObservation();
     screenTrials* trialsScreen = new screenTrials();
-
+    QProgressBar* progressBar = new QProgressBar(this);
     QWidget* lunarLanderScreen  = new QWidget();
 
     //Create Tab Names
@@ -69,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    rewardScreen->show();
 //    lunarLanderScreen->show();
     vLayoutMain->addWidget(tab);
-
+    vLayoutMain->addWidget(progressBar);
     //Welcome screen text
 //    QLabel *label = new QLabel(welcomescreen);
 //    QFont welcomeFont;
