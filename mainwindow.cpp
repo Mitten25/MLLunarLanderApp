@@ -65,25 +65,11 @@ MainWindow::MainWindow(QWidget *parent) :
     tab->addTab(lunarLanderScreen, lunarString);
 
 
-    //Display Screens
-   // welcomescreen->show();
-   // introScreen->show();
-//    rewardScreen->show();
-//    lunarLanderScreen->show();
+
+    //Add to Main Layout
     vLayoutMain->addWidget(tab);
     vLayoutMain->addWidget(progressBar);
-    //Welcome screen text
-//    QLabel *label = new QLabel(welcomescreen);
-//    QFont welcomeFont;
 
-//    welcomeFont.setBold(true);
-//    welcomeFont.setStyleHint(QFont::Helvetica);
-//    welcomeFont.setPixelSize(100);
-
-//    label->setFont(welcomeFont);
-//    label->setText("Welcome");
-//    label->resize(1000, 100);
-//    label->show();
 }
 
 
