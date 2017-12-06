@@ -19,7 +19,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QProgressBar* progressBar;
-    QTabWidget* tab;
+    bool one, two, three, four, five;
 
 public slots:
     void updateValue(int index);

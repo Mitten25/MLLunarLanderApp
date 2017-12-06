@@ -31,9 +31,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //Layout Setup
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
+    one, two, three, four, five = false;
 
     //Tab Setup
-    tab = new QTabWidget(this);
+    QTabWidget* tab = new QTabWidget(this);
    // tab->setStyleSheet("background-color: grey;");
     ui->centralWidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     tab->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
@@ -42,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Progres Bar
     progressBar = new QProgressBar(this);
     progressBar->setRange(0,5);
+    progressBar->setValue(0);
 
     //Create Screen Widgets
     screenWelcome* welcomeScreen = new screenWelcome(this);
@@ -83,34 +85,34 @@ void MainWindow::updateValue(int index){
     int val = progressBar->value();
     switch (index) {
     case 1:
-        if(progressBar->value() >= 1){
-            break;
+        if(!one){
+            progressBar->setValue(++val);
+            one = true;
         }
-        progressBar->setValue(1);
         break;
     case 2:
-        if(progressBar->value() >= 2){
-            break;
+        if(!two){
+            progressBar->setValue(++val);
+            two = true;
         }
-        progressBar->setValue(2);
         break;
     case 3:
-        if(progressBar->value() >= 3){
-            break;
+        if(!three){
+            progressBar->setValue(++val);
+            three = true;
         }
-        progressBar->setValue(3);
         break;
     case 4:
-        if(progressBar->value() >= 4){
-            break;
+        if(!four){
+            progressBar->setValue(++val);
+            four = true;
         }
-        progressBar->setValue(4);
         break;
     case 5:
-        if(progressBar->value() >= 5){
-            break;
+        if(!five){
+            progressBar->setValue(++val);
+            five = true;
         }
-        progressBar->setValue(5);
         break;
     default:
         break;
