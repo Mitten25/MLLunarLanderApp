@@ -3,6 +3,11 @@
 
 #include <QObject>
 #include <QWidget>
+#include "QLabel"
+#include <QHBoxLayout>
+#include <QPushButton>
+#include <QDebug>
+#include <QComboBox>
 
 class screenObservation : public QWidget
 {

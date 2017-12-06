@@ -3,8 +3,12 @@
 
 #include <QObject>
 #include <QWidget>
-#include <QVBoxLayout>
 #include "QLabel"
+#include <QHBoxLayout>
+#include <QPushButton>
+#include <QDebug>
+#include <QComboBox>
+
 
 
 class screenTrials : public QWidget
