@@ -578,7 +578,8 @@ void LunarLander::render() {
         *power -= 0.15;
 
         sf::CircleShape shape(5);
-        shape.setFillColor(sf::Color(150, 50, 250, std::max((int) 0.2*255, (int) (128*(*power)))));
+        //150, 50, 250
+        shape.setFillColor(sf::Color(50,205,50, std::max((int) 0.2*255, (int) (128*(*power)))));
         shape.setPosition(sf::Vector2f(SCALE*body->GetPosition().x, VIEWPORT_H-(body->GetPosition().y*SCALE)));
         viewer_->draw(shape);
     }
