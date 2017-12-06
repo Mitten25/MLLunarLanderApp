@@ -3,7 +3,7 @@
 #include "screenwelcome.h"
 #include "screenintro.h"
 #include "screenreward.h"
-#include "screenobservation.h""
+#include "screenobservation.h"
 #include "screentrials.h"
 #include "screenlander.h"
 
@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Layout Setup
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
-    one, two, three, four, five = false;
+    one = two = three = four = five = false;
 
     //Tab Setup
     QTabWidget* tab = new QTabWidget(this);
