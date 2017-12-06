@@ -87,16 +87,16 @@ private:
     sf::RenderWindow *viewer_;
 
 
-    //b2FixtureDef particleFixtureDef;
-    //b2FixtureDef groundDef;
-    ////b2FixtureDef landerFixtureDef;
-    //b2FixtureDef leftLegFixtureDef;
-    //b2FixtureDef rightLegFixtureDef;
-    //b2BodyDef leftLegBodyDef;
-    //b2BodyDef rightLegBodyDef;
-    //b2BodyDef particleBodyDef;
-    //b2BodyDef moonBodyDef;
-    //b2BodyDef landerBodyDef;
+    b2FixtureDef particleFixtureDef;
+    b2FixtureDef groundDef;
+    b2FixtureDef landerFixtureDef;
+    b2FixtureDef leftLegFixtureDef;
+    b2FixtureDef rightLegFixtureDef;
+    b2BodyDef leftLegBodyDef;
+    b2BodyDef rightLegBodyDef;
+    b2BodyDef particleBodyDef;
+    b2BodyDef moonBodyDef;
+    b2BodyDef landerBodyDef;
 
     int helipadY_;
     int helipadX1_;

@@ -74,10 +74,9 @@ int game()
         count++;
         // action = choose action based on envData.observation
 
-
         std::vector<float> action;
         action.push_back(std::floor(dis(gen)));
-        std::cout << action.front() << std::endl;
+        //std::cout << action.front() << std::endl;
 
         // update the sf::RenderWindow with the new location of stuff (redraw basically)
 
@@ -85,11 +84,10 @@ int game()
         envData = env.step(action);
         episodeReward += envData.reward;
 
-        std::cout << "obs: ";
-        for (std::vector<float>::const_iterator i = envData.observation.begin(); i != envData.observation.end(); ++i)
-            std::cout << *i << ' ';
-        std::cout << std::endl;
-
+        //std::cout << "obs: ";
+        //for (std::vector<float>::const_iterator i = envData.observation.begin(); i != envData.observation.end(); ++i)
+        //    std::cout << *i << ' ';
+        //std::cout << std::endl;
 
 
         // lander has crashed or landed successfully or timed out
@@ -97,7 +95,7 @@ int game()
             envData = env.reset();
             std::cout << "done, ep reward = " << episodeReward << std::endl;
             episodeReward = 0;
-            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
