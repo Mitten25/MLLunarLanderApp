@@ -17,7 +17,7 @@ SOURCES +=\
         mainwindow.cpp \
     game.cpp \
     main.cpp \
-    lunarlander.cpp \
+    envs/lunarlander.cpp \
     screenwelcome.cpp \
     screenintro.cpp \
     screenreward.cpp \
@@ -31,10 +31,23 @@ HEADERS  += mainwindow.h \
     screenreward.h \
     screenobservation.h \
     screentrials.h \
-    screenlander.h
+    screenlander.h \
+    envs/env.h \
+    envs/lunarlander.h
 FORMS    += mainwindow.ui \
 
 
+# reinforcement learning source (need to test on windows)
+unix: SOURCES+= rl/reinforce.cpp
+unix: HEADERS+= rl/reinforce.h
+unix:INCLUDEPATH += $$PWD/include/armadillo-8.300.1/include/
+unix:INCLUDEPATH += $$PWD/include/OpenBLAS-0.2.20/include/
+# ARMADILLO
+unix: LIBS += -L"$$PWD/include/armadillo-8.300.1/"
+unix: LIBS += -larmadillo
+# OpenBLAS
+unix: LIBS += -L"$$PWD/include/OpenBLAS-0.2.20/"
+unix: LIBS += -lopenblas
 
 INCLUDEPATH += $$PWD/include/Box2D/Box2D/
 INCLUDEPATH += $$PWD/include/SFML/include/
@@ -80,6 +93,7 @@ unix: LIBS += -L"$$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug" -lBox2D
 
 
 
+
 #win32:CONFIG(release, debug|release): LIBS += -L$$PWD/include/Box2D/Box2D/Build/gmake/bin/release/ -lBox2D
 #else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/include/Box2D/Box2D/Build/gmake/bin/debug/ -lBox2D
 
@@ -87,7 +101,3 @@ unix: LIBS += -L"$$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug" -lBox2D
 #DEPENDPATH += $$PWD/include/Box2D/Box2D/Build/gmake/bin/Debug
 
 include(include/Box2D/Box2D/Box2D/Box2D.pro)
-
-HEADERS += \
-    env.h \
-    lunarlander.h

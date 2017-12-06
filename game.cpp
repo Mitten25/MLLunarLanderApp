@@ -5,8 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include "QtMath"
 #include "tuple"
-#include "env.h"
-#include "lunarlander.h"
+#include "envs/env.h"
+#include "envs/lunarlander.h"
 #include <iostream>
 #include <thread>         // std::this_thread::sleep_for
 #include <chrono>         // std::chrono::seconds

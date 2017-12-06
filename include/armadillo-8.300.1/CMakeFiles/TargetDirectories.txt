@@ -1,0 +1,7 @@
+/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/armadillo-8.300.1/CMakeFiles/install.dir
+/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/armadillo-8.300.1/CMakeFiles/list_install_components.dir
+/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/armadillo-8.300.1/CMakeFiles/rebuild_cache.dir
+/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/armadillo-8.300.1/CMakeFiles/armadillo.dir
+/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/armadillo-8.300.1/CMakeFiles/install/strip.dir
+/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/armadillo-8.300.1/CMakeFiles/install/local.dir
+/home/jericho/code/cs3505/cs3505-f17-a8-edu-app-matwilso/include/armadillo-8.300.1/CMakeFiles/edit_cache.dir
