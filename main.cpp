@@ -22,15 +22,15 @@ int main(int argc, char *argv[])
     //return a.exec();
     REINFORCE reinforce(8, 4);
     std::vector<float> obs;
-    obs.push_back(1);
-    obs.push_back(1);
-    obs.push_back(1);
-    obs.push_back(1);
-    obs.push_back(1);
-    obs.push_back(1);
-    obs.push_back(1);
-    obs.push_back(1);
-    reinforce.forward(obs);
+    obs.push_back(1.f);
+    obs.push_back(1.f);
+    obs.push_back(1.f);
+    obs.push_back(1.f);
+    obs.push_back(1.f);
+    obs.push_back(1.f);
+    obs.push_back(1.f);
+    obs.push_back(1.f);
+    std::cout << "sample: " << reinforce.selectAction(obs) << std::endl;
 
     return 0;
 }
