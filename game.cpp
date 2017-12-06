@@ -61,19 +61,23 @@ int game()
 
     EnvData envData = env.reset();
 
+    // random sampler
+    std::random_device rd;  //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    std::uniform_real_distribution<> dis(0.0, 4.0);
+
+
     float episodeReward = 0;
     // loop forever running episodes of lunar lander
     int count = 0;
     while (1) {
         count++;
         // action = choose action based on envData.observation
+
+
         std::vector<float> action;
-        if (count % 2 == 0 || count % 7 == 0) {
-            action.push_back(2); // TODO: something better than always 0 (noop)
-        }
-        else {
-            action.push_back(0);
-        }
+        action.push_back(std::floor(dis(gen)));
+        std::cout << action.front() << std::endl;
 
         // update the sf::RenderWindow with the new location of stuff (redraw basically)
 
@@ -96,7 +100,7 @@ int game()
             std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
     return 0;

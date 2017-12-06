@@ -30,7 +30,7 @@ public:
         b2Body* bodyB = contact->GetFixtureB()->GetBody();
         // Lander crashed into the ground
         if (env_->lander_ == bodyA || env_->lander_ == bodyB) {
-            std::cout << "end game\n";
+            //std::cout << "end game\n";
             env_->gameOver_ = true;
         }
         // legs are touching the ground (so the bot knows it has reached the surface)
@@ -102,22 +102,24 @@ LunarLander::~LunarLander() {
 }
 
 b2Body* LunarLander::createParticle(float mass, float x, float y, float* power) {
-    particleBodyDef.type = b2_dynamicBody;
-    particleBodyDef.position = b2Vec2(x, y);
-    particleBodyDef.angle = 0.0;
+    b2BodyDef*    particleBodyDef =    new b2BodyDef;
+    b2FixtureDef* particleFixtureDef = new b2FixtureDef;
+    particleBodyDef->type = b2_dynamicBody;
+    particleBodyDef->position = b2Vec2(x, y);
+    particleBodyDef->angle = 0.0;
     b2CircleShape* circle = new b2CircleShape;
     circle->m_p = b2Vec2(0.0, 0.0);
     circle->m_radius = 2.0/SCALE;
-    particleFixtureDef.shape = circle;
-    particleFixtureDef.density = mass;
-    particleFixtureDef.friction = 0.1;
-    particleFixtureDef.filter.categoryBits = 0x0100;
-    particleFixtureDef.filter.maskBits = 0x001;
-    particleFixtureDef.restitution = 0.3;
+    particleFixtureDef->shape = circle;
+    particleFixtureDef->density = mass;
+    particleFixtureDef->friction = 0.1;
+    particleFixtureDef->filter.categoryBits = 0x0100;
+    particleFixtureDef->filter.maskBits = 0x001;
+    particleFixtureDef->restitution = 0.3;
 
-    b2Body* particle = world_->CreateBody(&particleBodyDef);
+    b2Body* particle = world_->CreateBody(particleBodyDef);
     particle->SetUserData(power);
-    particle->CreateFixture(&particleFixtureDef);
+    particle->CreateFixture(particleFixtureDef);
 
     particles_.push_back(particle);
 
@@ -150,7 +152,7 @@ void LunarLander::destroyParticles(bool all) {
 
 void LunarLander::destroy() {
     // if things haven't been created, we don't need to destroy them.
-    std::cout << "destroy" << std::endl;
+    //std::cout << "destroy" << std::endl;
     if (contactDetector_ == nullptr) {
         return;
     }
@@ -192,7 +194,6 @@ EnvData LunarLander::reset() {
     int i;
     for (i = 0; i < 12; i++) {
         height[i] = heightSampler(gen_);
-        std::cout << "height " << height[i] << std::endl;
     }
     for (i = 0; i < 11; i++) {
         chunkX[i] = i * (W/(CHUNKS-1));
@@ -216,8 +217,10 @@ EnvData LunarLander::reset() {
     }
 
     // create moon
-    moonBodyDef.type = b2_staticBody;
-    moon_ = world_->CreateBody(&moonBodyDef);
+    b2BodyDef* moonBodyDef = new b2BodyDef;
+    b2FixtureDef* moonFixtureDef = new b2FixtureDef;
+    moonBodyDef->type = b2_staticBody;
+    moon_ = world_->CreateBody(moonBodyDef);
     b2EdgeShape* moonEdgeShape = new b2EdgeShape;
     b2Vec2 v1(0.0f, 0.0f);
     b2Vec2 v2((float) W, 0.0f);
@@ -229,11 +232,13 @@ EnvData LunarLander::reset() {
         b2Vec2 p1(chunkX[i], smoothY[i]);
         b2Vec2 p2(chunkX[i+1], smoothY[i+1]);
         b2EdgeShape* groundEdge = new b2EdgeShape;
+
+        b2FixtureDef* groundFixtureDef = new b2FixtureDef;
         groundEdge->Set(p1, p2);
-        groundDef.shape = groundEdge;
-        groundDef.density = 0;
-        groundDef.friction = 0.1;
-        moon_->CreateFixture(&groundDef);
+        groundFixtureDef->shape = groundEdge;
+        groundFixtureDef->density = 0;
+        groundFixtureDef->friction = 0.1;
+        moon_->CreateFixture(groundFixtureDef);
 
         // stuff for drawing sky
         b2Vec2 skyTop1(p1.x, (float) H);
@@ -268,19 +273,22 @@ EnvData LunarLander::reset() {
     float f2 = forceSampler(gen_);
     lander_->ApplyForceToCenter(b2Vec2(forceSampler(gen_), forceSampler(gen_)), true);
 
-    leftLegBodyDef.type = b2_dynamicBody;
-    leftLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((-1)*LEG_AWAY)/SCALE, initLanderY);
-    leftLegBodyDef.angle = (-1)*0.05;
+
+    b2BodyDef*    leftLegBodyDef =    new b2BodyDef;
+    b2FixtureDef* leftLegFixtureDef = new b2FixtureDef;
+    leftLegBodyDef->type = b2_dynamicBody;
+    leftLegBodyDef->position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((-1)*LEG_AWAY)/SCALE, initLanderY);
+    leftLegBodyDef->angle = (-1)*0.05;
     b2PolygonShape* leftLegShape = new b2PolygonShape;
     leftLegShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
-    leftLegFixtureDef.shape = leftLegShape;
-    leftLegFixtureDef.density = 1.0;
-    leftLegFixtureDef.restitution = 0.0;
-    leftLegFixtureDef.filter.categoryBits = 0x0020;
-    leftLegFixtureDef.filter.maskBits = 0x001;
+    leftLegFixtureDef->shape = leftLegShape;
+    leftLegFixtureDef->density = 1.0;
+    leftLegFixtureDef->restitution = 0.0;
+    leftLegFixtureDef->filter.categoryBits = 0x0020;
+    leftLegFixtureDef->filter.maskBits = 0x001;
 
-    leftLeg_ = world_->CreateBody(&leftLegBodyDef);
-    leftLeg_->CreateFixture(&leftLegFixtureDef);
+    leftLeg_ = world_->CreateBody(leftLegBodyDef);
+    leftLeg_->CreateFixture(leftLegFixtureDef);
 
 
     b2RevoluteJointDef leftLegRJD;
@@ -296,21 +304,23 @@ EnvData LunarLander::reset() {
     leftLegRJD.lowerAngle = 0.9 - 0.5;
     leftLegRJD.upperAngle = 0.9;
 
-    world_->CreateJoint(&leftLegRJD);
+    leftLegJoint_ = (b2RevoluteJoint*) world_->CreateJoint(&leftLegRJD);
 
-    rightLegBodyDef.type = b2_dynamicBody;
-    rightLegBodyDef.position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((1)*LEG_AWAY)/SCALE, initLanderY);
-    rightLegBodyDef.angle = (1)*0.05;
+    b2BodyDef*    rightLegBodyDef =    new b2BodyDef;
+    b2FixtureDef* rightLegFixtureDef = new b2FixtureDef;
+    rightLegBodyDef->type = b2_dynamicBody;
+    rightLegBodyDef->position = b2Vec2(VIEWPORT_W / SCALE / 2.0 - ((1)*LEG_AWAY)/SCALE, initLanderY);
+    rightLegBodyDef->angle = (1)*0.05;
     b2PolygonShape* rightLegShape = new b2PolygonShape;
     rightLegShape->SetAsBox(LEG_W/SCALE, LEG_H/SCALE);
-    rightLegFixtureDef.shape = rightLegShape;
-    rightLegFixtureDef.density = 1.0;
-    rightLegFixtureDef.restitution = 0.0;
-    rightLegFixtureDef.filter.categoryBits = 0x0020;
-    rightLegFixtureDef.filter.maskBits = 0x001;
+    rightLegFixtureDef->shape = rightLegShape;
+    rightLegFixtureDef->density = 1.0;
+    rightLegFixtureDef->restitution = 0.0;
+    rightLegFixtureDef->filter.categoryBits = 0x0020;
+    rightLegFixtureDef->filter.maskBits = 0x001;
 
-    rightLeg_ = world_->CreateBody(&rightLegBodyDef);
-    rightLeg_->CreateFixture(&rightLegFixtureDef);
+    rightLeg_ = world_->CreateBody(rightLegBodyDef);
+    rightLeg_->CreateFixture(rightLegFixtureDef);
 
 
     b2RevoluteJointDef rightLegRJD;
@@ -326,7 +336,7 @@ EnvData LunarLander::reset() {
     rightLegRJD.lowerAngle = -0.9;
     rightLegRJD.upperAngle = -0.9 + 0.5;
 
-    world_->CreateJoint(&rightLegRJD);
+    rightLegJoint_ = (b2RevoluteJoint*) world_->CreateJoint(&rightLegRJD);
 
     drawList_.clear();
     drawList_.push_back(lander_);
@@ -457,9 +467,10 @@ EnvData LunarLander::step(std::vector<float> action) {
     reward -= sPower[0]*0.03;
 
     bool done = false;
-    if (gameOver_ || std::abs(state.at(0) >= 1.0)) {
+
+    if (gameOver_ || std::abs(state.at(0)) >= 1.0) {
         done = true;
-        reward = -100; // we crashed :(
+        reward = -100; // we crashed or left the boundaries :(
     }
     if (!lander_->IsAwake()) {
         done = true;
@@ -474,11 +485,8 @@ EnvData LunarLander::step(std::vector<float> action) {
 
 void LunarLander::render() {
 
-    // TODO:
-
     // set viewer if null
     if (viewer_ == nullptr){
-        std::cout << "hi" << std::endl;
         viewer_ = new sf::RenderWindow(sf::VideoMode(600, 400), "test");
     }
 
@@ -488,32 +496,56 @@ void LunarLander::render() {
 
 
     viewer_->display();
-    viewer_->clear(sf::Color().Black);
+    viewer_->clear(sf::Color().White);
 
-    // create an empty shape
-    sf::ConvexShape convex;
-
-    // resize it to 10 points
-    convex.setPointCount(11);
-    convex.setFillColor(sf::Color().White);
 
     //draw moon
-    for (int i = 0; i < skyPolys_.size(); i++){
-        sf::Sprite Sprite;
-        convex.setPoint(i, sf::Vector2f(std::get<0>(skyPolys_[i]).x*SCALE, VIEWPORT_H-std::get<0>(skyPolys_[i]).y*SCALE));
-    }
-    convex.setPoint(10, sf::Vector2f(600, 400));
+
+    // add beginning and end to make it flatter
+    sf::ConvexShape convex;
+    convex.setPointCount(4);
+    convex.setFillColor(sf::Color().Black);
+
+    std::tuple<b2Vec2, b2Vec2, b2Vec2, b2Vec2> polyTupe = skyPolys_[0];
+    convex.setPoint(0, sf::Vector2f(-200+SCALE*std::get<0>(polyTupe).x, VIEWPORT_H-SCALE*std::get<0>(polyTupe).y));
+    convex.setPoint(1, sf::Vector2f(SCALE*std::get<1>(polyTupe).x, VIEWPORT_H-SCALE*std::get<1>(polyTupe).y));
+    convex.setPoint(2, sf::Vector2f(SCALE*std::get<2>(polyTupe).x, 0.f));
+    convex.setPoint(3, sf::Vector2f(-200+SCALE*std::get<3>(polyTupe).x, 0.f));
     viewer_->draw(convex);
 
+    for (int i = 0; i < skyPolys_.size(); i++){
+        // draw separate polys
+        sf::ConvexShape convex;
+        convex.setPointCount(4);
+        convex.setFillColor(sf::Color().Black);
+
+        std::tuple<b2Vec2, b2Vec2, b2Vec2, b2Vec2> polyTupe = skyPolys_[i];
+        convex.setPoint(0, sf::Vector2f(SCALE*std::get<0>(polyTupe).x, VIEWPORT_H-SCALE*std::get<0>(polyTupe).y));
+        convex.setPoint(1, sf::Vector2f(SCALE*std::get<1>(polyTupe).x, VIEWPORT_H-SCALE*std::get<1>(polyTupe).y));
+        convex.setPoint(2, sf::Vector2f(SCALE*std::get<2>(polyTupe).x, 0.f));
+        convex.setPoint(3, sf::Vector2f(SCALE*std::get<3>(polyTupe).x, 0.f));
+        viewer_->draw(convex);
+    }
+    sf::ConvexShape endconvex;
+    endconvex.setPointCount(4);
+    endconvex.setFillColor(sf::Color().Black);
+    polyTupe = skyPolys_[skyPolys_.size()-1];
+    endconvex.setPoint(0, sf::Vector2f(SCALE*std::get<0>(polyTupe).x, VIEWPORT_H-SCALE*std::get<0>(polyTupe).y));
+    endconvex.setPoint(1, sf::Vector2f(100+SCALE*std::get<1>(polyTupe).x, VIEWPORT_H-SCALE*std::get<1>(polyTupe).y));
+    endconvex.setPoint(2, sf::Vector2f(100+SCALE*std::get<2>(polyTupe).x, 0.f));
+    endconvex.setPoint(3, sf::Vector2f(SCALE*std::get<3>(polyTupe).x, 0.f));
+    viewer_->draw(endconvex);
+
+
     //draw flag poles
-    sf::RectangleShape flag, flag2;
-    flag.setFillColor(sf::Color().White);
+    sf::RectangleShape flag1, flag2;
+    flag1.setFillColor(sf::Color().White);
     flag2.setFillColor(sf::Color().White);
-    flag.setSize(sf::Vector2f(1, -(helipadY_ + 50)));
+    flag1.setSize(sf::Vector2f(1, -(helipadY_ + 50)));
     flag2.setSize(sf::Vector2f(1, -(helipadY_ + 50)));
-    flag.setPosition(sf::Vector2f(SCALE*helipadX1_, VIEWPORT_H-helipadY_*SCALE));
+    flag1.setPosition(sf::Vector2f(SCALE*helipadX1_, VIEWPORT_H-helipadY_*SCALE));
     flag2.setPosition(sf::Vector2f(SCALE*helipadX2_, VIEWPORT_H-helipadY_*SCALE));
-    viewer_->draw(flag);
+    viewer_->draw(flag1);
     viewer_->draw(flag2);
 
     //draw flag triangles
@@ -528,7 +560,7 @@ void LunarLander::render() {
     flagTri2.setPoint(0, sf::Vector2f(5, 5));
     flagTri2.setPoint(1, sf::Vector2f(5, -5));
     flagTri2.setPoint(2, sf::Vector2f(25, 0));
-    flagTri1.setPosition(sf::Vector2f(SCALE*helipadX1_-5, flag.getSize().y+VIEWPORT_H-helipadY_*SCALE));
+    flagTri1.setPosition(sf::Vector2f(SCALE*helipadX1_-5, flag1.getSize().y+VIEWPORT_H-helipadY_*SCALE));
     flagTri2.setPosition(sf::Vector2f(SCALE*helipadX2_-5, flag2.getSize().y+VIEWPORT_H-helipadY_*SCALE));
     viewer_->draw(flagTri1);
     viewer_->draw(flagTri2);
@@ -537,29 +569,40 @@ void LunarLander::render() {
     sf::ConvexShape ship;
     ship.setPointCount(6);
     ship.setFillColor(sf::Color().Blue);
-    ship.setPoint(0, sf::Vector2f(-14, -17));
-    ship.setPoint(5, sf::Vector2f(14, -17));
-    ship.setPoint(4, sf::Vector2f(17, -10));
-    ship.setPoint(3, sf::Vector2f(17, 0));
-    ship.setPoint(2, sf::Vector2f(-17, 0));
-    ship.setPoint(1, sf::Vector2f(-17, -10));
-
-    ship.setPosition(drawList_[0]->GetPosition().x*SCALE, VIEWPORT_H-(drawList_[0]->GetPosition().y*SCALE));
-    ship.rotate(-drawList_[0]->GetAngle()*SCALE);
-
+    ship.setPoint(0, sf::Vector2f(-14,  -17));
+    ship.setPoint(5, sf::Vector2f(-17,  0  ));
+    ship.setPoint(4, sf::Vector2f(-17, +10 ));
+    ship.setPoint(3, sf::Vector2f(+17, +10 ));
+    ship.setPoint(2, sf::Vector2f(+17,  0  ));
+    ship.setPoint(1, sf::Vector2f(+14,  -17));
+    ship.setPosition(lander_->GetPosition().x*SCALE, 10+VIEWPORT_H-(lander_->GetPosition().y*SCALE));
+    ship.rotate(-lander_->GetAngle()*SCALE);
     viewer_->draw(ship);
+    //lander_->GetFixtureList();
+    //for (b2Fixture* f = lander_->GetFixtureList(); f; f = f->GetNext()) {
+    //    b2Transform t = f->GetBody()->GetTransform();
+    //    b2PolygonShape* polygonShape = (b2PolygonShape*)f->GetShape();
+    //    b2Vec2* arr = polygonShape->m_vertices;
+    //    int count = polygonShape->m_count;
+
+    //    for (int i = 0; i < count; i++) {
+    //        t * arr[i];
+    //    }
+    //}
 
     //draw legs
-    for(int i = 1; i < drawList_.size(); i++)
-    {
-        sf::RectangleShape legShape;
-        legShape.setSize(sf::Vector2f(LEG_W, LEG_H));
-        legShape.setPosition(drawList_[i]->GetPosition().x*SCALE, VIEWPORT_H-(drawList_[i]->GetPosition().y*SCALE));
-        legShape.setFillColor(sf::Color().Green);
-        legShape.rotate(-drawList_[i]->GetAngle()*SCALE);
-        viewer_->draw(legShape);
-    }
-
+    sf::RectangleShape leftLegShape;
+    leftLegShape.setSize(sf::Vector2f(2*LEG_W, 2*LEG_H));
+    leftLegShape.setPosition(leftLeg_->GetPosition().x*SCALE, 5+VIEWPORT_H-(leftLeg_->GetPosition().y*SCALE));
+    leftLegShape.setFillColor(sf::Color().Green);
+    leftLegShape.rotate(-SCALE*leftLeg_->GetAngle());
+    viewer_->draw(leftLegShape);
+    sf::RectangleShape rightLegShape;
+    rightLegShape.setSize(sf::Vector2f(2*LEG_W, 2*LEG_H));
+    rightLegShape.setPosition(rightLeg_->GetPosition().x*SCALE, 5+VIEWPORT_H-(rightLeg_->GetPosition().y*SCALE));
+    rightLegShape.setFillColor(sf::Color().Green);
+    rightLegShape.rotate(-SCALE*rightLeg_->GetAngle());
+    viewer_->draw(rightLegShape);
 
     //draw particles
     for (std::list<b2Body*>::iterator it=particles_.begin(); it != particles_.end(); ++it)
@@ -574,7 +617,6 @@ void LunarLander::render() {
         viewer_->draw(shape);
     }
 
-
     //sf::RenderWindow Window(sf::VideoMode(800, 600, 32), "Test");
     sf::Event event;
             while (viewer_->pollEvent(event))
@@ -585,5 +627,4 @@ void LunarLander::render() {
                     viewer_->close();
                 }
     }
-
 }

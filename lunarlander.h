@@ -22,7 +22,7 @@ const float SCALE  = 30.0;   // affects how fast-paced the game is, forces shoul
 const float MAIN_ENGINE_POWER  = 13.0;
 const float SIDE_ENGINE_POWER  =  0.6;
 
-const float INITIAL_RANDOM = 1.0;   // Set 1500 to make game harder
+const float INITIAL_RANDOM = 1000.0;   // Set 1500 to make game harder
 
 const int LEG_AWAY = 20;
 const int LEG_DOWN = 18;
@@ -73,7 +73,9 @@ private:
     std::vector<std::tuple<b2Vec2, b2Vec2, b2Vec2, b2Vec2> > skyPolys_; // I think is for drawing the sky
     b2Body* lander_; // body of lunar lander
     b2Body* leftLeg_; // left leg of lunar lander
-    b2Body* rightLeg_; // right leg of lunar lander
+    b2Body* rightLeg_; // left leg of lunar lander
+    b2RevoluteJoint* rightLegJoint_;
+    b2RevoluteJoint* leftLegJoint_;
     bool leftLegGroundContact_; // if the left leg is touching the ground
     bool rightLegGroundContact_; // if the right leg is touching the ground
     ContactDetector* contactDetector_; // Box2D object for handling collisions
@@ -85,15 +87,15 @@ private:
     sf::RenderWindow *viewer_;
 
 
-    b2FixtureDef particleFixtureDef;
-    b2FixtureDef groundDef;
-    //b2FixtureDef landerFixtureDef;
-    b2FixtureDef leftLegFixtureDef;
-    b2FixtureDef rightLegFixtureDef;
-    b2BodyDef leftLegBodyDef;
-    b2BodyDef rightLegBodyDef;
-    b2BodyDef particleBodyDef;
-    b2BodyDef moonBodyDef;
+    //b2FixtureDef particleFixtureDef;
+    //b2FixtureDef groundDef;
+    ////b2FixtureDef landerFixtureDef;
+    //b2FixtureDef leftLegFixtureDef;
+    //b2FixtureDef rightLegFixtureDef;
+    //b2BodyDef leftLegBodyDef;
+    //b2BodyDef rightLegBodyDef;
+    //b2BodyDef particleBodyDef;
+    //b2BodyDef moonBodyDef;
     //b2BodyDef landerBodyDef;
 
     int helipadY_;
