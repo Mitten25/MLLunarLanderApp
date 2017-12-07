@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QLabel>
+#include <QPushButton>
+#include <QGridLayout>
 
 class screenLander : public QWidget
 {
@@ -10,9 +13,19 @@ class screenLander : public QWidget
 public:
     explicit screenLander(QWidget *parent = nullptr);
 
+    ~screenLander();
+
 signals:
 
 public slots:
+    void onPress();
+
+private:
+    QGridLayout *layout;
+    QFont font;
+    QLabel *titleLabel;
+    QLabel *playGameLabel;
+    QPushButton *playGameButton;
 };
 
 #endif // SCREENLANDER_H

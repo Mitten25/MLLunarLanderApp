@@ -24,6 +24,8 @@ private:
     QLabel *firstSentence;
     QLabel *markovText;
     QLabel *rewardText;
+    QLabel *rewardImage;
+    QLabel *markovImage;
     QFont font;
 
 

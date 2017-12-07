@@ -37,11 +37,11 @@ screenReward::screenReward(QWidget *parent) : QWidget(parent)
 
 
     QPixmap pixReward("../cs3505-f17-a8-edu-app-matwilso/diagrams/reward.png");
-    QLabel *rewardImage = new QLabel(this);
+    rewardImage = new QLabel(this);
     rewardImage->setPixmap(pixReward);
     rewardImage->setScaledContents(true);
     QPixmap pixMarkov("../cs3505-f17-a8-edu-app-matwilso/diagrams/markov.png");
-    QLabel *markovImage = new QLabel(this);
+    markovImage = new QLabel(this);
     markovImage->setPixmap(pixMarkov);
     markovImage->setScaledContents(true);
 
@@ -57,4 +57,8 @@ screenReward::screenReward(QWidget *parent) : QWidget(parent)
 
 screenReward::~screenReward(){
     delete headerText;
+    delete firstSentence;
+    delete markovText;
+    delete rewardImage;
+    delete markovImage;
 }
