@@ -93,6 +93,10 @@ LunarLander::LunarLander(bool continuous): gen_(std::random_device()()) {
     rightLeg_ = nullptr;
     contactDetector_ = nullptr;
     viewer_ = nullptr;
+
+    //load textures
+    shipBodyTex.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/shipBodyTex.png");
+    legTex.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/legtex.png");
 }
 
 LunarLander::~LunarLander() {
@@ -534,7 +538,7 @@ void LunarLander::render() {
     //draw lander
     sf::ConvexShape ship;
     ship.setPointCount(6);
-    ship.setFillColor(sf::Color().Blue);
+    ship.setTexture(&shipBodyTex);
     ship.setPoint(0, sf::Vector2f(-14,  -17));
     ship.setPoint(5, sf::Vector2f(-17,  0  ));
     ship.setPoint(4, sf::Vector2f(-17, +10 ));
@@ -560,13 +564,16 @@ void LunarLander::render() {
     sf::RectangleShape leftLegShape;
     leftLegShape.setSize(sf::Vector2f(2*LEG_W, 2*LEG_H));
     leftLegShape.setPosition(leftLeg_->GetPosition().x*SCALE, 5+VIEWPORT_H-(leftLeg_->GetPosition().y*SCALE));
-    leftLegShape.setFillColor(sf::Color().Green);
+    //leftLegShape.setFillColor(sf::Color().Green);
+    leftLegShape.setTexture(&legTex);
     leftLegShape.rotate(-SCALE*leftLeg_->GetAngle());
     viewer_->draw(leftLegShape);
+
     sf::RectangleShape rightLegShape;
     rightLegShape.setSize(sf::Vector2f(2*LEG_W, 2*LEG_H));
     rightLegShape.setPosition(rightLeg_->GetPosition().x*SCALE, 5+VIEWPORT_H-(rightLeg_->GetPosition().y*SCALE));
-    rightLegShape.setFillColor(sf::Color().Green);
+    //rightLegShape.setFillColor(sf::Color().Green);
+    rightLegShape.setTexture(&legTex);
     rightLegShape.rotate(-SCALE*rightLeg_->GetAngle());
     viewer_->draw(rightLegShape);
 
@@ -578,8 +585,7 @@ void LunarLander::render() {
         *power -= 0.15;
 
         sf::CircleShape shape(5);
-        //150, 50, 250
-        shape.setFillColor(sf::Color(50,205,50, std::max((int) 0.2*255, (int) (128*(*power)))));
+        shape.setFillColor(sf::Color(150, 50, 250, std::max((int) 0.2*255, (int) (128*(*power)))));
         shape.setPosition(sf::Vector2f(SCALE*body->GetPosition().x, VIEWPORT_H-(body->GetPosition().y*SCALE)));
         viewer_->draw(shape);
     }

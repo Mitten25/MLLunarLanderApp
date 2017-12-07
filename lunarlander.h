@@ -102,6 +102,10 @@ private:
     int helipadX1_;
     int helipadX2_;
 
+    //textures
+    sf::Texture shipBodyTex;
+    sf::Texture legTex;
+
     std::random_device rd_;  //Will be used to obtain a seed for the random number engine
     std::mt19937 gen_;
 

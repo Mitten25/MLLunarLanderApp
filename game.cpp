@@ -21,7 +21,7 @@ void createGround(b2World& World, float X, float Y);
 void createBox(b2World& World, int MouseX, int MouseY);
 
 /** Bots */
-std::vector<float> xBasedBot(std::vector<float> obs);
+std::vector<float> landerBot(std::vector<float> obs);
 
 void createBox(b2World& World, int MouseX, int MouseY)
 {
@@ -89,7 +89,7 @@ int game()
         // update the sf::RenderWindow with the new location of stuff (redraw basically)
 
         env.render();
-        envData = env.step(xBasedBot(observation));
+        envData = env.step(landerBot(observation));
         observation = envData.observation;
         episodeReward += envData.reward;
 
@@ -112,19 +112,26 @@ int game()
     return 0;
 }
 
-std::vector<float> xBasedBot(std::vector<float> obs){
+std::vector<float> landerBot(std::vector<float> obs){
     //observation values: x, y, xvel, yvel, angle, anglevel, leftleg, rightleg
     //(noop, left engine, main engine, right engine)
     // -anglevel : right , +anglevel : left
     float arr[] = {1.0f};
-    if (obs[2] < -0.05){
-        arr[0] = 3.0f;
+    if (obs[3] < -.4){
+
+        arr[0] = 2.0f;
     }
-    else if (obs[2] > 0.05){
+    else if (obs[4] < -.2){
         arr[0] = 1.0f;
     }
-    else if (obs[3] < -0.25){
-        arr[0] = 2.0f;
+    else if (obs[4] > .2){
+        arr[0] = 3.0f;
+    }
+    else if (obs[0] < -0.1){
+        arr[0] = 3.0f;
+    }
+    else if (obs[0] > 0.1){
+        arr[0] = 1.0f;
     }
     else{
         arr[0] = 0.0f;
