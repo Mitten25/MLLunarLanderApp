@@ -9,10 +9,27 @@ REINFORCE::REINFORCE(int obsSpace, int actionChoices)
 {
     arma_rng::set_seed_random();  // set the seed to a random value
     // random initialization for the weights. all zeros intialization for the biases
-    W1.randn(obsSpace, H) / sqrt(H);
-    b1.zeros(H);
-    W2.randn(H, actionChoices) / sqrt(actionChoices);
-    b2.zeros(actionChoices);
+    fmat W1 = randn<fmat>(obsSpace, H) / sqrt(H);
+    fmat b1 = zeros<frowvec>(H);
+    fmat W2 = randn<fmat>(H, actionChoices) / sqrt(actionChoices);
+    fmat b2 = zeros<frowvec>(actionChoices);
+    params["W1"] = W1;
+    params["b1"] = b1;
+    params["W2"] = W2;
+    params["b2"] = b2;
+
+    // create gradient and adamCache element for every parameter (used to train network)
+    for (auto it=params.begin(); it!=params.end(); ++it) {
+        string name = it->first;
+        fmat param = it->second;
+
+        fmat grad =  zeros<fmat>(size(param));
+        fmat m =  zeros<fmat>(size(param));
+        fmat v =  zeros<fmat>(size(param));
+        gradients[name] = grad;
+        adamMCache[name] = m;
+        adamVCache[name] = v;
+    }
 }
 
 frowvec REINFORCE::softmax_(frowvec logp) {
@@ -22,7 +39,6 @@ frowvec REINFORCE::softmax_(frowvec logp) {
 }
 
 int REINFORCE::sample_(frowvec probs) {
-    int n = probs.size();
     std::random_device rd;
     std::mt19937 gen(rd());
 
@@ -33,24 +49,63 @@ int REINFORCE::sample_(frowvec probs) {
     return d(gen);
 }
 
+
+
+fvec REINFORCE::calculateReturns_(fvec rewards) {
+    // See Sutton Book for math
+    // Calculating discounted returns
+    // $G_t = r_{t+1} + \gamma*r_{t+2} + \gamma^2*r_{t=3} + ....$
+    // $G_i = r_{i+1} + \gamma * G_{i+1}$
+
+    fvec returns(rewards);
+    returns.zeros();
+
+    // nextReturn is the return of the next state. It is used in the recursive calculation of
+    // return (if you know the current reward at state i and the return at state i+1, you can
+    // calculate the return at state i. read that again)
+    float nextReturn = 0.0; // starts at 0 because we start at the last state (there's no return after we are done)
+
+    for (int i = (int) rewards.size()-1; i >= 0; i--) {
+        nextReturn = rewards[i] + GAMMA*nextReturn;
+        returns[i] = nextReturn;
+    }
+
+    // normalize returns (this tends to help the network train (something something statistics))
+    returns = (returns - mean(returns)) / (stddev(returns) + eps(returns));
+    return returns;
+}
+
+void REINFORCE::zeroGradients() {
+    for (auto it=params.begin(); it!=params.end(); ++it) {
+        string name = it->first;
+        gradients[name].zeros();
+    }
+}
+
+
 frowvec REINFORCE::policyForward(vector<float> observation) {
+    fmat W1 = params["W1"];
+    fmat b1 = params["b1"];
+    fmat W2 = params["W2"];
+    fmat b2 = params["b2"];
+
     frowvec obs(observation); // convert to arma vec
 
     // affine 1
-    fmat h = obs *  W1 + trans(b1);
+    fmat h = obs *  W1 + b1;
     // ReLU (make all elements < 0 = zero)
     h.elem( find(h < 0) ).zeros();
     // affine 2
-    fmat logp = h * W2 + trans(b2); // log (unnormalized) probabilities
+    fmat logp = h * W2 + b2; // log (unnormalized) probabilities
 
     //logp.print();
 
     frowvec softmaxProbs = softmax_(logp);
 
     // cache variables for computing analytic gradient in backward pass
-    join_vert(cacheObservations, obs);
-    join_vert(cacheSoftmaxProbs, softmaxProbs);
-    join_vert(cacheHiddenStates, h);
+    cacheObservations = join_vert(cacheObservations, obs);
+    cacheSoftmaxProbs = join_vert(cacheSoftmaxProbs, softmaxProbs);
+    cacheHiddenStates = join_vert(cacheHiddenStates, h);
     // weights and biases are also needed, but they are implicitly cached (they do not change during forward pass)
 
     return softmaxProbs;
@@ -59,46 +114,90 @@ frowvec REINFORCE::policyForward(vector<float> observation) {
 int REINFORCE::selectAction(vector<float> observation) {
     frowvec probs = policyForward(observation);
     int action = sample_(probs);
-
+    cacheActions.push_back(action);
     // this is for multiplying by the rewards in optimize (line 72 pytorch reinforce)
-    cacheLogProbs.push_back(probs[action]);
+    cacheLogProbs.push_back(-log(probs[action]));
 
     return action;
 }
 
-void REINFORCE::policyBackward(frowvec dout) {
+// TODO: verify this gradient somehow
+void REINFORCE::policyBackward(fmat dout) {
     // compute gradients and multiply them back through the network to update
     // weights. This method does "backpropagation" by computing the analytic
     // gradient for each layer of the network, where the gradient is the
     // extension of the derivative to matrices and vectors. So this function
     // was derived using calculus.
+    fmat W1 = params["W1"];
+    fmat b1 = params["b1"];
+    fmat W2 = params["W2"];
+    fmat b2 = params["b2"];
 
+    //cacheSoftmaxProbs.print();
+    //dout.print();
 
-    // TODO: need to go through and make sure everything is the right dimension
+    fmat dSoftmax = dout * cacheSoftmaxProbs;
+    //dSoftmax.print();
 
-    // TODO: verify this gradient somehow
-    fmat dSoftmax(cacheSoftmaxProbs);
-    dSoftmax.elem(cacheActions) -= 1;
+    fvec vecActions(cacheActions);
+    // subtract 1 from the softmax vals for all the actions that were chosen
+    for (size_t i = 0; i < vecActions.size(); i++) {
+        dSoftmax(i, vecActions[i]) -= 1;
+    }
 
     // forward pass was softmax = h*W2 + b2, so derivative w.r.t. W2 is dsoftmax * h from the forward pass
-    fmat dW2 = dSoftmax * cacheHiddenStates;
+    fmat curr_dW2 = cacheHiddenStates.t() * dSoftmax;
+
     // derivative of softmax w.r.t. h is similar because they are multiplied
-    fmat dh = dSoftmax * W2;
-    // derivate of softmax w.r.t. b2 is 1 so gradient gets passed through
-    fmat db2 = dSoftmax;//.sum() along some axis or something
-
+    fmat curr_dh = dSoftmax * W2.t();
     // analytic gradient of relu. if anything was less than 0 in the forward pass, the gradient is 0
-    dh.elem( find(cacheHiddenStates < 0) ).zeros();
+    curr_dh.elem( find(cacheHiddenStates < 0) ).zeros();
+
+    // derivate of softmax w.r.t. b2 is 1 so gradient gets passed through
+    frowvec curr_db2 = sum(dSoftmax, 0);
+
     // forward pass was h = obs*W1 + b1, so derivative w.r.t. W1 is dh * obs from the forward pass
-    fmat dW1 = dh * cacheObservations;
+    fmat curr_dW1 = cacheObservations.t() * curr_dh;
     // derivate of h w.r.t. b2 is 1 so gradient gets passed through
-    fmat db1 = dh; //.sum() along some axis or something
+    frowvec curr_db1 = sum(curr_dh, 0);
 
 
+    cacheActions.clear();
+    cacheObservations.clear();
+    cacheHiddenStates.clear();
+    cacheSoftmaxProbs.clear();
+    gradients["W2"] += curr_dW2;
+    gradients["b2"] += curr_db2;
+    gradients["W1"] += curr_dW1;
+    gradients["b1"] += curr_db1;
 }
 
 
-void REINFORCE::optimize() {
-    //frowvec logProbs(cacheLogProbs);
+void REINFORCE::optimizePolicy(vector<float> rewards, bool doit) {
+    fvec returns = calculateReturns_(fvec(rewards));
+    frowvec logProbs(cacheLogProbs);
+    cacheLogProbs.clear();
 
+    policyBackward(returns * logProbs);
+
+    if (doit) {
+        // Adam Optimizer
+        // (http://cs231n.github.io/neural-networks-3/)
+        for (auto it=params.begin(); it!=params.end(); ++it) {
+            string name = it->first;
+            fmat param = it->second;
+
+            adamMCache[name] = ADAM_B1*adamMCache[name] + (1-ADAM_B1)*gradients[name];
+            fmat mt = adamMCache[name] / (1-pow(ADAM_B1, adamCount));
+
+            adamVCache[name] = ADAM_B2*adamVCache[name] + (1-ADAM_B2)*pow(gradients[name], 2);
+            fmat vt = adamVCache[name] / (1-pow(ADAM_B2, adamCount));
+
+            params[name] += -ADAM_LEARNING_RATE * mt / (sqrt(vt) + eps(vt));
+        }
+        zeroGradients();
+    }
 }
+
+
+

@@ -1,10 +1,11 @@
 #ifndef REINFORCE_H
 #define REINFORCE_H
 
-#include <armadillo>
+#include <string>
 #include <vector>
 #include <random>
-#include <tuple>
+#include <map>
+#include <armadillo>
 
 using namespace arma;
 using namespace std;
@@ -32,9 +33,11 @@ public:
     /*
     * Neural network backward pass (calculate gradient of all parameters with respect to output ("backpropagation"))
     */
-    void policyBackward(frowvec dout);
+    void policyBackward(fmat dout);
     //update network weights (hopefully in a good way)
-    void optimize();
+    void optimizePolicy(vector<float> rewards, bool doit);
+
+    void zeroGradients();
 
 
 private:
@@ -43,23 +46,35 @@ private:
     // discrete sample from probability list
     int sample_(frowvec probs);
 
+    fvec calculateReturns_(fvec rewards);
+
     vector<float> cacheLogProbs;
+    vector<float> cacheActions;
     fmat cacheObservations;
     fmat cacheHiddenStates;
     fmat cacheSoftmaxProbs;
 
-
-
     // Network shape parameters
     fvec O; // observation shape
     int A; // action shape
-    static const int H = 400; // number of hidden units (higher = more numbers the network can use to learn)
+    static constexpr int H = 10; // number of hidden units (higher = more numbers the network can use to learn)
+    static constexpr float GAMMA = 0.99; // discount factor gamma (close to 1 means more long-sighted, 0 only optimizes current reward)
+    // adam optimizer params
+    static constexpr float ADAM_B1 = 0.9;
+    static constexpr float ADAM_B2 = 0.999;
+    static constexpr float ADAM_LEARNING_RATE = 4e-3;
+    long adamCount; // count up
+    map<string, fmat> adamMCache;
+    map<string, fmat> adamVCache;
 
     // Neural network parameters (weights and biases)
-    fmat W1;
-    fvec b1;
-    fmat W2;
-    fvec b2;
+    map<string, fmat> params;
+    map<string, fmat> gradients;
+
+    //fmat dW1;
+    //fvec db1;
+    //fmat dW2;
+    //fvec db2;
 };
 
 #endif // REINFORCE_H
