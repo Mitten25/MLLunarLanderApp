@@ -18,6 +18,8 @@ REINFORCE::REINFORCE(int obsSpace, int actionChoices)
     params["W2"] = W2;
     params["b2"] = b2;
 
+
+    adamCount = 1;
     // create gradient and adamCache element for every parameter (used to train network)
     for (auto it=params.begin(); it!=params.end(); ++it) {
         string name = it->first;
@@ -71,7 +73,7 @@ fvec REINFORCE::calculateReturns_(fvec rewards) {
     }
 
     // normalize returns (this tends to help the network train (something something statistics))
-    returns = (returns - mean(returns)) / (stddev(returns) + eps(returns));
+    returns = (returns - mean(returns)) / (stddev(returns) + 1e-5);
     return returns;
 }
 
@@ -188,13 +190,24 @@ void REINFORCE::optimizePolicy(vector<float> rewards, bool doit) {
             fmat param = it->second;
 
             adamMCache[name] = ADAM_B1*adamMCache[name] + (1-ADAM_B1)*gradients[name];
-            fmat mt = adamMCache[name] / (1-pow(ADAM_B1, adamCount));
+            //cout << "mCache " << adamMCache[name] << endl;
+            fmat mt = adamMCache[name] / (1.-pow(ADAM_B1, adamCount) + 1e-5);
+            //cout << "mt " << mt << endl;
+
+            //cout << "power " << pow(ADAM_B1, (float) adamCount) << endl;
+            //cout << "power " << 1.-pow(ADAM_B2, adamCount) << endl;
 
             adamVCache[name] = ADAM_B2*adamVCache[name] + (1-ADAM_B2)*pow(gradients[name], 2);
             fmat vt = adamVCache[name] / (1-pow(ADAM_B2, adamCount));
+            //cout << "vt " << vt << endl;
 
-            params[name] += -ADAM_LEARNING_RATE * mt / (sqrt(vt) + eps(vt));
+            fmat update = -ADAM_LEARNING_RATE * mt / (sqrt(vt) + 1e-5);
+
+            //cout << "update " << update << endl;
+
+            params[name] += update;
         }
+        adamCount++;
         zeroGradients();
     }
 }

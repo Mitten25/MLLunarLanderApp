@@ -23,7 +23,8 @@ SOURCES +=\
     screenreward.cpp \
     screenobservation.cpp \
     screentrials.cpp \
-    screenlander.cpp
+    screenlander.cpp \
+    learn_game.cpp
 HEADERS  += mainwindow.h \
     lunarlander.h \
     screenwelcome.h \

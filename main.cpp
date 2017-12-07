@@ -1,10 +1,10 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "game.cpp"
+//#include "game.cpp"
+#include "learn_game.cpp"
 #include <QThread>
 #include <QFuture>
 #include <QtConcurrent>
-#include "rl/reinforce.h"
 
 
 int main(int argc, char *argv[])
@@ -14,23 +14,13 @@ int main(int argc, char *argv[])
     //w.show();
 
 
-    ////Comment these out to stop the game
-    //extern int game();
-    //QFuture<void> future = QtConcurrent::run(game);
+    //Comment these out to stop the game
+    extern int learn_game();
+    learn_game();
+
+    //QFuture<void> future = QtConcurrent::run(learn_game);
 
 
     //return a.exec();
-    REINFORCE reinforce(8, 4);
-    std::vector<float> obs;
-    obs.push_back(1.f);
-    obs.push_back(1.f);
-    obs.push_back(1.f);
-    obs.push_back(1.f);
-    obs.push_back(1.f);
-    obs.push_back(1.f);
-    obs.push_back(1.f);
-    obs.push_back(1.f);
-    std::cout << "sample: " << reinforce.selectAction(obs) << std::endl;
-
     return 0;
 }
