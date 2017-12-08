@@ -95,8 +95,11 @@ LunarLander::LunarLander(bool continuous): gen_(std::random_device()()) {
     viewer_ = nullptr;
 
     //load textures
-    shipBodyTex.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/shipBodyTex.png");
-    legTex.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/legtex.png");
+    bgTex.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/Assets/spaceBGTex.png");
+    shipBodyTex.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/Assets/shipBodyTex.png");
+    legTex.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/Assets/legtex.png");
+    sparkTex.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/Assets/sparkTex.png");
+    flagTex.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/Assets/flagTex.png");
 }
 
 LunarLander::~LunarLander() {
@@ -483,27 +486,26 @@ void LunarLander::render() {
         viewer_ = new sf::RenderWindow(sf::VideoMode(600, 400), "test");
     }
 
-    //std::cout << skyPolys_.size();
-    sf::Texture BoxTexture;
-    BoxTexture.loadFromFile("../cs3505-f17-a8-edu-app-matwilso/box.png");
-
-
+    sf::RectangleShape bgShape;
+    bgShape.setSize(sf::Vector2f(600,400));
+    bgShape.setTexture(&bgTex);
     viewer_->display();
-    viewer_->clear(sf::Color().White);
+    viewer_->clear(sf::Color().Black);
 
+    viewer_->draw(bgShape);
 
     //draw moon
     for (int i = 0; i < skyPolys_.size(); i++){
         // draw separate polys
         sf::ConvexShape convex;
         convex.setPointCount(4);
-        convex.setFillColor(sf::Color().Black);
+        convex.setFillColor(sf::Color(223, 233, 239));
 
         std::tuple<b2Vec2, b2Vec2, b2Vec2, b2Vec2> polyTupe = skyPolys_[i];
         convex.setPoint(0, sf::Vector2f(SCALE*std::get<0>(polyTupe).x, VIEWPORT_H-SCALE*std::get<0>(polyTupe).y));
         convex.setPoint(1, sf::Vector2f(SCALE*std::get<1>(polyTupe).x, VIEWPORT_H-SCALE*std::get<1>(polyTupe).y));
-        convex.setPoint(2, sf::Vector2f(SCALE*std::get<2>(polyTupe).x, 0.f));
-        convex.setPoint(3, sf::Vector2f(SCALE*std::get<3>(polyTupe).x, 0.f));
+        convex.setPoint(2, sf::Vector2f(SCALE*std::get<2>(polyTupe).x, 400.f));
+        convex.setPoint(3, sf::Vector2f(SCALE*std::get<3>(polyTupe).x, 400.f));
         viewer_->draw(convex);
     }
 
@@ -519,19 +521,13 @@ void LunarLander::render() {
     viewer_->draw(flag2);
 
     //draw flag triangles
-    sf::ConvexShape flagTri1, flagTri2;
-    flagTri1.setFillColor(sf::Color().Yellow);
-    flagTri2.setFillColor(sf::Color().Yellow);
-    flagTri1.setPointCount(3);
-    flagTri2.setPointCount(3);
-    flagTri1.setPoint(0, sf::Vector2f(5, 5));
-    flagTri1.setPoint(1, sf::Vector2f(5, -5));
-    flagTri1.setPoint(2, sf::Vector2f(25, 0));
-    flagTri2.setPoint(0, sf::Vector2f(5, 5));
-    flagTri2.setPoint(1, sf::Vector2f(5, -5));
-    flagTri2.setPoint(2, sf::Vector2f(25, 0));
-    flagTri1.setPosition(sf::Vector2f(SCALE*helipadX1_-5, flag1.getSize().y+VIEWPORT_H-helipadY_*SCALE));
-    flagTri2.setPosition(sf::Vector2f(SCALE*helipadX2_-5, flag2.getSize().y+VIEWPORT_H-helipadY_*SCALE));
+    sf::RectangleShape flagTri1, flagTri2;
+    flagTri1.setSize(sf::Vector2f(20,10));
+    flagTri2.setSize(sf::Vector2f(20,10));
+    flagTri1.setPosition(sf::Vector2f(SCALE*helipadX1_, flag1.getSize().y+VIEWPORT_H-helipadY_*SCALE));
+    flagTri2.setPosition(sf::Vector2f(SCALE*helipadX2_, flag2.getSize().y+VIEWPORT_H-helipadY_*SCALE));
+    flagTri1.setTexture(&flagTex);
+    flagTri2.setTexture(&flagTex);
     viewer_->draw(flagTri1);
     viewer_->draw(flagTri2);
 
@@ -585,7 +581,8 @@ void LunarLander::render() {
         *power -= 0.15;
 
         sf::CircleShape shape(5);
-        shape.setFillColor(sf::Color(150, 50, 250, std::max((int) 0.2*255, (int) (128*(*power)))));
+        shape.setFillColor(sf::Color(255, 255, 255, std::max((int) 0.2*255, (int) (128*(*power)))));
+        shape.setTexture(&sparkTex);
         shape.setPosition(sf::Vector2f(SCALE*body->GetPosition().x, VIEWPORT_H-(body->GetPosition().y*SCALE)));
         viewer_->draw(shape);
     }

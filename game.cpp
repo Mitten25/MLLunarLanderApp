@@ -118,8 +118,14 @@ std::vector<float> landerBot(std::vector<float> obs){
     // -anglevel : right , +anglevel : left
     float arr[] = {1.0f};
     if (obs[3] < -.4){
-
-        arr[0] = 2.0f;
+        if(obs[2] < -.85){
+            arr[0] = 3.0f;
+        }
+        else if(obs[2] > .85){
+            arr[0] = 1.0f;
+        }
+        else
+            arr[0] = 2.0f;
     }
     else if (obs[4] < -.2){
         arr[0] = 1.0f;
