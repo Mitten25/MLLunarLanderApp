@@ -48,7 +48,7 @@ private:
 
     fvec calculateReturns_(fvec rewards);
 
-    vector<float> cacheLogProbs;
+    vector<float> cacheNegLogProbs;
     vector<float> cacheActions;
     fmat cacheObservations;
     fmat cacheHiddenStates;
@@ -57,7 +57,7 @@ private:
     // Network shape parameters
     fvec O; // observation shape
     int A; // action shape
-    static constexpr int H = 10; // number of hidden units (higher = more numbers the network can use to learn)
+    static constexpr int H = 400; // number of hidden units (higher = more numbers the network can use to learn)
     static constexpr float GAMMA = 0.99; // discount factor gamma (close to 1 means more long-sighted, 0 only optimizes current reward)
     // adam optimizer params
     static constexpr float ADAM_B1 = 0.9;

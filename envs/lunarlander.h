@@ -101,6 +101,7 @@ private:
     int helipadY_;
     int helipadX1_;
     int helipadX2_;
+    int stepCount_;
 
     std::random_device rd_;  //Will be used to obtain a seed for the random number engine
     std::mt19937 gen_;

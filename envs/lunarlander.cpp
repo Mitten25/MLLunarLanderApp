@@ -177,6 +177,7 @@ EnvData LunarLander::reset() {
     world_->SetContactListener(contactDetector_);
     gameOver_ = false;
     prevShaping_ = 0;
+    stepCount_ = 0;
 
     int H = VIEWPORT_H/SCALE;
     int W = VIEWPORT_W/SCALE;
@@ -345,6 +346,7 @@ EnvData LunarLander::reset() {
 
 EnvData LunarLander::step(std::vector<float> action) {
     EnvData envData;
+    stepCount_++;
 
     if (continuous_) {
         //assert(action.size() == 2);
@@ -465,6 +467,12 @@ EnvData LunarLander::step(std::vector<float> action) {
         done = true;
         reward = 100; // we landed safely :)
     }
+
+    // timeout
+    if (stepCount_ >= 1000) {
+        done = true;
+    }
+
 
     envData.observation = state;
     envData.reward = reward;

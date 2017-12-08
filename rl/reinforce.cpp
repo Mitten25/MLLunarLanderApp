@@ -11,13 +11,12 @@ REINFORCE::REINFORCE(int obsSpace, int actionChoices)
     // random initialization for the weights. all zeros intialization for the biases
     fmat W1 = randn<fmat>(obsSpace, H) / sqrt(H);
     fmat b1 = zeros<frowvec>(H);
-    fmat W2 = randn<fmat>(H, actionChoices) / sqrt(actionChoices);
+    fmat W2 = randn<fmat>(H, actionChoices) / sqrt(H);
     fmat b2 = zeros<frowvec>(actionChoices);
     params["W1"] = W1;
     params["b1"] = b1;
     params["W2"] = W2;
     params["b2"] = b2;
-
 
     adamCount = 1;
     // create gradient and adamCache element for every parameter (used to train network)
@@ -73,7 +72,7 @@ fvec REINFORCE::calculateReturns_(fvec rewards) {
     }
 
     // normalize returns (this tends to help the network train (something something statistics))
-    returns = (returns - mean(returns)) / (stddev(returns) + 1e-5);
+    returns = (returns - mean(returns)) / (stddev(returns));
     return returns;
 }
 
@@ -103,6 +102,7 @@ frowvec REINFORCE::policyForward(vector<float> observation) {
     //logp.print();
 
     frowvec softmaxProbs = softmax_(logp);
+    //cout << "softmaxProbs" << softmaxProbs << endl;
 
     // cache variables for computing analytic gradient in backward pass
     cacheObservations = join_vert(cacheObservations, obs);
@@ -118,7 +118,7 @@ int REINFORCE::selectAction(vector<float> observation) {
     int action = sample_(probs);
     cacheActions.push_back(action);
     // this is for multiplying by the rewards in optimize (line 72 pytorch reinforce)
-    cacheLogProbs.push_back(-log(probs[action]));
+    cacheNegLogProbs.push_back(-log(probs[action]));
 
     return action;
 }
@@ -138,14 +138,51 @@ void REINFORCE::policyBackward(fmat dout) {
     //cacheSoftmaxProbs.print();
     //dout.print();
 
-    fmat dSoftmax = dout * cacheSoftmaxProbs;
+    fmat stretchDout = join_horiz(dout, dout);
+    stretchDout = join_horiz(stretchDout, dout);
+    stretchDout = join_horiz(stretchDout, dout);
+    //cout << "size1 " << size(cacheSoftmaxProbs) << endl;
+    //cout << "size2 " << size(dout) << endl;
+    //cout << "size2 " << size(cacheHiddenStates) << endl;
+    //cout << "dout " << dout << endl;
+    //fmat dSoftmax = stretchDout % (cacheSoftmaxProbs % (1 - cacheSoftmaxProbs));
+    //fmat dSoftmax = stretchDout;
     //dSoftmax.print();
 
-    fvec vecActions(cacheActions);
-    // subtract 1 from the softmax vals for all the actions that were chosen
-    for (size_t i = 0; i < vecActions.size(); i++) {
-        dSoftmax(i, vecActions[i]) -= 1;
-    }
+    fmat inner = sum(stretchDout % cacheSoftmaxProbs, 1);
+    //cout << "inner " << inner << endl;
+    inner = join_horiz(inner, inner);
+    inner = join_horiz(inner, inner);
+    fmat dSoftmax = cacheSoftmaxProbs % (stretchDout - inner);
+
+    //// zero out gradients for actions not chosen (similar to an arg max)
+    //fvec vecActions(cacheActions);
+    //fmat z = zeros<fmat>(size(stretchDout));
+
+    //for (size_t i = 0; i < vecActions.size(); i++) {
+    //    //cout << "action " << vecActions(i) << endl;
+    //    z(i, vecActions(i)) = 1;
+    //}
+
+    ////cout << "z " << z << endl;
+
+    //dSoftmax %= z;
+    //cout << "dSoftmax " << dSoftmax << endl;
+
+    //for (size_t i = 0; i < vecActions.size(); i++) {
+    //    dSoftmax *= cacheSoftmaxProbs * (vecActions[i])
+    //}
+
+
+    // TODO: next try deciphering this (using jacobian):
+    // https://stats.stackexchange.com/questions/79454/softmax-layer-in-a-neural-network
+
+
+    // TODO: we need something like this, but this may be wrong
+    //fvec vecActions(cacheActions);
+    //for (size_t i = 0; i < vecActions.size(); i++) {
+    //    dSoftmax(i, vecActions[i]) -= 1;
+    //}
 
     // forward pass was softmax = h*W2 + b2, so derivative w.r.t. W2 is dsoftmax * h from the forward pass
     fmat curr_dW2 = cacheHiddenStates.t() * dSoftmax;
@@ -163,7 +200,6 @@ void REINFORCE::policyBackward(fmat dout) {
     // derivate of h w.r.t. b2 is 1 so gradient gets passed through
     frowvec curr_db1 = sum(curr_dh, 0);
 
-
     cacheActions.clear();
     cacheObservations.clear();
     cacheHiddenStates.clear();
@@ -177,10 +213,10 @@ void REINFORCE::policyBackward(fmat dout) {
 
 void REINFORCE::optimizePolicy(vector<float> rewards, bool doit) {
     fvec returns = calculateReturns_(fvec(rewards));
-    frowvec logProbs(cacheLogProbs);
-    cacheLogProbs.clear();
+    fvec negLogProbs(cacheNegLogProbs);
+    cacheNegLogProbs.clear();
 
-    policyBackward(returns * logProbs);
+    policyBackward(returns % negLogProbs);
 
     if (doit) {
         // Adam Optimizer
@@ -191,7 +227,7 @@ void REINFORCE::optimizePolicy(vector<float> rewards, bool doit) {
 
             adamMCache[name] = ADAM_B1*adamMCache[name] + (1-ADAM_B1)*gradients[name];
             //cout << "mCache " << adamMCache[name] << endl;
-            fmat mt = adamMCache[name] / (1.-pow(ADAM_B1, adamCount) + 1e-5);
+            fmat mt = adamMCache[name] / (1.-pow(ADAM_B1, adamCount));
             //cout << "mt " << mt << endl;
 
             //cout << "power " << pow(ADAM_B1, (float) adamCount) << endl;
@@ -201,9 +237,8 @@ void REINFORCE::optimizePolicy(vector<float> rewards, bool doit) {
             fmat vt = adamVCache[name] / (1-pow(ADAM_B2, adamCount));
             //cout << "vt " << vt << endl;
 
-            fmat update = -ADAM_LEARNING_RATE * mt / (sqrt(vt) + 1e-5);
-
-            //cout << "update " << update << endl;
+            fmat update = -ADAM_LEARNING_RATE * mt / (sqrt(vt) + 1e-9);
+            //cout << "update " << name << " " << update << endl;
 
             params[name] += update;
         }
