@@ -1,3 +1,5 @@
+//Osama was here
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "screenwelcome.h"
@@ -26,11 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setMaximumSize(*minSize);
     this->setWindowTitle("ML Moonlander");
     this->setIconSize(QSize(0,0));
-//    this->setStyleSheet("background-color: grey;");
-    //
-
-  this->centralWidget()->setStyleSheet("background-color: rgb(46, 78, 105);");
-   // this->centralWidget()->setStyleSheet("color: grey;");
+    this->centralWidget()->setStyleSheet("background-color: rgb(46, 78, 105);");
 
     //Program Wide StyleSheet Setup
     qApp->setStyleSheet("QLabel { background-color: rgb(46, 78, 105) }"
