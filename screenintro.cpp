@@ -2,19 +2,23 @@
 
 screenIntro::screenIntro(QWidget *parent) : QWidget(parent)
 {
+    //Setting up our variables
     QLabel *intro = new QLabel(this);
     QVBoxLayout *boxLayout = new QVBoxLayout;
     intro->setStyleSheet("QLabel { background-color : black; color : grey; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
     QFont tabFont;
 
+    //Making the font for the tab title
     tabFont.setBold(true);
     tabFont.setStyleHint(QFont::Helvetica);
     tabFont.setPixelSize(70);
 
+    // Setting up the tab
     intro->setFont(tabFont);
     intro->setText("What is Machine Learning?");
     intro->resize(1000, 100);
 
+    // Adding the text to the window
     QFont textFont;
     textFont.setStyleHint(QFont::Helvetica);
     textFont.setPixelSize(20);
@@ -26,10 +30,11 @@ screenIntro::screenIntro(QWidget *parent) : QWidget(parent)
     text+= "\nThis guide will go over Reinforcement Learning, a type of Machine Learning commonly used in games\n";
     text+= "In each of the next tabs, we'll go over a property of Reinforcement learning to see how it affects the model.";
 
-
+    // Setting the text and layout
     info1->setText(text);
-
     setLayout(boxLayout);
+
+    //Declaring the first diagram
     diagram = new QPushButton;
     QPixmap pixDiagram1("../cs3505-f17-a8-edu-app-matwilso/diagrams/rl1png.png");
     QIcon ButtonIcon1(pixDiagram1);
@@ -43,9 +48,12 @@ screenIntro::screenIntro(QWidget *parent) : QWidget(parent)
     boxLayout->addWidget(info1);
     boxLayout->addWidget(diagram);
 
+    //Connecting the signal for the button press so it will change
     connect(diagram, SIGNAL(clicked(bool)), this, SLOT(change(bool)));
 }
 
+
+// Slot to change the button diagram
 void screenIntro::change(bool) {
     if(flag == 0) {
         QPixmap pixDiagram2("../cs3505-f17-a8-edu-app-matwilso/diagrams/progeny.png");
