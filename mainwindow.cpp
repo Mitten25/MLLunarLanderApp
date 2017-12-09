@@ -6,6 +6,7 @@
 #include "screenobservation.h"
 #include "screentrials.h"
 #include "screenlander.h"
+#include "screenfuture.h"
 
 #include <QString>
 #include <QSizePolicy>
@@ -75,6 +76,8 @@ MainWindow::MainWindow(QWidget *parent) :
     screenObservation* observationScreen = new screenObservation(this);
     screenTrials* trialsScreen = new screenTrials(this);
     screenLander* lunarLanderScreen  = new screenLander(this);
+    screenFuture* futureScreen  = new screenFuture(this);
+
 
     //Create Tab Names
     QString welcome = "Welcome";
@@ -83,6 +86,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QString lunarString = "Lunar Landing Simulation";
     QString observationString = "Observation";
     QString trialsString = "Trials";
+    QString futureString = "Past Vs. Future";
+
 
     //Add Widgets/.CPP to tab screens
     tab->addTab(welcomeScreen, welcome);
@@ -90,6 +95,7 @@ MainWindow::MainWindow(QWidget *parent) :
     tab->addTab(rewardScreen, rewardString);
     tab->addTab(observationScreen, observationString);
     tab->addTab(trialsScreen, trialsString);
+    tab->addTab(futureScreen, futureString);
     tab->addTab(lunarLanderScreen, lunarString);
 
 
