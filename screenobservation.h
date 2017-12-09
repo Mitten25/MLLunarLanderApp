@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QDebug>
 #include <QComboBox>
+#include <QMovie>
 
 class screenObservation : public QWidget
 {
@@ -15,9 +16,13 @@ class screenObservation : public QWidget
 public:
     explicit screenObservation(QWidget *parent = nullptr);
 
+private:
+    QLabel *gif;
+
 signals:
 
 public slots:
+    void change(int);
 };
 
 #endif // SCREENOBSERVATION_H
