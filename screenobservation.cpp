@@ -36,6 +36,9 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
     text+= "\nWe can see what happens when we blind";
     text+= "\nthe model in certain ways by running ";
     text+= "\nthe simulations below.";
+    text+= "\nIn the first one, the bot does not know its x position";
+    text+= "\nIn the second one, the bot does not know its height";
+    text+= "\nIn the last one, the bot does not know its angle";
 
     //Setting the text
     info1->setFont(textFont);

@@ -37,6 +37,7 @@ screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
     text+= "Look at the Success Rate Graph";
     text+= "\nDoes it match your observations?";
 
+
     info1->setText(text);
 
 
@@ -65,14 +66,14 @@ void screenTrials::change(int index) {
         return;
     }
     if (index == 2) {
-        /*QMovie *movie = new QMovie("../cs3505-f17-a8-edu-app-matwilso/diagrams/trials10000.gif");
+        QMovie *movie = new QMovie("../cs3505-f17-a8-edu-app-matwilso/diagrams/trials10000.gif");
         gif->setMovie(movie);
         movie->setSpeed(200);
-        movie->start(); */
+        movie->start();
         return;
     }
     if(index == 3) {
-        QPixmap pixMap("../cs3505-f17-a8-edu-app-matwilso/diagrams/rl1png.png");
+        QPixmap pixMap("../cs3505-f17-a8-edu-app-matwilso/diagrams/trialsGraph.png");
         gif->setPixmap(pixMap);
     }
 }
