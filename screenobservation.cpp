@@ -4,7 +4,7 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
 {
     QLabel *intro = new QLabel(this);
     gif = new QLabel;
-    QVBoxLayout *boxLayout = new QVBoxLayout;
+    QGridLayout* girdLayout = new QGridLayout(this);
     intro->setStyleSheet("QLabel { background-color : black; color : grey; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
     QFont tabFont;
     QComboBox *choices = new QComboBox;
@@ -27,15 +27,11 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
 
     info1->setText(text);
 
-    setLayout(boxLayout);
-
-
-
     //Adding to the layout
-    boxLayout->addWidget(intro);
-    boxLayout->addWidget(info1);
-    boxLayout->addWidget(choices);
-    boxLayout->addWidget(gif);
+    girdLayout->addWidget(intro,   0,0,1,0);
+    girdLayout->addWidget(info1,   1,0,1,1);
+    girdLayout->addWidget(gif, 1,1,1,1);
+    girdLayout->addWidget(choices, 2,0,1,2);
 
     connect(choices, SIGNAL(activated(int)), this, SLOT(change(int)));
 }

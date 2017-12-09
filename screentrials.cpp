@@ -38,7 +38,6 @@ screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
 
 
     QLabel* gifSpot = new QLabel(this);
-    gifSpot->setText("LASDJFLASKDJFASDLKFJASLDKFJASLDKJFASLDKJF");
 
     //Adding to the layout
     girdLayout->addWidget(intro,   0,0,1,0);
