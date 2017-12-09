@@ -14,6 +14,11 @@
 #undef main
 //static const float SCALE = 30.f;
 
+/** Player input */
+bool input_up = false;
+bool input_left = false;
+bool input_right = false;
+
 /** Create the base for the boxes to land */
 void createGround(b2World& World, float X, float Y);
 
@@ -87,16 +92,27 @@ int game()
         //std::cout << action.front() << std::endl;
 
         // update the sf::RenderWindow with the new location of stuff (redraw basically)
-
+        if (input_up == true){
+            qDebug("up");
+            input_up = false;
+        }
+        else if (input_left == true){
+            qDebug("left");
+            input_left = false;
+        }
+        else if (input_right == true){
+            qDebug("right");
+            input_right = false;
+        }
         env.render();
         envData = env.step(landerBot(observation));
         observation = envData.observation;
         episodeReward += envData.reward;
 
-        std::cout << "obs: ";
-        for (std::vector<float>::const_iterator i = envData.observation.begin(); i != envData.observation.end(); ++i)
-            std::cout << *i << ' ';
-        std::cout << std::endl;
+//        std::cout << "obs: ";
+//        for (std::vector<float>::const_iterator i = envData.observation.begin(); i != envData.observation.end(); ++i)
+//            std::cout << *i << ' ';
+//        std::cout << std::endl;
 
         // lander has crashed or landed successfully or timed out
         if (envData.done) {
