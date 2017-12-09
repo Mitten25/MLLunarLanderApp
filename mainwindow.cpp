@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     //setup for the mainwindow
     ui->setupUi(this);
-    QSize* minSize = new QSize(1100, 600);
+    QSize* minSize = new QSize(1280, 720);
     this->setMinimumSize(*minSize);
     this->setMaximumSize(*minSize);
     this->setWindowTitle("ML Moonlander");

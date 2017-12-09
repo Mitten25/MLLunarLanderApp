@@ -9,19 +9,23 @@ screenIntro::screenIntro(QWidget *parent) : QWidget(parent)
 
     tabFont.setBold(true);
     tabFont.setStyleHint(QFont::Helvetica);
-    tabFont.setPixelSize(100);
+    tabFont.setPixelSize(70);
 
     intro->setFont(tabFont);
-    intro->setText("Machine Learning");
+    intro->setText("What is Machine Learning?");
     intro->resize(1000, 100);
 
-
+    QFont textFont;
+    textFont.setStyleHint(QFont::Helvetica);
+    textFont.setPixelSize(20);
     QLabel *info1 = new QLabel(this);
-    QString text = "Machine Learning is the process in which computers apply statistical learning techniques to identify patterns in data. ";
-    text+= "This data can then be used to make highly accurate predictions.";
-    text+= "\nThis guide will go over Reinforcement Learning, a type of Machine Learning commonly used in games";
-    text+= "\n In reinforcement learning you have the agent do some action in the environment, and based on the action you give it rewards ";
-    text+= "\n ";
+    info1->setFont(textFont);
+    QString text = "Machine Learning is the process in which computers apply statistical learning techniques to identify patterns in data. \n";
+    text+= "This data can then be used to make a model, which can then make highly accurate predictions\n";
+    text+= "Machine learning is a rapidly expanding field that is employed in a wide variety of computing tasks\n";
+    text+= "\nThis guide will go over Reinforcement Learning, a type of Machine Learning commonly used in games\n";
+    text+= "Reinforcement learning is a subsection of machine learning that focses on using a system of rewards to get the AI to learn";
+
 
     info1->setText(text);
 
