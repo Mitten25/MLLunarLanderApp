@@ -24,9 +24,15 @@ screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
     choices->addItem("1000 Trials", QString::number(1));
     choices->addItem("10000 Trials", QString::number(2));
 
+    QFont textFont;
+    textFont.setPixelSize(20);
     QLabel *info1 = new QLabel(this);
-    QString text = "In reinforcement learning, the more trials you run, the more information that the model has to predict actions.";
-    text+= "\n This means that the more trials you have the more accurate the model can be";
+    info1->setFont(textFont);
+    QString text = "In reinforcement learning, the more trials you run,\nthe more information that the model has to predict actions.\n";
+    text+= "\nThis means that the more trials you have \nthe more accurate the model can be.";
+    text+= "\nRun the simulations below. ";
+    text+= "What do you notice?";
+    text+= "";
 
     info1->setText(text);
 
