@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include <QDebug>
 #include <QComboBox>
+#include <QMovie>
 
 
 
@@ -18,9 +19,13 @@ class screenTrials : public QWidget
 public:
     explicit screenTrials(QWidget *parent = nullptr);
 
+private:
+    QLabel *gif;
+
 signals:
 
-public slots:
+public slots: 
+    void change(int);
 };
 
 #endif // SCREENTRIALS_H
