@@ -1,29 +1,25 @@
 #include "lunarlander.h"
 #include <iostream>
 
+/** Eliminates extreme values for lander */
 float clip(float n, float lower, float upper) {
   return std::max(lower, std::min(n, upper));
 }
 
-/*
- * Custom handler for collisions so we can handle them in our game
- */
+/** Custom handler for collisions so we can handle them in our game */
 class ContactDetector : public b2ContactListener
 {
 public:
+    /** Lander environment */
     LunarLander* env_;
     ContactDetector() {
-        // keep env_ member variable so we can access data
-        //env_ = env;
     }
-
+    /** Set lander environment */
     void SetEnv(LunarLander* env) {
         env_ = env;
     }
 
-    /*
-     * Event handler called when two Box2D bodies collide (contact)
-     */
+    /** Event handler called when two Box2D bodies collide (contact) */
     void BeginContact(b2Contact* contact) {
 //        std::cout<<"here"<<std::endl;
         b2Body* bodyA = contact->GetFixtureA()->GetBody();
@@ -41,9 +37,7 @@ public:
             env_->rightLegGroundContact_ = true;
         }
     }
-    /*
-     * Event handler called when two Box2D bodies stop contacting
-     */
+    /** Event handler called when two Box2D bodies stop contacting */
     void EndContact(b2Contact* contact) {
         // these
         b2Body* bodyA = contact->GetFixtureA()->GetBody();
@@ -59,7 +53,7 @@ public:
     }
 };
 
-
+/* Lunar lander game with Box2d and SFML */
 LunarLander::LunarLander(bool continuous): gen_(std::random_device()()) {
     // create lander shape
     LANDERPOLY[0] = b2Vec2(-14, +17);
@@ -107,6 +101,7 @@ LunarLander::~LunarLander() {
     free(world_);
 }
 
+/** Creates b2Body particles when lander gas is being used */
 b2Body* LunarLander::createParticle(float mass, float x, float y, float* power) {
     particleBodyDef.type = b2_dynamicBody;
     particleBodyDef.position = b2Vec2(x, y);
@@ -128,12 +123,11 @@ b2Body* LunarLander::createParticle(float mass, float x, float y, float* power) 
     particles_.push_back(particle);
 
     destroyParticles(false);
-    //std::cout << "particle count: " << particles_.size() << std::endl;
-
 
     return particle;
 }
 
+/** Destroy lander gas b2Body particles */
 void LunarLander::destroyParticles(bool all) {
     if (particles_.front() == nullptr) {
         return;
@@ -154,6 +148,7 @@ void LunarLander::destroyParticles(bool all) {
     }
 }
 
+/** Destroy game bodies */
 void LunarLander::destroy() {
     // if things haven't been created, we don't need to destroy them.
     //std::cout << "destroy" << std::endl;
@@ -165,7 +160,6 @@ void LunarLander::destroy() {
     world_->DestroyBody(moon_);
     world_->DestroyBody(leftLeg_);
     world_->DestroyBody(rightLeg_);
-    // not sure if necessary
     moon_ = nullptr;
     lander_ = nullptr;
     leftLeg_ = nullptr;
@@ -176,7 +170,7 @@ void LunarLander::destroy() {
     contactDetector_ = nullptr;
 }
 
-
+/** Reset lunar lander game */
 EnvData LunarLander::reset() {
     destroy();
     contactDetector_ = new ContactDetector;
@@ -350,6 +344,7 @@ EnvData LunarLander::reset() {
     return step(action);
 }
 
+/** Advances the game based on the action */
 EnvData LunarLander::step(std::vector<float> action) {
     EnvData envData;
 
@@ -479,6 +474,7 @@ EnvData LunarLander::step(std::vector<float> action) {
     return envData;
 }
 
+/** Renders the game with SFML based on box2D bodies*/
 void LunarLander::render() {
 
     // set viewer if null
@@ -544,23 +540,11 @@ void LunarLander::render() {
     ship.setPosition(lander_->GetPosition().x*SCALE, 10+VIEWPORT_H-(lander_->GetPosition().y*SCALE));
     ship.rotate(-lander_->GetAngle()*SCALE);
     viewer_->draw(ship);
-    //lander_->GetFixtureList();
-    //for (b2Fixture* f = lander_->GetFixtureList(); f; f = f->GetNext()) {
-    //    b2Transform t = f->GetBody()->GetTransform();
-    //    b2PolygonShape* polygonShape = (b2PolygonShape*)f->GetShape();
-    //    b2Vec2* arr = polygonShape->m_vertices;
-    //    int count = polygonShape->m_count;
-
-    //    for (int i = 0; i < count; i++) {
-    //        t * arr[i];
-    //    }
-    //}
 
     //draw legs
     sf::RectangleShape leftLegShape;
     leftLegShape.setSize(sf::Vector2f(2*LEG_W, 2*LEG_H));
     leftLegShape.setPosition(leftLeg_->GetPosition().x*SCALE, 5+VIEWPORT_H-(leftLeg_->GetPosition().y*SCALE));
-    //leftLegShape.setFillColor(sf::Color().Green);
     leftLegShape.setTexture(&legTex);
     leftLegShape.rotate(-SCALE*leftLeg_->GetAngle());
     viewer_->draw(leftLegShape);
@@ -568,7 +552,6 @@ void LunarLander::render() {
     sf::RectangleShape rightLegShape;
     rightLegShape.setSize(sf::Vector2f(2*LEG_W, 2*LEG_H));
     rightLegShape.setPosition(rightLeg_->GetPosition().x*SCALE, 5+VIEWPORT_H-(rightLeg_->GetPosition().y*SCALE));
-    //rightLegShape.setFillColor(sf::Color().Green);
     rightLegShape.setTexture(&legTex);
     rightLegShape.rotate(-SCALE*rightLeg_->GetAngle());
     viewer_->draw(rightLegShape);
@@ -587,7 +570,15 @@ void LunarLander::render() {
         viewer_->draw(shape);
     }
 
-    //sf::RenderWindow Window(sf::VideoMode(800, 600, 32), "Test");
+    sf::Text rewardText;
+    std::string rewardString = "Reward: " + std::to_string(lastReward);
+    rewardText.setString(rewardString);
+    rewardText.setPosition(200,-200);
+    rewardText.setColor(sf::Color().White);
+    rewardText.setCharacterSize(50);
+    viewer_->draw(rewardText);
+
+    //keyboard events
     sf::Event event;
             while (viewer_->pollEvent(event))
             {
