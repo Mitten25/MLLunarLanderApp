@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
                         "QLabel { color: black }"
                         "QLabel { border-color: grey }"
                         "QComboBox { color: grey }"
-                        "QPushButton { color: black }"
+                        "QPushButton { color: white }"
                         "QTabWidget { background-color: rgb(46, 78, 105) }"
                         "QTabWidget { color: black }"
                         "QTabWidget { border-color: grey }"

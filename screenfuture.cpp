@@ -15,6 +15,9 @@ screenFuture::screenFuture(QWidget *parent) : QWidget(parent)
     //Button Basics
     playBot->setText("Hard Coded Bot");
     playGif->setText("Machine Learning Bot");
+    playBot->setStyleSheet("background-color: rgb(53, 50, 47)");
+    playGif->setStyleSheet("background-color: rgb(53, 50, 47)");
+
 
     //Intro stylesheet and setup
     intro->setStyleSheet("QLabel { background-color : black; color : grey; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");

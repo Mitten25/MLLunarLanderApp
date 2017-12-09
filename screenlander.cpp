@@ -26,10 +26,11 @@ screenLander::screenLander(QWidget *parent) : QWidget(parent)
      playGameLabel->resize(300, 100);
 
      playGameButton->setText("Play Game");
+     playGameButton->setStyleSheet("background-color: rgb(53, 50, 47)");
 
      layout->addWidget(titleLabel, 0, 0);
      layout->addWidget(playGameLabel, 1, 0, Qt::AlignCenter);
-     layout->addWidget(playGameButton, 2, 0, Qt::AlignCenter);
+     layout->addWidget(playGameButton, 2, 0);
 
      connect(playGameButton, SIGNAL(clicked(bool)), this, SLOT(onPress()));
 }
