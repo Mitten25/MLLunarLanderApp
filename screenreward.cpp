@@ -2,24 +2,28 @@
 
 screenReward::screenReward(QWidget *parent) : QWidget(parent)
 {
+    //Declarring objects
     layout = new QVBoxLayout(this);
     headerText = new QLabel(this);
     markovText = new QLabel(this);
     rewardText = new QLabel(this);
 
+    //Making the font
     font.setBold(true);
     font.setStyleHint(QFont::Helvetica);
     font.setPixelSize(70);
 
+    //Setting header text
     headerText->setFont(font);
     headerText->setText("Rewarding the AI");
     headerText->resize(1000, 100);
     headerText->setStyleSheet("QLabel { background-color : black; color : grey; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
 
+    //Changing the font for the rest of the page text
     font.setBold(false);
     font.setPixelSize(20);
 
-
+    // Hardcoding the text
     markovText->setFont(font);
     markovText->setText("Reinforcement learning uses something called the Markov Decision Process.\n"
                         "The Markov Decision Process is where you have a series of states that the \n"
@@ -32,24 +36,27 @@ screenReward::screenReward(QWidget *parent) : QWidget(parent)
                         "about it is getting the agent to look at long term rewards to best optimize its \n"
                         "solution");
 
+    //Code for the diagram
     diagram = new QPushButton;
     QPixmap pixReward("../cs3505-f17-a8-edu-app-matwilso/diagrams/reward.png");
     QIcon buttonIcon(pixReward);
     diagram->setIcon(buttonIcon);
-        diagram->setIconSize(pixReward.rect().size());
+    diagram->setIconSize(pixReward.rect().size());
     flag = 0;
 
-
+    // Adding objects to the layout
     layout->addWidget(headerText);
     layout->addWidget(markovText);
     layout->addWidget(diagram);
     layout->addWidget(rewardText);
     setLayout(layout);
 
-
+    // Connect for the diagrams
     connect(diagram, SIGNAL(clicked(bool)), this, SLOT(change(bool)));
 }
 
+
+// Slot for changing the diagram
 void screenReward::change(bool) {
     if(flag == 0) {
         QPixmap pixDiagram2("../cs3505-f17-a8-edu-app-matwilso/diagrams/markov.png");

@@ -2,6 +2,7 @@
 
 screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
 {
+    // Declaring my objects
     QLabel *intro = new QLabel(this);
     gif = new QLabel;
     QGridLayout* girdLayout = new QGridLayout(this);
@@ -9,19 +10,23 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
     QFont tabFont;
     QComboBox *choices = new QComboBox;
 
+    //Assigning properties to the fonts
     tabFont.setBold(true);
     tabFont.setStyleHint(QFont::Helvetica);
     tabFont.setPixelSize(100);
 
+    //Setting the intro
     intro->setFont(tabFont);
     intro->setText("Observations");
     intro->resize(1000, 100);
 
+    //Making the combo box
     choices->addItem("Not knowing X Position", QString::number(0));
     choices->addItem("Not knowing Y Postiion", QString::number(1));
     choices->addItem("Not knowing Angle", QString::number(2));
     choices->addItem("Observation Success Rate Graph", QString::number(3));
 
+    //Hard coding the text info
     QFont textFont;
     textFont.setPixelSize(20);
     QLabel *info1 = new QLabel(this);
@@ -31,7 +36,11 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
     text+= "\nWe can see what happens when we blind";
     text+= "\nthe model in certain ways by running ";
     text+= "\nthe simulations below.";
+    text+= "\nIn the first one, the bot does not know its x position";
+    text+= "\nIn the second one, the bot does not know its height";
+    text+= "\nIn the last one, the bot does not know its angle";
 
+    //Setting the text
     info1->setFont(textFont);
     info1->setText(text);
 
@@ -41,9 +50,11 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
     girdLayout->addWidget(gif, 1,1,1,1);
     girdLayout->addWidget(choices, 2,0,1,2);
 
+    //Connecting the signal and the slot
     connect(choices, SIGNAL(activated(int)), this, SLOT(change(int)));
 }
 
+// The slot for making the combo box change what is displayed
 void screenObservation::change(int index) {
     if (index == 0) {
         QMovie *movie = new QMovie("../cs3505-f17-a8-edu-app-matwilso/diagrams/obsX.gif");
