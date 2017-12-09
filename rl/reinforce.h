@@ -23,7 +23,7 @@ public:
      * of choosing each of the different actions.  These will start nearly equally distributed and as
      * the network learns, the probabilities will be higher for better actiosn
      */
-    frowvec policyForward(vector<float> observation);
+    fvec policyForward(vector<float> observation);
 
     /*
      * Pass observations through neural network and choose an action from the forward pass's probability distribution
@@ -42,14 +42,19 @@ public:
 
 private:
     // softmax function (turns a list of numbers into probabilities)
-    frowvec softmax_(frowvec logp);
+    fvec softmax_(fvec logp);
     // discrete sample from probability list
-    int sample_(frowvec probs);
+    int sample_(fvec probs);
 
+    // See Sutton Book for math
+    // Calculating discounted returns
+    // $G_t = r_{t+1} + \gamma*r_{t+2} + \gamma^2*r_{t=3} + ....$
+    // $G_i = r_{i+1} + \gamma * G_{i+1}$
     fvec calculateReturns_(fvec rewards);
 
     vector<float> cacheNegLogProbs;
     vector<float> cacheActions;
+    fmat cacheLogits;
     fmat cacheObservations;
     fmat cacheHiddenStates;
     fmat cacheSoftmaxProbs;
@@ -64,8 +69,8 @@ private:
     static constexpr float ADAM_B2 = 0.999;
     static constexpr float ADAM_LEARNING_RATE = 4e-3;
     long adamCount; // count up
-    map<string, fmat> adamMCache;
-    map<string, fmat> adamVCache;
+    map<string, fmat> adamCacheM;
+    map<string, fmat> adamCacheV;
 
     // Neural network parameters (weights and biases)
     map<string, fmat> params;
