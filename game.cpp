@@ -60,7 +60,7 @@ void createGround(b2World& World, float X, float Y)
 }
 
 
-int game()
+int game(bool bot)
 {
     LunarLander env(false);
 
@@ -91,21 +91,40 @@ int game()
         //action.push_back(std::floor(dis(gen)));
         //std::cout << action.front() << std::endl;
 
-        // update the sf::RenderWindow with the new location of stuff (redraw basically)
-        if (input_up == true){
-            qDebug("up");
-            input_up = false;
-        }
-        else if (input_left == true){
-            qDebug("left");
-            input_left = false;
-        }
-        else if (input_right == true){
-            qDebug("right");
-            input_right = false;
-        }
         env.render();
-        envData = env.step(landerBot(observation));
+        if (!bot){
+        // update the sf::RenderWindow with the new location of stuff (redraw basically)
+            float arr[] = {0.0f};
+            if (input_up == true){
+                qDebug("up");
+                arr[0] = 2.0f;
+                std::vector<float> rtn (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+                envData = env.step(rtn);
+                input_up = false;
+            }
+            else if (input_left == true){
+                qDebug("left");
+                arr[0] = 1.0f;
+                std::vector<float> rtn (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+                envData = env.step(rtn);
+                input_left = false;
+            }
+            else if (input_right == true){
+                qDebug("right");
+                arr[0] = 3.0f;
+                std::vector<float> rtn (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+                envData = env.step(rtn);
+                input_right = false;
+            }
+            else{
+                arr[0] = 0.0f;
+                std::vector<float> rtn (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+                envData = env.step(rtn);
+            }
+
+        }
+        else
+            envData = env.step(landerBot(observation));
         observation = envData.observation;
         episodeReward += envData.reward;
 
@@ -122,7 +141,7 @@ int game()
             //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(30));
     }
 
     return 0;
