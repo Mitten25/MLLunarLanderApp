@@ -44,5 +44,5 @@ screenLander::~screenLander(){
 
 void screenLander::onPress(){
     extern int game(bool);
-    QFuture<void> future = QtConcurrent::run(game, true);
+    QFuture<void> future = QtConcurrent::run(game, false);
 }
