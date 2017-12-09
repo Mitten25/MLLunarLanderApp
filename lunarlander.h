@@ -116,6 +116,7 @@ public:
     LunarLander(bool continuous);
     ~LunarLander();
     //std::pair<float, float> observationRange;
+    //float lastReward;
 };
 
 

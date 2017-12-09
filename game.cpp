@@ -18,54 +18,16 @@
 bool input_up = false;
 bool input_left = false;
 bool input_right = false;
-
-/** Create the base for the boxes to land */
-void createGround(b2World& World, float X, float Y);
-
-/** Create the boxes */
-void createBox(b2World& World, int MouseX, int MouseY);
-
 /** Bots */
 std::vector<float> landerBot(std::vector<float> obs);
 
-void createBox(b2World& World, int MouseX, int MouseY)
-{
-    b2BodyDef BodyDef;
-    BodyDef.position = b2Vec2(MouseX/SCALE, MouseY/SCALE);
-    BodyDef.type = b2_dynamicBody;
-    b2Body* Body = World.CreateBody(&BodyDef);
-
-    b2PolygonShape Shape;
-    Shape.SetAsBox((32.f/2)/SCALE, (32.f/2)/SCALE);
-    b2FixtureDef FixtureDef;
-    FixtureDef.density = 1.f;
-    FixtureDef.friction = 0.7f;
-    FixtureDef.shape = &Shape;
-    Body->CreateFixture(&FixtureDef);
-}
-
-void createGround(b2World& World, float X, float Y)
-{
-    b2BodyDef BodyDef;
-    BodyDef.position = b2Vec2(X/SCALE, Y/SCALE);
-    BodyDef.type = b2_staticBody;
-    b2Body* Body = World.CreateBody(&BodyDef);
-
-    b2PolygonShape Shape;
-    Shape.SetAsBox((800.f/2)/SCALE, (16.f/2)/SCALE);
-    b2FixtureDef FixtureDef;
-    FixtureDef.density = 0.f;
-    FixtureDef.shape = &Shape;
-    Body->CreateFixture(&FixtureDef);
-}
-
-
+/** Play lunar lander game. If bot is true, hardcoded bot is played. If bot is false, user can play. */
 int game(bool bot)
 {
     LunarLander env(false);
 
     // discrete
-    int actionSpace = (int)(env.actionSpace.at(0)); // = 4 for lunar lander (noop, left engine, main engine, right engine)
+    int actionSpace = (int)(env.actionSpace.at(0));
 
     EnvData envData = env.reset();
 
@@ -85,11 +47,6 @@ int game(bool bot)
     observation = envData.observation;
     while (1) {
         count++;
-        // action = choose action based on envData.observation
-
-        //std::vector<float> action;
-        //action.push_back(std::floor(dis(gen)));
-        //std::cout << action.front() << std::endl;
 
         env.render();
         if (!bot){
@@ -124,18 +81,12 @@ int game(bool bot)
             envData = env.step(landerBot(observation));
         observation = envData.observation;
         episodeReward += envData.reward;
-
-//        std::cout << "obs: ";
-//        for (std::vector<float>::const_iterator i = envData.observation.begin(); i != envData.observation.end(); ++i)
-//            std::cout << *i << ' ';
-//        std::cout << std::endl;
-
+        //env.lastReward = episodeReward;
         // lander has crashed or landed successfully or timed out
         if (envData.done) {
             envData = env.reset();
             std::cout << "done, ep reward = " << episodeReward << std::endl;
             episodeReward = 0;
-            //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(30));
@@ -144,10 +95,8 @@ int game(bool bot)
     return 0;
 }
 
+/** Hardcoded lunar lander bot */
 std::vector<float> landerBot(std::vector<float> obs){
-    //observation values: x, y, xvel, yvel, angle, anglevel, leftleg, rightleg
-    //(noop, left engine, main engine, right engine)
-    // -anglevel : right , +anglevel : left
     float arr[] = {1.0f};
     if (obs[3] < -.4){
         if(obs[2] < -.85){
