@@ -81,11 +81,11 @@ int game(bool bot)
             envData = env.step(landerBot(observation));
         observation = envData.observation;
         episodeReward += envData.reward;
-        //env.lastReward = episodeReward;
         // lander has crashed or landed successfully or timed out
         if (envData.done) {
             envData = env.reset();
             std::cout << "done, ep reward = " << episodeReward << std::endl;
+            env.lastReward = episodeReward;
             episodeReward = 0;
         }
 
