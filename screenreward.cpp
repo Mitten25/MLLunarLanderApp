@@ -55,7 +55,7 @@ void screenReward::change(bool) {
         QPixmap pixDiagram2("../cs3505-f17-a8-edu-app-matwilso/diagrams/markov.png");
         QIcon ButtonIcon2(pixDiagram2);
         diagram->setIcon(ButtonIcon2);
-        diagram->setIconSize(pixDiagram2.rect().size());
+        diagram->setIconSize(QSize(600, 500));
         flag = 1;
     }
     else {

@@ -1,3 +1,5 @@
+//Osama was here
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "screenwelcome.h"
@@ -6,6 +8,7 @@
 #include "screenobservation.h"
 #include "screentrials.h"
 #include "screenlander.h"
+#include "screenfuture.h"
 
 #include <QString>
 #include <QSizePolicy>
@@ -25,11 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setMaximumSize(*minSize);
     this->setWindowTitle("ML Moonlander");
     this->setIconSize(QSize(0,0));
-//    this->setStyleSheet("background-color: grey;");
-    //
-
-  this->centralWidget()->setStyleSheet("background-color: rgb(46, 78, 105);");
-   // this->centralWidget()->setStyleSheet("color: grey;");
+    this->centralWidget()->setStyleSheet("background-color: rgb(46, 78, 105);");
 
     //Program Wide StyleSheet Setup
     qApp->setStyleSheet("QLabel { background-color: rgb(46, 78, 105) }"
@@ -53,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Layout Setup
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
-    one = two = three = four = five = false;
+    one = two = three = four = five = six = false;
 
     //Tab Setup
     QTabWidget* tab = new QTabWidget(this);
@@ -64,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Progres Bar
     progressBar = new QProgressBar(this);
-    progressBar->setRange(0,5);
+    progressBar->setRange(0,6);
     progressBar->setValue(0);
 
 
@@ -75,6 +74,8 @@ MainWindow::MainWindow(QWidget *parent) :
     screenObservation* observationScreen = new screenObservation(this);
     screenTrials* trialsScreen = new screenTrials(this);
     screenLander* lunarLanderScreen  = new screenLander(this);
+    screenFuture* futureScreen  = new screenFuture(this);
+
 
     //Create Tab Names
     QString welcome = "Welcome";
@@ -83,6 +84,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QString lunarString = "Lunar Landing Simulation";
     QString observationString = "Observation";
     QString trialsString = "Trials";
+    QString futureString = "Past Vs. Future";
+
 
     //Add Widgets/.CPP to tab screens
     tab->addTab(welcomeScreen, welcome);
@@ -90,6 +93,7 @@ MainWindow::MainWindow(QWidget *parent) :
     tab->addTab(rewardScreen, rewardString);
     tab->addTab(observationScreen, observationString);
     tab->addTab(trialsScreen, trialsString);
+    tab->addTab(futureScreen, futureString);
     tab->addTab(lunarLanderScreen, lunarString);
 
 
@@ -135,6 +139,12 @@ void MainWindow::updateValue(int index){
         if(!five){
             progressBar->setValue(++val);
             five = true;
+        }
+        break;
+    case 6:
+        if(!six){
+            progressBar->setValue(++val);
+            six = true;
         }
         break;
     default:

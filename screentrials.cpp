@@ -20,9 +20,10 @@ screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
     intro->setText("Trials");
     intro->resize(1000, 100);
 
-    choices->addItem("100 Trials", QString::number(0));
-    choices->addItem("1000 Trials", QString::number(1));
-    choices->addItem("10000 Trials", QString::number(2));
+    choices->addItem("100 Trials Simulation", QString::number(0));
+    choices->addItem("1000 Trials Simulation", QString::number(1));
+    choices->addItem("10000 Trials Simulation", QString::number(2));
+    choices->addItem("Success Rate Graph", QString::number(3));
 
     QFont textFont;
     textFont.setPixelSize(20);
@@ -30,9 +31,11 @@ screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
     info1->setFont(textFont);
     QString text = "In reinforcement learning, the more trials you run,\nthe more information that the model has to predict actions.\n";
     text+= "\nThis means that the more trials you have \nthe more accurate the model can be.";
-    text+= "\nRun the simulations below. ";
-    text+= "What do you notice?";
-    text+= "";
+    text+= "\nRun the simulations below. \n";
+    text+= "What do you notice? \n";
+    text+= "After making your observations, \n";
+    text+= "Look at the Success Rate Graph";
+    text+= "\nDoes it match your observations?";
 
     info1->setText(text);
 
@@ -47,8 +50,37 @@ screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
 }
 
 void screenTrials::change(int index) {
-    QMovie *movie = new QMovie("../cs3505-f17-a8-edu-app-matwilso/diagrams/trials100.gif");
-    gif->setMovie(movie);
-    movie->setSpeed(200);
-    movie->start();
+    if(index == 0) {
+        QMovie *movie = new QMovie("../cs3505-f17-a8-edu-app-matwilso/diagrams/trials100.gif");
+        gif->setMovie(movie);
+        movie->setSpeed(200);
+        movie->start();
+        return;
+    }
+    if (index == 1) {
+        QMovie *movie = new QMovie("../cs3505-f17-a8-edu-app-matwilso/diagrams/trials1000.gif");
+        gif->setMovie(movie);
+        movie->setSpeed(200);
+        movie->start();
+        return;
+    }
+    if (index == 2) {
+        /*QMovie *movie = new QMovie("../cs3505-f17-a8-edu-app-matwilso/diagrams/trials10000.gif");
+        gif->setMovie(movie);
+        movie->setSpeed(200);
+        movie->start(); */
+        return;
+    }
+    if(index == 3) {
+        QPixmap pixMap("../cs3505-f17-a8-edu-app-matwilso/diagrams/rl1png.png");
+        gif->setPixmap(pixMap);
+    }
 }
+
+
+
+
+
+
+
+

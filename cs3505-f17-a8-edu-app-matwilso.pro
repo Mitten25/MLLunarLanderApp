@@ -23,7 +23,8 @@ SOURCES +=\
     screenreward.cpp \
     screenobservation.cpp \
     screentrials.cpp \
-    screenlander.cpp
+    screenlander.cpp \
+    screenfuture.cpp
 HEADERS  += mainwindow.h \
     lunarlander.h \
     screenwelcome.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     screenreward.h \
     screenobservation.h \
     screentrials.h \
-    screenlander.h
+    screenlander.h \
+    screenfuture.h
 FORMS    += mainwindow.ui \
 
 

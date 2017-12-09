@@ -17,14 +17,22 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
     intro->setText("Observations");
     intro->resize(1000, 100);
 
-    choices->addItem("Not knowing Y Position", QString::number(0));
-    choices->addItem("Not knowing X Postiion", QString::number(1));
+    choices->addItem("Not knowing X Position", QString::number(0));
+    choices->addItem("Not knowing Y Postiion", QString::number(1));
     choices->addItem("Not knowing Angle", QString::number(2));
+    choices->addItem("Observation Success Rate Graph", QString::number(3));
 
+    QFont textFont;
+    textFont.setPixelSize(20);
     QLabel *info1 = new QLabel(this);
-    QString text = "Reinforcement learning requires observation of the environment to work properly";
+    QString text = "In Reinforcement learning, the model \n";
+    text+= "needs to be able to observe the evironment";
+    text+= "\nThe more it can observe, the better";
+    text+= "\nWe can see what happens when we blind";
+    text+= "\nthe model in certain ways by running ";
+    text+= "\nthe simulations below.";
 
-
+    info1->setFont(textFont);
     info1->setText(text);
 
     //Adding to the layout
@@ -37,10 +45,29 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
 }
 
 void screenObservation::change(int index) {
-    QMovie *movie = new QMovie("../cs3505-f17-a8-edu-app-matwilso/diagrams/trials100.gif");
-    gif->setMovie(movie);
-    movie->setSpeed(200);
-    movie->start();
+    if (index == 0) {
+        QMovie *movie = new QMovie("../cs3505-f17-a8-edu-app-matwilso/diagrams/obsX.gif");
+        gif->setMovie(movie);
+        movie->setSpeed(200);
+        movie->start();
+    }
+    if (index == 1) {
+        QMovie *movie = new QMovie("../cs3505-f17-a8-edu-app-matwilso/diagrams/obsY.gif");
+        gif->setMovie(movie);
+        movie->setSpeed(200);
+        movie->start();
+    }
+    if (index == 2) {
+        QMovie *movie = new QMovie("../cs3505-f17-a8-edu-app-matwilso/diagrams/obsANGLE-2.gif");
+        gif->setMovie(movie);
+        movie->setSpeed(200);
+        movie->start();
+    }
+    if (index == 3) {
+        QPixmap pixMap("../cs3505-f17-a8-edu-app-matwilso/diagrams/observation.png");
+        gif->setPixmap(pixMap);
+    }
+
 }
 
 

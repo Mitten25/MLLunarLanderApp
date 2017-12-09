@@ -25,7 +25,7 @@ screenLander::screenLander(QWidget *parent) : QWidget(parent)
 
      playGameButton->setText("Play Game");
 
-     layout->addWidget(titleLabel, 0, 0, Qt::AlignCenter);
+     layout->addWidget(titleLabel, 0, 0);
      layout->addWidget(playGameLabel, 1, 0, Qt::AlignCenter);
      layout->addWidget(playGameButton, 2, 0, Qt::AlignCenter);
 
@@ -42,5 +42,5 @@ screenLander::~screenLander(){
 
 void screenLander::onPress(){
     extern int game(bool);
-    QFuture<void> future = QtConcurrent::run(game, false);
+    QFuture<void> future = QtConcurrent::run(game, true);
 }
