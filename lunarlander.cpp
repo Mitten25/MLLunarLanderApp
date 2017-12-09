@@ -596,6 +596,27 @@ void LunarLander::render() {
                 {
                     viewer_->close();
                 }
+                else if (event.type == sf::Event::KeyPressed)
+                {
+                    if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up){
+                        extern bool input_up, input_left, input_right;
+                        input_up = true;
+                        input_left = false;
+                        input_right = false;
+                    }
+                    else if(event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left){
+                        extern bool input_up, input_left, input_right;
+                        input_up = false;
+                        input_left = true;
+                        input_right = false;
+                    }
+                    else if(event.key.code == sf::Keyboard::D|| event.key.code == sf::Keyboard::Right){
+                        extern bool input_up, input_left, input_right;
+                        input_up = false;
+                        input_left = false;
+                        input_right = true;
+                    }
+                }
     }
 
 }

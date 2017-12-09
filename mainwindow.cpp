@@ -44,7 +44,9 @@ MainWindow::MainWindow(QWidget *parent) :
                         "QTabWidget::pane { border: 0 }"
                         "QTabBar { color: black }"
                         "QTabBar::tab { background: rgb(46, 78, 155) }"
-                        "QProgressBar { color: black }");
+                        "QTabBar::tab { color: white }"
+                        "QProgressBar { color: black }"
+                        "");
 
 
 
