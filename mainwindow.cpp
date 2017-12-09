@@ -23,9 +23,31 @@ MainWindow::MainWindow(QWidget *parent) :
     QSize* minSize = new QSize(1100, 600);
     this->setMinimumSize(*minSize);
     this->setMaximumSize(*minSize);
-    this->setWindowTitle("MoonMoon");
+    this->setWindowTitle("ML Moonlander");
+    this->setIconSize(QSize(0,0));
 //    this->setStyleSheet("background-color: grey;");
-//    ui->centralWidget->setStyleSheet("background-color: grey;");
+    //
+
+  this->centralWidget()->setStyleSheet("background-color: rgb(53, 50, 47);");
+   // this->centralWidget()->setStyleSheet("color: grey;");
+
+
+    //Program Wide StyleSheet Setup
+    qApp->setStyleSheet("QLabel { background-color: rgb(53, 50, 47) }"
+                        "QLabel { color: grey }"
+                        "QLabel { border-color: grey }"
+                        "QComboBox { color: grey }"
+                        "QPushButton { color: grey }"
+                        "QTabWidget { background-color: rgb(53, 50, 47) }"
+                        "QTabWidget { color: grey }"
+                        "QTabWidget { border-color: grey }"
+                        "QTabWidget { border-bottem: grey }"
+                        "QTabBar { color: black }"
+                        "QTabBar::tab { background: grey }"
+                        "QProgressBar { color: grey }"
+//                      "QProgressBar::chunk { color: black }"
+                        "");
+
 
 
     //Layout Setup
@@ -44,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     progressBar = new QProgressBar(this);
     progressBar->setRange(0,5);
     progressBar->setValue(0);
+
 
     //Create Screen Widgets
     screenWelcome* welcomeScreen = new screenWelcome(this);

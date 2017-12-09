@@ -24,7 +24,7 @@ screenWelcome::screenWelcome(QWidget *parent) : QWidget(parent)
 
     //Names Setup
     font.setPixelSize(20);
-    madeBy->setText("Made By \nKathy, Osama, Ling, Andrew, Joel, Matt");
+    madeBy->setText("Made By \nKathy, Osama Kergaye, Ling, Andrew, Joel, Matt");
     madeBy->setFont(font);
 
 
