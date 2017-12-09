@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Layout Setup
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
-    one = two = three = four = five = false;
+    one = two = three = four = five = six = false;
 
     //Tab Setup
     QTabWidget* tab = new QTabWidget(this);
@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Progres Bar
     progressBar = new QProgressBar(this);
-    progressBar->setRange(0,5);
+    progressBar->setRange(0,6);
     progressBar->setValue(0);
 
 
@@ -141,6 +141,12 @@ void MainWindow::updateValue(int index){
         if(!five){
             progressBar->setValue(++val);
             five = true;
+        }
+        break;
+    case 6:
+        if(!six){
+            progressBar->setValue(++val);
+            six = true;
         }
         break;
     default:
