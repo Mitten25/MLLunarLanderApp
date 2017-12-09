@@ -24,7 +24,7 @@ screenIntro::screenIntro(QWidget *parent) : QWidget(parent)
     text+= "This data can then be used to make a model, which can then make highly accurate predictions\n";
     text+= "Machine learning is a rapidly expanding field that is employed in a wide variety of computing tasks\n";
     text+= "\nThis guide will go over Reinforcement Learning, a type of Machine Learning commonly used in games\n";
-    text+= "Reinforcement learning is a subsection of machine learning that focses on using a system of rewards to get the AI to learn";
+    text+= "In each of the next tabs, we'll go over a property of Reinforcement learning to see how it affects the model.";
 
 
     info1->setText(text);

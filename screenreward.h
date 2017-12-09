@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QGridLayout>
+#include <QPushButton>
 
 class screenReward : public QWidget
 {
@@ -17,9 +18,9 @@ public:
 signals:
 
 public slots:
-
+    void change(bool);
 private:
-    QGridLayout *layout;
+    QVBoxLayout *layout;
     QLabel *headerText;
     QLabel *firstSentence;
     QLabel *markovText;
@@ -27,6 +28,8 @@ private:
     QLabel *rewardImage;
     QLabel *markovImage;
     QFont font;
+    QPushButton *diagram;
+    int flag;
 
 
 };
