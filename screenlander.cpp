@@ -19,8 +19,10 @@ screenLander::screenLander(QWidget *parent) : QWidget(parent)
 
      font.setPixelSize(30);
      playGameLabel->setFont(font);
-     playGameLabel->setText("Maybe you can take what you have learned about how machinces learn to get better at \n"
-                             "Lunar Lander and see if you can use the same tactics yourself");
+     playGameLabel->setText("Here you can try the game for yourself." \
+                            "\nOur hard coded bot got a high score of around 72" \
+                            "\nOur ML bot got an average score of 193" \
+                            "\nSee how you can do!");
      playGameLabel->resize(300, 100);
 
      playGameButton->setText("Play Game");

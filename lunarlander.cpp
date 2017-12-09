@@ -570,13 +570,13 @@ void LunarLander::render() {
         viewer_->draw(shape);
     }
 
-    sf::Text rewardText;
-    std::string rewardString = "Reward: " + std::to_string(lastReward);
-    rewardText.setString(rewardString);
-    rewardText.setPosition(200,-200);
-    rewardText.setColor(sf::Color().White);
-    rewardText.setCharacterSize(50);
-    viewer_->draw(rewardText);
+//    sf::Text rewardText;
+//    std::string rewardString = "Reward: " + std::to_string(lastReward);
+//    rewardText.setString(rewardString);
+//    rewardText.setPosition(200,-200);
+//    rewardText.setColor(sf::Color().White);
+//    rewardText.setCharacterSize(50);
+//    viewer_->draw(rewardText);
 
     //keyboard events
     sf::Event event;
