@@ -3,7 +3,11 @@
 screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
 {
     QLabel *intro = new QLabel(this);
-    QVBoxLayout *boxLayout = new QVBoxLayout;
+  //  QVBoxLayout *boxLayout = new QVBoxLayout;
+
+
+    QGridLayout* girdLayout = new QGridLayout(this);
+
     intro->setStyleSheet("QLabel { background-color : black; color : grey; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
     QFont tabFont;
     QComboBox *choices = new QComboBox;
@@ -32,13 +36,16 @@ screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
 
     info1->setText(text);
 
-    setLayout(boxLayout);
 
+    QLabel* gifSpot = new QLabel(this);
+    gifSpot->setText("LASDJFLASKDJFASDLKFJASLDKFJASLDKJFASLDKJF");
 
     //Adding to the layout
-    boxLayout->addWidget(intro);
-    boxLayout->addWidget(info1);
-    boxLayout->addWidget(choices);
+    girdLayout->addWidget(intro,   0,0,1,0);
+    girdLayout->addWidget(info1,   1,0,1,1);
+    girdLayout->addWidget(gifSpot, 1,1,1,1);
+    girdLayout->addWidget(choices, 2,0,1,2);
+
 
 
 
