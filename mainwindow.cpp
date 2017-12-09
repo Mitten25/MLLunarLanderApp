@@ -1,3 +1,5 @@
+//Osama was here
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "screenwelcome.h"
@@ -26,11 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setMaximumSize(*minSize);
     this->setWindowTitle("ML Moonlander");
     this->setIconSize(QSize(0,0));
-//    this->setStyleSheet("background-color: grey;");
-    //
-
-  this->centralWidget()->setStyleSheet("background-color: rgb(46, 78, 105);");
-   // this->centralWidget()->setStyleSheet("color: grey;");
+    this->centralWidget()->setStyleSheet("background-color: rgb(46, 78, 105);");
 
     //Program Wide StyleSheet Setup
     qApp->setStyleSheet("QLabel { background-color: rgb(46, 78, 105) }"
@@ -54,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Layout Setup
     QVBoxLayout *vLayoutMain;
     vLayoutMain = new QVBoxLayout(this->centralWidget());
-    one = two = three = four = five = false;
+    one = two = three = four = five = six = false;
 
     //Tab Setup
     QTabWidget* tab = new QTabWidget(this);
@@ -65,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Progres Bar
     progressBar = new QProgressBar(this);
-    progressBar->setRange(0,5);
+    progressBar->setRange(0,6);
     progressBar->setValue(0);
 
 
@@ -141,6 +139,12 @@ void MainWindow::updateValue(int index){
         if(!five){
             progressBar->setValue(++val);
             five = true;
+        }
+        break;
+    case 6:
+        if(!six){
+            progressBar->setValue(++val);
+            six = true;
         }
         break;
     default:
