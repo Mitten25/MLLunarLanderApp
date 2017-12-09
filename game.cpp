@@ -100,21 +100,18 @@ int game(bool bot)
                 arr[0] = 2.0f;
                 std::vector<float> rtn (arr, arr + sizeof(arr) / sizeof(arr[0]) );
                 envData = env.step(rtn);
-                input_up = false;
             }
             else if (input_left == true){
                 qDebug("left");
                 arr[0] = 1.0f;
                 std::vector<float> rtn (arr, arr + sizeof(arr) / sizeof(arr[0]) );
                 envData = env.step(rtn);
-                input_left = false;
             }
             else if (input_right == true){
                 qDebug("right");
                 arr[0] = 3.0f;
                 std::vector<float> rtn (arr, arr + sizeof(arr) / sizeof(arr[0]) );
                 envData = env.step(rtn);
-                input_right = false;
             }
             else{
                 arr[0] = 0.0f;

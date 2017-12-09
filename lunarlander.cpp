@@ -617,6 +617,12 @@ void LunarLander::render() {
                         input_right = true;
                     }
                 }
+                else{
+                    extern bool input_up, input_left, input_right;
+                    input_up = false;
+                    input_left = false;
+                    input_right = false;
+                }
     }
 
 }
