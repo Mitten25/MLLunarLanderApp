@@ -28,23 +28,23 @@ MainWindow::MainWindow(QWidget *parent) :
 //    this->setStyleSheet("background-color: grey;");
     //
 
-  this->centralWidget()->setStyleSheet("background-color: rgb(53, 50, 47);");
+  this->centralWidget()->setStyleSheet("background-color: rgb(46, 78, 105);");
    // this->centralWidget()->setStyleSheet("color: grey;");
 
 
     //Program Wide StyleSheet Setup
-    qApp->setStyleSheet("QLabel { background-color: rgb(53, 50, 47) }"
+    qApp->setStyleSheet("QLabel { background-color: rgb(46, 78, 105) }"
                         "QLabel { color: grey }"
                         "QLabel { border-color: grey }"
                         "QComboBox { color: grey }"
                         "QPushButton { color: grey }"
-                        "QTabWidget { background-color: rgb(53, 50, 47) }"
+                        "QTabWidget { background-color: rgb(46, 78, 105) }"
                         "QTabWidget { color: grey }"
                         "QTabWidget { border-color: grey }"
                         "QTabWidget { border-bottem: grey }"
-                        "QTabBar { color: black }"
-                        "QTabBar::tab { background: grey }"
-                        "QProgressBar { color: grey }"
+                        "QTabBar { color: grey }"
+                        "QTabBar::tab { background: rgb(46, 78, 155) }"
+                        "QProgressBar { color: black }"
 //                      "QProgressBar::chunk { color: black }"
                         "");
 
