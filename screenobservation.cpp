@@ -29,8 +29,8 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
     text+= "needs to be able to observe the evironment";
     text+= "\nThe more it can observe, the better";
     text+= "\nWe can see what happens when we blind";
-    text+= "\nthe model in certain ways";
-    text+= "";
+    text+= "\nthe model in certain ways by running ";
+    text+= "\nthe simulations below.";
 
     info1->setFont(textFont);
     info1->setText(text);
