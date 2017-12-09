@@ -129,6 +129,8 @@ b2Body* LunarLander::createParticle(float mass, float x, float y, float* power) 
 
 /** Destroy lander gas b2Body particles */
 void LunarLander::destroyParticles(bool all) {
+    if(particles_.size() == 0)
+        return;
     if (particles_.front() == nullptr) {
         return;
     }
