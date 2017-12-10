@@ -1,3 +1,8 @@
+/***
+ * Authors: Matt Wilson, Osama Kergaye, Lingxi Zhong, Kathy Huang, Andrew Radford, Joel Swanson
+ *
+ */
+
 #ifndef SCREENTRIALS_H
 #define SCREENTRIALS_H
 

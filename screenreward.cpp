@@ -1,3 +1,8 @@
+/***
+ * Authors: Matt Wilson, Osama Kergaye, Lingxi Zhong, Kathy Huang, Andrew Radford, Joel Swanson
+ *
+ */
+
 #include "screenreward.h"
 
 screenReward::screenReward(QWidget *parent) : QWidget(parent)

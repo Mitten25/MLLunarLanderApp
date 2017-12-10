@@ -1,4 +1,7 @@
-//Osama was here
+/***
+ * Authors: Matt Wilson, Osama Kergaye, Lingxi Zhong, Kathy Huang, Andrew Radford, Joel Swanson
+ *
+ */
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"

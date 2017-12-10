@@ -1,3 +1,8 @@
+/***
+ * Authors: Matt Wilson, Osama Kergaye, Lingxi Zhong, Kathy Huang, Andrew Radford, Joel Swanson
+ *
+ */
+
 #include "screentrials.h"
 
 screenTrials::screenTrials(QWidget *parent) : QWidget(parent)

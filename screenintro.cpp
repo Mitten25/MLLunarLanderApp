@@ -1,3 +1,8 @@
+/***
+ * Authors: Matt Wilson, Osama Kergaye, Lingxi Zhong, Kathy Huang, Andrew Radford, Joel Swanson
+ *
+ */
+
 #include "screenintro.h"
 
 screenIntro::screenIntro(QWidget *parent) : QWidget(parent)
