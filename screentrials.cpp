@@ -1,3 +1,8 @@
+/***
+ * Authors: Matt Wilson, Osama Kergaye, Lingxi Zhong, Kathy Huang, Andrew Radford, Joel Swanson
+ *
+ */
+
 #include "screentrials.h"
 
 screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
@@ -8,13 +13,13 @@ screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
 
     QGridLayout* girdLayout = new QGridLayout(this);
 
-    intro->setStyleSheet("QLabel { background-color : black; color : grey; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
+    intro->setStyleSheet("QLabel { background-color : rgb(70,80,80); color : white; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
     QFont tabFont;
     QComboBox *choices = new QComboBox;
 
     tabFont.setBold(true);
     tabFont.setStyleHint(QFont::Helvetica);
-    tabFont.setPixelSize(100);
+    tabFont.setPixelSize(70);
 
     intro->setFont(tabFont);
     intro->setText("Trials");
@@ -24,6 +29,7 @@ screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
     choices->addItem("1000 Trials Simulation", QString::number(1));
     choices->addItem("10000 Trials Simulation", QString::number(2));
     choices->addItem("Success Rate Graph", QString::number(3));
+    choices->setStyleSheet("font-size: 20px; color: white; background-color: rgb(70,80,80)");
 
     QFont textFont;
     textFont.setPixelSize(20);
@@ -39,7 +45,7 @@ screenTrials::screenTrials(QWidget *parent) : QWidget(parent)
 
 
     info1->setText(text);
-
+    info1->setStyleSheet("background-color: rgb(80,90,90); padding: 10px");
 
     gif = new QLabel;
     //Adding to the layout

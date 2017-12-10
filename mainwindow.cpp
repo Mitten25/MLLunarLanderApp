@@ -1,4 +1,7 @@
-//Osama was here
+/***
+ * Authors: Matt Wilson, Osama Kergaye, Lingxi Zhong, Kathy Huang, Andrew Radford, Joel Swanson
+ *
+ */
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -28,23 +31,23 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setMaximumSize(*minSize);
     this->setWindowTitle("ML Moonlander");
     this->setIconSize(QSize(0,0));
-    this->centralWidget()->setStyleSheet("background-color: rgb(46, 78, 105);");
+    this->centralWidget()->setStyleSheet("background-color: rgb(105, 120, 120);");
 
     //Program Wide StyleSheet Setup
     qApp->setStyleSheet("QLabel { background-color: rgb(46, 78, 105) }"
-                        "QLabel { color: black }"
+                        "QLabel { color: white }"
                         "QLabel { border-color: grey }"
                         "QComboBox { color: grey }"
-                        "QPushButton { color: black }"
+                        "QPushButton { color: white }"
                         "QTabWidget { background-color: rgb(46, 78, 105) }"
                         "QTabWidget { color: black }"
                         "QTabWidget { border-color: grey }"
                         "QTabWidget { border-bottom: grey }"
                         "QTabWidget::pane { border: 0 }"
-                        "QTabBar { color: black }"
-                        "QTabBar::tab { background: rgb(46, 78, 155) }"
+                        "QTabBar { color: white }"
+                        "QTabBar::tab { background: rgb(70,80,80) }"
                         "QTabBar::tab { color: white }"
-                        "QProgressBar { color: black }"
+                        "QProgressBar { color: white }"
                         "");
 
 
@@ -104,7 +107,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Signals and Slots
     connect(tab, &QTabWidget::currentChanged, this, &MainWindow::updateValue);
-
 }
 
 void MainWindow::updateValue(int index){
@@ -151,7 +153,6 @@ void MainWindow::updateValue(int index){
         break;
     }
 }
-
 
 MainWindow::~MainWindow()
 {

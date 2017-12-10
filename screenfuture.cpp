@@ -1,3 +1,8 @@
+/***
+ * Authors: Matt Wilson, Osama Kergaye, Lingxi Zhong, Kathy Huang, Andrew Radford, Joel Swanson
+ *
+ */
+
 #include "screenfuture.h"
 
 screenFuture::screenFuture(QWidget *parent) : QWidget(parent)
@@ -15,19 +20,22 @@ screenFuture::screenFuture(QWidget *parent) : QWidget(parent)
     //Button Basics
     playBot->setText("Hard Coded Bot");
     playGif->setText("Machine Learning Bot");
+    playBot->setStyleSheet("background-color: rgb(70,80,80); font-size: 20px");
+    playGif->setStyleSheet("background-color: rgb(70,80,80); font-size: 20px");
+
 
     //Intro stylesheet and setup
-    intro->setStyleSheet("QLabel { background-color : black; color : grey; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
+    intro->setStyleSheet("QLabel { background-color : rgb(70,80,80); color : white; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
     tabFont.setBold(true);
     tabFont.setStyleHint(QFont::Helvetica);
-    tabFont.setPixelSize(100);
+    tabFont.setPixelSize(70);
     intro->setFont(tabFont);
     intro->setText("The Future of Bots");
     intro->resize(1000, 100);
 
     //Tab body
     textFont.setPixelSize(14);
-    QString text = "\nAlmost all game bots up to now have been coded by hand";
+    QString text = "Almost all game bots up to now have been coded by hand";
     text += "\nThis requires a lot of engineering effort and time to go through"\
             "\nthrough all possible cases and even more, to write a good bot,"\
             "\nyou have to be good at the game yourself. "
@@ -55,7 +63,7 @@ screenFuture::screenFuture(QWidget *parent) : QWidget(parent)
 
     info1->setFont(textFont);
     info1->setText(text);
-
+    info1->setStyleSheet("color: white; font-size: 20px; background-color: rgb(70,80,80); padding: 10px");
     //Adding to the layout
     gridLayout->addWidget(intro,   0,0,1,0);
     gridLayout->addWidget(info1,   1,0,1,1);
