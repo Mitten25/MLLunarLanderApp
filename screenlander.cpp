@@ -15,12 +15,12 @@ screenLander::screenLander(QWidget *parent) : QWidget(parent)
 
      font.setBold(true);
      font.setStyleHint(QFont::Helvetica);
-     font.setPixelSize(80);
+     font.setPixelSize(70);
 
      titleLabel->setFont(font);
      titleLabel->setText("Lunar Lander Game");
      titleLabel->resize(1000, 100);
-     titleLabel->setStyleSheet("QLabel { background-color : black; color : grey; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
+     titleLabel->setStyleSheet("QLabel { background-color : rgb(70,80,80); color : white; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
 
      font.setPixelSize(30);
      playGameLabel->setFont(font);
@@ -29,9 +29,9 @@ screenLander::screenLander(QWidget *parent) : QWidget(parent)
                             "\nOur ML bot got an average score of 193" \
                             "\nSee how you can do!");
      playGameLabel->resize(300, 100);
-
+     playGameLabel->setStyleSheet("background-color: rgb(80,90,90); padding: 10px");
      playGameButton->setText("Play Game");
-     playGameButton->setStyleSheet("background-color: rgb(53, 50, 47)");
+     playGameButton->setStyleSheet("background-color: rgb(70,80,80); font-size: 20px");
 
      layout->addWidget(titleLabel, 0, 0);
      layout->addWidget(playGameLabel, 1, 0, Qt::AlignCenter);

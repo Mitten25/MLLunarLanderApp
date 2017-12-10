@@ -10,7 +10,7 @@ screenIntro::screenIntro(QWidget *parent) : QWidget(parent)
     //Setting up our variables
     QLabel *intro = new QLabel(this);
     QVBoxLayout *boxLayout = new QVBoxLayout;
-    intro->setStyleSheet("QLabel { background-color : black; color : grey; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
+    intro->setStyleSheet("QLabel { background-color : rgb(70,80,80); color : white; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
     QFont tabFont;
 
     //Making the font for the tab title
@@ -37,6 +37,7 @@ screenIntro::screenIntro(QWidget *parent) : QWidget(parent)
 
     // Setting the text and layout
     info1->setText(text);
+    info1->setStyleSheet("background-color: rgb(80,90,90); padding: 10px");
     setLayout(boxLayout);
 
     //Declaring the first diagram
@@ -45,6 +46,7 @@ screenIntro::screenIntro(QWidget *parent) : QWidget(parent)
     QIcon ButtonIcon1(pixDiagram1);
     diagram->setIcon(ButtonIcon1);
     diagram->setIconSize(pixDiagram1.rect().size());
+    diagram->setStyleSheet("background-color: rgb(150,160,160)");
     flag = 0;
 
 

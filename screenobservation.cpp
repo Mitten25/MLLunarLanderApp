@@ -11,14 +11,14 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
     QLabel *intro = new QLabel(this);
     gif = new QLabel;
     QGridLayout* girdLayout = new QGridLayout(this);
-    intro->setStyleSheet("QLabel { background-color : black; color : grey; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
+    intro->setStyleSheet("QLabel { background-color : rgb(70,80,80); color : white; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
     QFont tabFont;
     QComboBox *choices = new QComboBox;
 
     //Assigning properties to the fonts
     tabFont.setBold(true);
     tabFont.setStyleHint(QFont::Helvetica);
-    tabFont.setPixelSize(100);
+    tabFont.setPixelSize(70);
 
     //Setting the intro
     intro->setFont(tabFont);
@@ -26,6 +26,7 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
     intro->resize(1000, 100);
 
     //Making the combo box
+    choices->setStyleSheet("font-size: 20px; color: white; background-color: rgb(70,80,80)");
     choices->addItem("Not knowing X Position", QString::number(0));
     choices->addItem("Not knowing Y Postiion", QString::number(1));
     choices->addItem("Not knowing Angle", QString::number(2));
@@ -48,6 +49,7 @@ screenObservation::screenObservation(QWidget *parent) : QWidget(parent)
     //Setting the text
     info1->setFont(textFont);
     info1->setText(text);
+    info1->setStyleSheet("background-color: rgb(80,90,90); padding: 10px");
 
     //Adding to the layout
     girdLayout->addWidget(intro,   0,0,1,0);

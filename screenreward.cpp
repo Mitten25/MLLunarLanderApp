@@ -22,7 +22,7 @@ screenReward::screenReward(QWidget *parent) : QWidget(parent)
     headerText->setFont(font);
     headerText->setText("Rewarding the AI");
     headerText->resize(1000, 100);
-    headerText->setStyleSheet("QLabel { background-color : black; color : grey; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
+    headerText->setStyleSheet("QLabel { background-color : rgb(70,80,80); color : white; border-color: white; border-style: outset; border-width: 2px; border-color: beige}");
 
     //Changing the font for the rest of the page text
     font.setBold(false);
@@ -35,18 +35,21 @@ screenReward::screenReward(QWidget *parent) : QWidget(parent)
                         "Environment and the agent are in, all of the available actions that can be taken, \n"
                         "and you have a function called the model that computes the probability of ending\n"
                         "at a select state. Then a reward is given once the agent has taken an action.");
+    markovText->setStyleSheet("background-color: rgb(80,90,90); padding: 10px");
 
     rewardText->setFont(font);
     rewardText->setText("The agent chooses the action that gives it the most reward. The tricky part \n"
                         "about it is getting the agent to look at long term rewards to best optimize its \n"
                         "solution");
+    rewardText->setStyleSheet("background-color: rgb(80,90,90); padding: 10px");
 
     //Code for the diagram
     diagram = new QPushButton;
     QPixmap pixReward("../cs3505-f17-a8-edu-app-matwilso/diagrams/reward.png");
     QIcon buttonIcon(pixReward);
     diagram->setIcon(buttonIcon);
-    diagram->setIconSize(pixReward.rect().size());
+    diagram->setIconSize(QSize(600, 500));
+    diagram->setStyleSheet("background-color: rgb(150,160,160)");
     flag = 0;
 
     // Adding objects to the layout
@@ -74,7 +77,7 @@ void screenReward::change(bool) {
         QPixmap pixDiagram1("../cs3505-f17-a8-edu-app-matwilso/diagrams/reward.png");
         QIcon ButtonIcon1(pixDiagram1);
         diagram->setIcon(ButtonIcon1);
-        diagram->setIconSize(pixDiagram1.rect().size());
+        diagram->setIconSize(QSize(600, 500));
         flag = 0;
     }
 }
